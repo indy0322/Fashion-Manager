@@ -1,6 +1,6 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    jdbc-url: jdbc:mariadb://localhost:3306/menudb
+    url: jdbc:mariadb://localhost:3306/fashion_manager
     username: swcamp
     password: swcamp
