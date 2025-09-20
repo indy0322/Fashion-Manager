@@ -1,11 +1,14 @@
 package fashionmanager.kim.develop;
 
+import fashionmanager.kim.develop.dto.MessageCategoryDTO;
+import fashionmanager.kim.develop.dto.ReportCategoryDTO;
+import fashionmanager.kim.develop.dto.ReviewCategoryDTO;
 import fashionmanager.kim.develop.service.CategoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -48,5 +51,92 @@ public class CategoryServiceTest {
                     category.forEach(System.out::println);
                 }
         );
+    }
+
+    @DisplayName("후기 카테고리 요소 추가 테스트")
+    @Test
+    void testInsertReviewCategory() {
+        String name = "아우터";
+
+        int result = categoryService.insertReviewCategory(name);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("신고 카테고리 요소 추가 테스트")
+    @Test
+    void testInsertReportCategory() {
+        String name = "인플루언서";
+
+        int result = categoryService.insertReportCategory(name);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("메세지 카테고리 요소 추가 테스트")
+    @Test
+    void testInsertMessageCategory() {
+        String name = "조언";
+
+        int result = categoryService.insertMessageCategory(name);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("후기 카테고리 요소 수정 테스트")
+    @ParameterizedTest
+    @CsvSource({"6,신발", "1, 패션쇼", "2, 패션 이벤트"})
+    void testUpdateReviewCategory(int num, String name) {
+        ReviewCategoryDTO testReviewCategoryDTO = new ReviewCategoryDTO();
+        testReviewCategoryDTO.setReviewCategoryNum(num);
+        testReviewCategoryDTO.setReviewCategoryName(name);
+
+        int result = categoryService.updateReviewCategory(testReviewCategoryDTO);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("신고 카테고리 요소 수정 테스트")
+    @ParameterizedTest
+    @CsvSource({"1,패션 게시물1", "2,패션 게시물2"})
+    void testUpdateReportCategory(int num, String name) {
+        ReportCategoryDTO testReportCategoryDTO = new ReportCategoryDTO();
+        testReportCategoryDTO.setReportCategoryNum(num);
+        testReportCategoryDTO.setReportCategoryName(name);
+
+        int result = categoryService.updateReportCategory(testReportCategoryDTO);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("쪽지 카테고리 요소 수정 테스트")
+    @ParameterizedTest
+    @CsvSource({"1,요청사항", "2,문의"})
+    void testUpdateMessageCategory(int num, String name) {
+        MessageCategoryDTO testMessageCategoryDTO = new MessageCategoryDTO();
+        testMessageCategoryDTO.setMessageCategoryNum(num);
+        testMessageCategoryDTO.setMessageCategoryName(name);
+
+        int result = categoryService.updateMessageCategory(testMessageCategoryDTO);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("후기 카테고리 요소 삭제 테스트")
+    @Test
+    void testDeleteReviewCategory() {
+        int num = 1;
+        int result = categoryService.deleteReviewCategory(num);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("신고 카테고리 요소 삭제 테스트")
+    @Test
+    void testDeleteReportCategory() {
+        int num = 1;
+        int result = categoryService.deleteReportCategory(num);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("쪽지 카테고리 요소 삭제 테스트")
+    @Test
+    void testDeleteMessageCategory() {
+        int num = 2;
+        int result = categoryService.deleteMessageCategory(num);
+        Assertions.assertTrue(1 == result);
     }
 }

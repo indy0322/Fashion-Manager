@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="fashionmanager.kim.develop.mapper.MessageCategoryMapper">
-    <resultMap id="messageCategoryMap" type="fashionmanager.kim.develop.MessageCategoryDTO">
+    <resultMap id="messageCategoryMap" type="fashionmanager.kim.develop.dto.MessageCategoryDTO">
         <id property="messageCategoryNum" column="NUM"/>
         <result property="messageCategoryName" column="NAME"/>
     </resultMap>
