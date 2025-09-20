@@ -131,4 +131,47 @@ public class CategoryService {
             return 0;
         }
     }
+
+    @Transactional
+    public int deleteReviewCategory(int deleteReviewCategoryNum) {
+        boolean check = deleteReviewCategoryNum == 0;
+        if(check){
+            return 0;
+        }
+        int result = reviewCategoryRepository.deleteReviewCategory(deleteReviewCategoryNum);
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+
+    }
+
+    @Transactional
+    public int deleteReportCategory(int deleteReportCategoryNum) {
+        boolean check = deleteReportCategoryNum == 0;
+        if(check){
+            return 0;
+        }
+        int result = reportCategoryRepository.deleteReviewCategory(deleteReportCategoryNum);
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    @Transactional
+    public int deleteMessageCategory(int deleteMessageCategoryNum) {
+        boolean check = deleteMessageCategoryNum == 0;
+        if(check) {
+            return 0;
+        }
+        int result = messageCategoryRepository.deleteMessageCategory(deleteMessageCategoryNum);
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }

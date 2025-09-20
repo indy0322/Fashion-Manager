@@ -13,4 +13,8 @@ public interface MessageCategoryRepository extends CrudRepository<MessageCategor
     @Modifying
     @Query(value = "UPDATE MessageCategory r SET r.messageCategoryName = :name WHERE r.messageCategoryNum = :num")
     int updateMessageCategory(@Param("num") int num, @Param("name") String name);
+
+    @Modifying
+    @Query(value = "DELETE FROM MessageCategory r WHERE r.messageCategoryNum = :num")
+    int deleteMessageCategory(@Param("num") int num);
 }

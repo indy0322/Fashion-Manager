@@ -115,4 +115,28 @@ public class CategoryServiceTest {
         int result = categoryService.updateMessageCategory(testMessageCategoryDTO);
         Assertions.assertTrue(1 == result);
     }
+
+    @DisplayName("후기 카테고리 요소 삭제 테스트")
+    @Test
+    void testDeleteReviewCategory() {
+        int num = 1;
+        int result = categoryService.deleteReviewCategory(num);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("신고 카테고리 요소 삭제 테스트")
+    @Test
+    void testDeleteReportCategory() {
+        int num = 1;
+        int result = categoryService.deleteReportCategory(num);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("쪽지 카테고리 요소 삭제 테스트")
+    @Test
+    void testDeleteMessageCategory() {
+        int num = 2;
+        int result = categoryService.deleteMessageCategory(num);
+        Assertions.assertTrue(1 == result);
+    }
 }

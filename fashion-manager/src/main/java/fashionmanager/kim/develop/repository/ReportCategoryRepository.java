@@ -14,4 +14,8 @@ public interface ReportCategoryRepository extends JpaRepository<ReportCategory,I
     @Modifying
     @Query(value = "UPDATE ReportCategory r SET r.reportCategoryName = :name WHERE r.reportCategoryNum = :num")
     int updateReportCategory(@Param("num") int num, @Param("name") String name);
+
+    @Modifying
+    @Query(value = "DELETE FROM ReportCategory r WHERE r.reportCategoryNum = :num")
+    int deleteReviewCategory(@Param("num") int num);
 }

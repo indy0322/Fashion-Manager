@@ -14,4 +14,8 @@ public interface ReviewCategoryRepository extends JpaRepository<ReviewCategory,I
     @Modifying
     @Query(value = "UPDATE ReviewCategory r SET r.reviewCategoryName = :name WHERE r.reviewCategoryNum = :num")
     int updateReviewCategory(@Param("num") int num, @Param("name") String name);
+
+    @Modifying
+    @Query(value = "DELETE FROM ReviewCategory r WHERE r.reviewCategoryNum = :num")
+    int deleteReviewCategory(@Param("num") int num);
 }
