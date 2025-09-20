@@ -44,6 +44,18 @@ public class CategoryController {
         }
     }
 
+    @PostMapping("updatereviewcategory")
+    public String updateReviewCategory(@RequestBody ReviewCategoryDTO reviewCategoryDTO) {
+        int result = cs.updateReviewCategory(reviewCategoryDTO);
+        if(result == 1){
+            log.info("새로운 후기 카테고리 " + reviewCategoryDTO.getReviewCategoryName() + "요소가 수정되었습니다.");
+            return "새로운 후기 카테고리 " + reviewCategoryDTO.getReviewCategoryName() + "요소가 수정되었습니다.";
+        }else{
+            log.info("새로운 후기 카테고리 " + reviewCategoryDTO.getReviewCategoryName() + "요소가 제대로 수정되지 못했습니다.");
+            return "새로운 후기 카테고리 " + reviewCategoryDTO.getReviewCategoryName() + "요소가 제대로 수정되지 못했습니다.";
+        }
+    }
+
     @GetMapping("/selectreportcategory")
     public List<ReportCategoryDTO> selectAllReportCategories() {
         List<ReportCategoryDTO> reportCategoryList = cs.selectAllReportCategories();
@@ -62,6 +74,18 @@ public class CategoryController {
         }
     }
 
+    @PostMapping("/updatereportcategory")
+    public String updateReportCategory(@RequestBody ReportCategoryDTO reportCategoryDTO) {
+        int result = cs.updateReportCategory(reportCategoryDTO);
+        if(result == 1){
+            log.info("새로운 신고 카테고리 " + reportCategoryDTO.getReportCategoryName() + "요소가 수정되었습니다.");
+            return "새로운 신고 카테고리 " + reportCategoryDTO.getReportCategoryName() + "요소가 수정되었습니다.";
+        }else{
+            log.info("새로운 신고 카테고리 " + reportCategoryDTO.getReportCategoryName() + "요소가 제대로 수정되지 못했습니다.");
+            return "새로운 신고 카테고리 " + reportCategoryDTO.getReportCategoryName() + "요소가 제대로 수정되지 못했습니다.";
+        }
+    }
+
     @GetMapping("/selectmessagecategory")
     public List<MessageCategoryDTO> selectAllMessageCategories() {
         List<MessageCategoryDTO> messageCategoryList = cs.selectAllMessageCategories();
@@ -72,11 +96,23 @@ public class CategoryController {
     public String insertMessageCategory(String insertMessageCategoryName) {
         int result = cs.insertMessageCategory(insertMessageCategoryName);
         if(result == 1){
-            log.info("새로운 신고 카테고리 " + insertMessageCategoryName + "요소가 등록되었습니다.");
-            return "새로운 신고 카테고리 " + insertMessageCategoryName + "요소가 등록되었습니다.";
+            log.info("새로운 쪽지 카테고리 " + insertMessageCategoryName + "요소가 등록되었습니다.");
+            return "새로운 쪽지 카테고리 " + insertMessageCategoryName + "요소가 등록되었습니다.";
         }else{
-            log.info("새로운 신고 카테고리 요소 등록에 실패했습니다.");
-            return "새로운 신고 카테고리 요소 등록에 실패했습니다.";
+            log.info("새로운 쪽지 카테고리 요소 등록에 실패했습니다.");
+            return "새로운 쪽지 카테고리 요소 등록에 실패했습니다.";
+        }
+    }
+
+    @PostMapping("/updatemessagecategory")
+    public String updateMessageCategory(@RequestBody MessageCategoryDTO messageCategoryDTO) {
+        int result = cs.updateMessageCategory(messageCategoryDTO);
+        if(result == 1){
+            log.info("새로운 쪽지 카테고리 " + messageCategoryDTO.getMessageCategoryName() + "요소가 수정되었습니다.");
+            return "새로운 쪽지 카테고리 " + messageCategoryDTO.getMessageCategoryName() + "요소가 수정되었습니다.";
+        }else{
+            log.info("새로운 쪽지 카테고리 " + messageCategoryDTO.getMessageCategoryName() + "요소가 제대로 수정되지 못했습니다.");
+            return "새로운 쪽지 카테고리 " + messageCategoryDTO.getMessageCategoryName() + "요소가 제대로 수정되지 못했습니다.";
         }
     }
 

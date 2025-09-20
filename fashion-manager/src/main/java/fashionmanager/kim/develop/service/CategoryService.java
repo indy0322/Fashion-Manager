@@ -3,15 +3,18 @@ package fashionmanager.kim.develop.service;
 import fashionmanager.kim.develop.dto.MessageCategoryDTO;
 import fashionmanager.kim.develop.dto.ReportCategoryDTO;
 import fashionmanager.kim.develop.dto.ReviewCategoryDTO;
+import fashionmanager.kim.develop.entity.MessageCategory;
 import fashionmanager.kim.develop.entity.ReportCategory;
 import fashionmanager.kim.develop.entity.ReviewCategory;
 import fashionmanager.kim.develop.mapper.MessageCategoryMapper;
 import fashionmanager.kim.develop.mapper.ReportCategoryMapper;
 import fashionmanager.kim.develop.mapper.ReviewCategoryMapper;
+import fashionmanager.kim.develop.repository.MessageCategoryRepository;
 import fashionmanager.kim.develop.repository.ReportCategoryRepository;
 import fashionmanager.kim.develop.repository.ReviewCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,16 +27,18 @@ public class CategoryService {
 
     private final ReviewCategoryRepository reviewCategoryRepository;
     private final ReportCategoryRepository reportCategoryRepository;
+    private final MessageCategoryRepository messageCategoryRepository;
 
     @Autowired
     public CategoryService(ReviewCategoryMapper categoryMapper, ReportCategoryMapper reportCategoryMapper, MessageCategoryMapper messageCategoryMapper,
-                           ReviewCategoryRepository reviewCategoryRepository, ReportCategoryRepository reportCategoryRepository) {
+                           ReviewCategoryRepository reviewCategoryRepository, ReportCategoryRepository reportCategoryRepository, MessageCategoryRepository messageCategoryRepository) {
         this.reviewCategoryMapper = categoryMapper;
         this.reportCategoryMapper = reportCategoryMapper;
         this.messageCategoryMapper = messageCategoryMapper;
 
         this.reviewCategoryRepository = reviewCategoryRepository;
         this.reportCategoryRepository = reportCategoryRepository;
+        this.messageCategoryRepository = messageCategoryRepository;
     }
 
     public List<ReviewCategoryDTO> selectAllReviewCategories() {
@@ -74,9 +79,56 @@ public class CategoryService {
         if(insertMessageCategoryName == null || insertMessageCategoryName.isEmpty()){
             return 0;
         }
-        int num = reportCategoryRepository.findMaxNum() + 1;
+        int num = messageCategoryRepository.findMaxNum() + 1;
         String name = insertMessageCategoryName;
-        reportCategoryRepository.save(new ReportCategory(num, name));
+        messageCategoryRepository.save(new MessageCategory(num, name));
         return 1;
+    }
+
+    @Transactional
+    public int updateReviewCategory(ReviewCategoryDTO reviewCategoryDTO) {
+        boolean check1 = reviewCategoryDTO.getReviewCategoryNum() == 0;
+        boolean check2 = reviewCategoryDTO.getReviewCategoryName().isEmpty() || reviewCategoryDTO.getReviewCategoryName() == null;
+        if(check1 || check2){
+            return 0;
+        }
+
+        int result = reviewCategoryRepository.updateReviewCategory(reviewCategoryDTO.getReviewCategoryNum(), reviewCategoryDTO.getReviewCategoryName());
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+
+    }
+
+    @Transactional
+    public int updateReportCategory(ReportCategoryDTO reportCategoryDTO) {
+        boolean check1 = reportCategoryDTO.getReportCategoryNum() == 0;
+        boolean check2 = reportCategoryDTO.getReportCategoryName().isEmpty() || reportCategoryDTO.getReportCategoryName() == null;
+        if(check1 || check2){
+            return 0;
+        }
+        int result = reportCategoryRepository.updateReportCategory(reportCategoryDTO.getReportCategoryNum(), reportCategoryDTO.getReportCategoryName());
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    @Transactional
+    public int updateMessageCategory(MessageCategoryDTO messageCategoryDTO) {
+        boolean check1 = messageCategoryDTO.getMessageCategoryNum() == 0;
+        boolean check2 = messageCategoryDTO.getMessageCategoryName().isEmpty() || messageCategoryDTO.getMessageCategoryName() == null;
+        if(check1 || check2){
+            return 0;
+        }
+        int result = messageCategoryRepository.updateMessageCategory(messageCategoryDTO.getMessageCategoryNum(), messageCategoryDTO.getMessageCategoryName());
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

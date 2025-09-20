@@ -7,6 +7,8 @@ import fashionmanager.kim.develop.service.CategoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -75,6 +77,42 @@ public class CategoryServiceTest {
         String name = "조언";
 
         int result = categoryService.insertMessageCategory(name);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("후기 카테고리 요소 수정 테스트")
+    @ParameterizedTest
+    @CsvSource({"6,신발", "1, 패션쇼", "2, 패션 이벤트"})
+    void testUpdateReviewCategory(int num, String name) {
+        ReviewCategoryDTO testReviewCategoryDTO = new ReviewCategoryDTO();
+        testReviewCategoryDTO.setReviewCategoryNum(num);
+        testReviewCategoryDTO.setReviewCategoryName(name);
+
+        int result = categoryService.updateReviewCategory(testReviewCategoryDTO);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("신고 카테고리 요소 수정 테스트")
+    @ParameterizedTest
+    @CsvSource({"1,패션 게시물1", "2,패션 게시물2"})
+    void testUpdateReportCategory(int num, String name) {
+        ReportCategoryDTO testReportCategoryDTO = new ReportCategoryDTO();
+        testReportCategoryDTO.setReportCategoryNum(num);
+        testReportCategoryDTO.setReportCategoryName(name);
+
+        int result = categoryService.updateReportCategory(testReportCategoryDTO);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("쪽지 카테고리 요소 수정 테스트")
+    @ParameterizedTest
+    @CsvSource({"1,요청사항", "2,문의"})
+    void testUpdateMessageCategory(int num, String name) {
+        MessageCategoryDTO testMessageCategoryDTO = new MessageCategoryDTO();
+        testMessageCategoryDTO.setMessageCategoryNum(num);
+        testMessageCategoryDTO.setMessageCategoryName(name);
+
+        int result = categoryService.updateMessageCategory(testMessageCategoryDTO);
         Assertions.assertTrue(1 == result);
     }
 }
