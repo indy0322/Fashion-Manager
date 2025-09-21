@@ -58,4 +58,19 @@ public class HashTagService {
         }
 
     }
+
+    @Transactional
+    public int deleteHashTag(int deleteHashTagNum) {
+        boolean check = deleteHashTagNum == 0;
+        if(check){
+            return 0;
+        }
+
+        int result = hashTagRepository.deleteHashTag(deleteHashTagNum);
+        if(result == 1){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }

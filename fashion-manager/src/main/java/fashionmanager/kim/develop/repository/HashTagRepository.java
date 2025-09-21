@@ -13,4 +13,8 @@ public interface HashTagRepository extends JpaRepository<HashTag, Integer> {
     @Modifying
     @Query(value = "UPDATE HashTag r SET r.hashTagName = :name WHERE r.hashTagNum = :num")
     int updateHashTag(@Param("num")int num, @Param("name")String name);
+
+    @Modifying
+    @Query(value = "DELETE FROM HashTag r WHERE r.hashTagNum = :num")
+    int deleteHashTag(@Param("num")int num);
 }

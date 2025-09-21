@@ -81,4 +81,16 @@ public class HashTagController {
             return "해시태그 수정에 실패했습니다.";
         }
     }
+
+    @PostMapping("/deletehashtag")
+    public String deleteHashTag(int deleteHashTagNum){
+        int result = hs.deleteHashTag(deleteHashTagNum);
+        if(result == 1){
+            log.info("해시태그 요소가 삭제 되었습니다.");
+            return "해시태그 요소가 삭제 되었습니다.";
+        }else{
+            log.info("해시태그 요소가 삭제에 실패했습니다.");
+            return "해시태그 요소가 삭제에 실패했습니다.";
+        }
+    }
 }

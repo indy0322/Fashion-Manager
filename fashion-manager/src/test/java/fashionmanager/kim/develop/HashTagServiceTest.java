@@ -54,12 +54,19 @@ public class HashTagServiceTest {
     @DisplayName("해시태그 요소 수정 테스트")
     @ParameterizedTest
     @CsvSource({"1,일상룩","2,오피스패션"})
-    void testDeleteHashTag(int num, String name){
+    void testUpdateHashTag(int num, String name){
 
         HashTagDTO updateHashTagDTO = new HashTagDTO();
         updateHashTagDTO.setHashTagNum(num);
         updateHashTagDTO.setHashTagName(name);
         int result = hashTagService.updateHashTag(updateHashTagDTO);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("해시태그 요소 삭제 테스트")
+    @Test
+    void testDeleteHashTag(){
+        int result = hashTagService.deleteHashTag(1);
         Assertions.assertTrue(1 == result);
     }
 }
