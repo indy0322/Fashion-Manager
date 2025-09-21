@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fashionmanager.lee.develop.mapper.CommentMapper">
+
+    <resultMap id="commentDtoMap" type="fashionmanager.lee.develop.dto.CommentDTO">
+        <id property="commentNum" column="COMMENT_NUM"/>
+        <result property="content" column="CONTENT"/>
+        <result property="authorName" column="AUTHOR_NAME"/>
+        <result property="authorId" column="AUTHOR_ID"/>
+    </resultMap>
+
+    <select id="findByFashionPostNum" resultMap="commentDtoMap">
+        SELECT
+            C.num AS COMMENT_NUM,
+            C.content AS CONTENT,
+            M.NAME AS AUTHOR_NAME,
+            M.num AS AUTHOR_ID
+        FROM
+            COMMENT C
+                JOIN
+            MEMBER M ON C.member_num = M.num
+        WHERE
+            C.fashion_post_num = #{fashionPostNum}
+        ORDER BY
+            C.num ASC
+    </select>
+</mapper>
