@@ -11,19 +11,23 @@
         <result property="authorId" column="AUTHOR_ID"/>
     </resultMap>
 
+    <!-- 패션 게시물 댓글 조회 쿼리-->
     <select id="findByFashionPostNum" resultMap="commentDtoMap">
         SELECT
-            C.num AS COMMENT_NUM,
-            C.content AS CONTENT,
-            M.NAME AS AUTHOR_NAME,
-            M.num AS AUTHOR_ID
-        FROM
-            COMMENT C
-                JOIN
-            MEMBER M ON C.member_num = M.num
-        WHERE
-            C.fashion_post_num = #{fashionPostNum}
-        ORDER BY
-            C.num ASC
+            C.num AS COMMENT_NUM, C.content AS CONTENT,
+            M.NAME AS AUTHOR_NAME, M.num AS AUTHOR_ID
+        FROM COMMENT C JOIN MEMBER M ON C.member_num = M.num
+        WHERE C.fashion_post_num = #{fashionPostNum}
+        ORDER BY C.num ASC
+    </select>
+
+    <!-- 후기 게시물 댓글 조회 쿼리-->
+    <select id="findByReviewPostNum" resultMap="commentDtoMap">
+        SELECT
+            C.num AS COMMENT_NUM, C.content AS CONTENT,
+            M.NAME AS AUTHOR_NAME, M.num AS AUTHOR_ID
+        FROM COMMENT C JOIN MEMBER M ON C.member_num = M.num
+        WHERE C.review_post_num = #{reviewPostNum}
+        ORDER BY C.num ASC
     </select>
 </mapper>

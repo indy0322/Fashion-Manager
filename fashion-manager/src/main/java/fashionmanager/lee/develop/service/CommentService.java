@@ -1,88 +1,120 @@
 package fashionmanager.lee.develop.service;
 
-import com.fashion.community.dto.CommentDTO;
-import com.fashion.community.entity.Comment;
-import com.fashion.community.entity.FashionPost;
-import com.fashion.community.entity.Member;
-import com.fashion.community.mapper.CommentMapper;
-import com.fashion.community.repository.CommentRepository;
-import com.fashion.community.repository.FashionPostRepository;
-import com.fashion.community.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
+
+
+import fashionmanager.lee.develop.dto.CommentResponse;
+import fashionmanager.lee.develop.entity.Comment;
+import fashionmanager.lee.develop.entity.FashionPost;
+import fashionmanager.lee.develop.entity.Member;
+import fashionmanager.lee.develop.entity.ReviewPost;
+import fashionmanager.lee.develop.repository.CommentRepository;
+import fashionmanager.lee.develop.repository.FashionPostRepository;
+import fashionmanager.lee.develop.repository.MemberRepository;
+import fashionmanager.lee.develop.repository.ReviewPostRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@Transactional
 public class CommentService {
 
-    // MyBatis Mapper와 JPA Repository 모두 주입
-    private final CommentMapper commentMapper;
+
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
     private final FashionPostRepository fashionPostRepository;
+    private final ReviewPostRepository reviewPostRepository;
 
-    /**
-     * 댓글 목록 조회 (Read) - MyBatis Mapper 사용
-     */
-    @Transactional(readOnly = true)
-    public List<CommentDTO> findComments(Long postId) {
-        return commentMapper.findByFashionPostNum(postId);
+
+    public CommentService(CommentRepository commentRepository,
+                          MemberRepository memberRepository,
+                          FashionPostRepository fashionPostRepository,
+                          ReviewPostRepository reviewPostRepository) {
+        this.commentRepository = commentRepository;
+        this.memberRepository = memberRepository;
+        this.fashionPostRepository = fashionPostRepository;
+        this.reviewPostRepository = reviewPostRepository;
     }
 
-    /**
-     * 댓글 생성 (Create) - JPA Repository 사용
-     */
-    @Transactional
-    public void createComment(CommentDTO dto) {
-        if (dto.getContent() == null || dto.getContent().isBlank()) {
-            throw new IllegalArgumentException("댓글 내용이 없습니다.");
-        }
-        // 연관 엔티티 조회
-        Member member = memberRepository.findById(dto.getMemberNum())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-        FashionPost post = fashionPostRepository.findById(dto.getFashionPostNum())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 
-        Comment newComment = new Comment(dto.getContent(), member, post);
-        commentRepository.save(newComment);
+    // 1) 회원이 패션 게시판 게시물에 댓글 작성
+    public CommentResponse createOnFashion(Integer fashionPostId, Integer memberId, String content) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+
+
+        FashionPost post = fashionPostRepository.findById(fashionPostId)
+                .orElseThrow(() -> new EntityNotFoundException("Fashion post not found"));
+
+
+        Comment c = new Comment();
+        c.setMember(member);
+        c.setFashionPost(post); // 패션 글에만 연결
+        c.setContent(content);
+
+
+        Comment saved = commentRepository.save(c);
+        return new CommentResponse(saved.getId(), saved.getMember().getId(), saved.getContent());
     }
 
-    /**
-     * 댓글 수정 (Update) - JPA Repository 사용
-     */
-    @Transactional
-    public void updateComment(Long commentId, CommentDTO dto) {
-        if (dto.getContent() == null || dto.getContent().isBlank()) {
-            throw new IllegalArgumentException("댓글 내용이 없습니다.");
+
+    // 2) 회원이 패션 게시물의 댓글 수정(소유자만)
+    public CommentResponse updateOnFashion(Integer commentId, Integer memberId, String content) {
+        Comment c = commentRepository.findByIdAndMember_Id(commentId, memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found or not owned by member"));
+
+
+// 무결성: 패션 댓글인지 확인
+        if (c.getFashionPost() == null || c.getReviewPost() != null) {
+            throw new IllegalStateException("Not a fashion-post comment");
         }
-
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
-
-        // 작성자 본인 확인
-        if (!comment.getMember().getMemberNum().equals(dto.getMemberNum())) {
-            throw new SecurityException("댓글을 수정할 권한이 없습니다.");
-        }
-
-        comment.updateContent(dto.getContent()); // Dirty Checking으로 DB 업데이트
+        c.updateContent(content);
+        return new CommentResponse(c.getId(), c.getMember().getId(), c.getContent());
     }
 
-    /**
-     * 댓글 삭제 (Delete) - JPA Repository 사용
-     */
-    @Transactional
-    public void deleteComment(Long commentId, Long memberNum) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
 
-        // 작성자 본인 확인
-        if (!comment.getMember().getMemberNum().equals(memberNum)) {
-            throw new SecurityException("댓글을 삭제할 권한이 없습니다.");
+    // 3) 패션 게시물의 댓글 삭제(소유자만)
+    public void deleteOnFashion(Integer commentId, Integer memberId) {
+        Comment c = commentRepository.findByIdAndMember_Id(commentId, memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found or not owned by member"));
+        if (c.getFashionPost() == null || c.getReviewPost() != null) {
+            throw new IllegalStateException("Not a fashion-post comment");
         }
-
-        commentRepository.delete(comment);
+        commentRepository.delete(c);
+    }
+    // 4) 회원이 후기 게시판 게시물에 댓글 작성
+    public CommentResponse createOnReview(Integer reviewPostId, Integer memberId, String
+            content) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found"));
+        ReviewPost post = reviewPostRepository.findById(reviewPostId)
+                .orElseThrow(() -> new EntityNotFoundException("Review post not found"));
+        Comment c = new Comment();
+        c.setMember(member);
+        c.setReviewPost(post); // 후기 글에만 연결
+        c.setContent(content);
+        Comment saved = commentRepository.save(c);
+        return new CommentResponse(saved.getId(), saved.getMember().getId(), saved.getContent());
+    }
+    // 5) 회원이 후기 게시물의 댓글 수정(소유자만)
+    public CommentResponse updateOnReview(Integer commentId, Integer memberId, String
+            content) {
+        Comment c = commentRepository.findByIdAndMember_Id(commentId, memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found or not owned by member"));
+        if (c.getReviewPost() == null || c.getFashionPost() != null) {
+            throw new IllegalStateException("Not a review-post comment");
+        }
+        c.updateContent(content);
+        return new CommentResponse(c.getId(), c.getMember().getId(), c.getContent());
+    }
+    // 6) 후기 게시물의 댓글 삭제(소유자만)
+    public void deleteOnReview(Integer commentId, Integer memberId) {
+        Comment c = commentRepository.findByIdAndMember_Id(commentId, memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found or not owned by member"));
+        if (c.getReviewPost() == null || c.getFashionPost() != null) {
+            throw new IllegalStateException("Not a review-post comment");
+        }
+        commentRepository.delete(c);
     }
 }

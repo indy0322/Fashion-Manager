@@ -1,10 +1,10 @@
-package fashionmanager.kim.develop.config;
+package fashionmanager.lee.develop.config;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan(basePackages = "fashionmanager.kim.develop", annotationClass = Mapper.class)
-public class CategoryConfiguration {
+@MapperScan(basePackages = "fashionmanager.lee.develop", annotationClass = Mapper.class)
+public class CommentConfiguration {
 }

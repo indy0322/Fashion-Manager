@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "`COMMENT`") // 예약어 보호
-public class Comment {
+@Table(name = "Review_Post")
+public class ReviewPost {
 
 
     @Id
@@ -15,8 +15,12 @@ public class Comment {
     private Integer id; // PK
 
 
-    @Column(name = "content", nullable = false, length = 255)
-    private String content;
+    @Column(name = "title", nullable = false)
+    private String title;
+
+
+    @Column(name = "content")
+    private String content; // NULL 허용
 
 
     @Column(name = "good", nullable = false)
@@ -32,25 +36,8 @@ public class Comment {
     private Member member; // 작성자 FK
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mentoring_post_num")
-    private MentoringPost mentoringPost; // NULL 허용
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_post_num")
-    private ReviewPost reviewPost; // NULL 허용
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fashion_post_num")
-    private FashionPost fashionPost; // NULL 허용
-
-
-    // ===== 편의 메서드 =====
-    public void updateContent(String content) {
-        this.content = content;
-    }
+    @Column(name = "review_category_num", nullable = false)
+    private Integer reviewCategoryNum; // 단순 숫자 FK (엔티티로 안 뺌)
 
     public Integer getId() {
         return id;
@@ -58,6 +45,14 @@ public class Comment {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
@@ -92,41 +87,24 @@ public class Comment {
         this.member = member;
     }
 
-    public MentoringPost getMentoringPost() {
-        return mentoringPost;
+    public Integer getReviewCategoryNum() {
+        return reviewCategoryNum;
     }
 
-    public void setMentoringPost(MentoringPost mentoringPost) {
-        this.mentoringPost = mentoringPost;
-    }
-
-    public ReviewPost getReviewPost() {
-        return reviewPost;
-    }
-
-    public void setReviewPost(ReviewPost reviewPost) {
-        this.reviewPost = reviewPost;
-    }
-
-    public FashionPost getFashionPost() {
-        return fashionPost;
-    }
-
-    public void setFashionPost(FashionPost fashionPost) {
-        this.fashionPost = fashionPost;
+    public void setReviewCategoryNum(Integer reviewCategoryNum) {
+        this.reviewCategoryNum = reviewCategoryNum;
     }
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "ReviewPost{" +
                 "id=" + id +
+                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", good=" + good +
                 ", cheer=" + cheer +
                 ", member=" + member +
-                ", mentoringPost=" + mentoringPost +
-                ", reviewPost=" + reviewPost +
-                ", fashionPost=" + fashionPost +
+                ", reviewCategoryNum=" + reviewCategoryNum +
                 '}';
     }
 }
