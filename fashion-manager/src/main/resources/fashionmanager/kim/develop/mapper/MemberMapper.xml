@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fashionmanager.kim.develop.mapper.MemberMapper">
+    <select id="selectMessageAllow" parameterType="string" resultType="fashionmanager.kim.develop.dto.MemberDTO">
+        SELECT
+               A.NUM AS memberNum
+             , A.ID AS memberId
+             , A.PWD AS memberPwd
+             , A.EMAIL AS memberEmail
+             , A.NAME AS memberName
+             , A.AGE AS memberAge
+             , A.GENDER AS memberGender
+             , A.HEIGHT AS memberHeight
+             , A.WEIGHT AS memberWeight
+             , A.STATUS AS memberStatus
+             , A.REPORT_COUNT AS memberReportCount
+             , A.DAILY_REPORT_COUNT AS memberDailyReportCount
+             , A.GOOD_COUNT AS memberGoodCount
+             , A.MONTHLY_GOOD_COUNT AS memberMonthlyGoodCount
+             , A.CHEER_COUNT AS memberCheerCount
+             , A.MESSAGE_ALLOW AS memberMessageAllow
+          FROM MEMBER A
+         WHERE A.ID = #{selectMemberId}
+    </select>
+
+    <select id="selectMemberByNum" parameterType="_int" resultType="fashionmanager.kim.develop.dto.MemberDTO">
+        SELECT
+            A.NUM AS memberNum
+             , A.ID AS memberId
+             , A.PWD AS memberPwd
+             , A.EMAIL AS memberEmail
+             , A.NAME AS memberName
+             , A.AGE AS memberAge
+             , A.GENDER AS memberGender
+             , A.HEIGHT AS memberHeight
+             , A.WEIGHT AS memberWeight
+             , A.STATUS AS memberStatus
+             , A.REPORT_COUNT AS memberReportCount
+             , A.DAILY_REPORT_COUNT AS memberDailyReportCount
+             , A.GOOD_COUNT AS memberGoodCount
+             , A.MONTHLY_GOOD_COUNT AS memberMonthlyGoodCount
+             , A.CHEER_COUNT AS memberCheerCount
+             , A.MESSAGE_ALLOW AS memberMessageAllow
+        FROM MEMBER A
+        WHERE A.NUM = #{selectMemberNum}
+    </select>
+</mapper>
+
+
