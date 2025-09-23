@@ -2,6 +2,7 @@ package fashionmanager.baek.develop.controller;
 
 
 import fashionmanager.baek.develop.aggregate.PostType;
+import fashionmanager.baek.develop.dto.ModifyDTO;
 import fashionmanager.baek.develop.dto.ResponseRegistPostDTO;
 import fashionmanager.baek.develop.dto.RequestRegistPostDTO;
 import fashionmanager.baek.develop.service.PostService;
@@ -18,6 +19,8 @@ public class PostController {
     private final ModelMapper modelMapper;
 
     @Autowired
+
+
     public PostController(PostServiceFactory postServiceFactory, ModelMapper modelMapper) {
         this.postServiceFactory = postServiceFactory;
         this.modelMapper = modelMapper;
@@ -30,5 +33,33 @@ public class PostController {
         PostService postService = postServiceFactory.getService(type);
         ResponseRegistPostDTO response = postService.registPost(newPost);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{postType}/{postNum}")
+    public ResponseEntity<ModifyDTO> modifyPost
+            (@PathVariable String postType, @PathVariable int postNum,
+             @RequestBody ModifyDTO modifyDTO) {
+        PostType type = PostType.valueOf(postType.toUpperCase());
+        PostService postService = postServiceFactory.getService(type);
+
+        ModifyDTO response = postService.modifyPost(postNum, modifyDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping("/{postType}/{postNum}")
+    public String deletePost
+            (@PathVariable String postType, @PathVariable int postNum) {
+        PostType type = PostType.valueOf(postType.toUpperCase());
+        PostService postService = postServiceFactory.getService(type);
+
+        String message = postService.deletePost(postNum);
+        return message;
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage());
     }
 }
