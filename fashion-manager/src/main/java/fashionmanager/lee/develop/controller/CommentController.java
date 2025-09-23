@@ -1,72 +1,68 @@
 package fashionmanager.lee.develop.controller;
 
-import fashionmanager.lee.develop.dto.CommentCreateDTO;
-import fashionmanager.lee.develop.dto.CommentResponseDTO;
-import fashionmanager.lee.develop.dto.CommentUpdateDTO;
+import fashionmanager.lee.develop.dto.CommentDTO;
+import fashionmanager.lee.develop.dto.CommentPostDTO;
 import fashionmanager.lee.develop.service.CommentService;
-import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/comments")
+@RequiredArgsConstructor
 public class CommentController {
-    private final CommentService service;
-    public CommentController(CommentService service) {
-        this.service = service;
+
+    private final CommentService commentService;
+
+    /**
+     * 특정 게시물의 댓글 목록을 조회하는 API
+     * 예) GET /api/comments/fashion/10
+     */
+    @GetMapping("/{postType}/{postNum}")
+    public ResponseEntity<List<CommentDTO>> getCommentsByPost(
+            @PathVariable String postType,
+            @PathVariable Integer postNum) {
+        List<CommentDTO> comments = commentService.findComments(postType, postNum);
+        return ResponseEntity.ok(comments);
     }
-    // 1. 회원이 패션 게시판 게시물에 댓글 작성
-    @PostMapping("/fashion-posts/{postId}/comments")
-    public ResponseEntity<CommentResponseDTO> createOnFashion(@PathVariable Integer postId,
-                                                              @RequestBody @Valid CommentCreateDTO req) {
-        CommentResponseDTO res = service.createOnFashion(postId, req.getMemberId(), req.getContent());
-        return ResponseEntity.created(URI.create("/api/fashion-posts/" + postId + "/comments/" +
-                        res.getId()))
-                .body(res);
+
+    /**
+     * 새로운 댓글을 생성하는 API
+     * POST /api/comments
+     */
+    @PostMapping
+    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentPostDTO commentPostDTO) {
+        CommentDTO createdComment = commentService.createComment(commentPostDTO);
+        return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
     }
-    // 2. 회원이 패션 게시물의 댓글 수정
-    @PatchMapping("/fashion-posts/{postId}/comments/{commentId}")
-    public ResponseEntity<CommentResponseDTO> updateOnFashion(@PathVariable Integer postId,
-                                                           @PathVariable Integer commentId,
-                                                           @RequestBody @Valid CommentUpdateDTO req) {
-        CommentResponseDTO res = service.updateOnFashion(commentId, req.getMemberId(),
-                req.getContent());
-        return ResponseEntity.ok(res);
+
+    /**
+     * 댓글을 수정하는 API
+     * PUT /api/comments/5
+     */
+    @PutMapping("/{commentNum}")
+    public ResponseEntity<CommentDTO> updateComment(
+            @PathVariable Integer commentNum,
+            @RequestBody Map<String, String> requestBody) {
+        String content = requestBody.get("content");
+        if (content == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        CommentDTO updatedComment = commentService.updateComment(commentNum, content);
+        return ResponseEntity.ok(updatedComment);
     }
-    // 3. 패션 게시물의 댓글 삭제
-    @DeleteMapping("/fashion-posts/{postId}/comments/{commentId}")
-    public ResponseEntity<?> deleteOnFashion(@PathVariable Integer postId,
-                                             @PathVariable Integer commentId,
-                                             @RequestParam("memberId") Integer memberId) {
-        service.deleteOnFashion(commentId, memberId);
-        return ResponseEntity.noContent().build();
-    }
-    // 4. 회원이 후기 게시판 게시물에 댓글 작성
-    @PostMapping("/review-posts/{postId}/comments")
-    public ResponseEntity<CommentResponseDTO> createOnReview(@PathVariable Integer postId,
-                                                          @RequestBody @Valid CommentCreateDTO req) {
-        CommentResponseDTO res = service.createOnReview(postId, req.getMemberId(), req.getContent());
-        return ResponseEntity.created(URI.create("/api/review-posts/" + postId + "/comments/" +
-                        res.getId()))
-                .body(res);
-    }
-    // 5. 회원이 후기 게시물의 댓글 수정
-    @PatchMapping("/review-posts/{postId}/comments/{commentId}")
-    public ResponseEntity<CommentResponseDTO> updateOnReview(@PathVariable Integer postId,
-                                                          @PathVariable Integer commentId,
-                                                          @RequestBody @Valid CommentUpdateDTO req) {
-        CommentResponseDTO res = service.updateOnReview(commentId, req.getMemberId(),
-                req.getContent());
-        return ResponseEntity.ok(res);
-    }
-    // 6. 후기 게시물의 댓글 삭제
-    @DeleteMapping("/review-posts/{postId}/comments/{commentId}")
-    public ResponseEntity<?> deleteOnReview(@PathVariable Integer postId,
-                                            @PathVariable Integer commentId,
-                                            @RequestParam("memberId") Integer memberId) {
-        service.deleteOnReview(commentId, memberId);
+
+    /**
+     * 댓글을 삭제하는 API
+     * DELETE /api/comments/5
+     */
+    @DeleteMapping("/{commentNum}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Integer commentNum) {
+        commentService.deleteComment(commentNum);
         return ResponseEntity.noContent().build();
     }
 }
