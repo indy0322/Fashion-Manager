@@ -1,36 +1,36 @@
-package fashionmanager.kim.develop.entity;
+package fashionmanager.baek.develop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "fashion_post")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class FashionPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num")
-    private int fashionPostNum;
+    private int num;
 
     @Column(name = "title")
-    private String fashionPostTitle;
+    private String title;
 
     @Column(name = "content")
-    private String fashionPostContent;
+    private String content;
 
     @Column(name = "good")
-    private int fashionPostGood;
+    private int good;
 
     @Column(name = "cheer")
-    private int fashionPostCheer;
+    private int cheer;
 
     @Column(name = "temp")
-    private int fashionPostTemp;
+    private double temp;
 
     @Column(name = "member_num")
-    private int fashionPostMemberNum;
+    private int member_num;
 }
