@@ -7,18 +7,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommentServiceTest {
 
     @Test
-    void findComments() {
+    void createOnFashion() {
     }
 
     @Test
-    void createComment() {
+    void updateOnFashion() {
     }
 
     @Test
-    void updateComment() {
+    void deleteOnFashion() {
     }
 
     @Test
-    void deleteComment() {
+    void createOnReview() {
+    }
+
+    @Test
+    void updateOnReview() {
+    }
+
+    @Test
+    void deleteOnReview() {
     }
 }

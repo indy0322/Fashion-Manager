@@ -1,7 +1,8 @@
 package fashionmanager.lee.develop.repository;
 
 
-import com.example.community.domain.Member;
+
+import fashionmanager.lee.develop.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

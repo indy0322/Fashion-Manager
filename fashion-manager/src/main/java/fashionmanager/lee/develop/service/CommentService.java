@@ -2,7 +2,7 @@ package fashionmanager.lee.develop.service;
 
 
 
-import fashionmanager.lee.develop.dto.CommentResponse;
+import fashionmanager.lee.develop.dto.CommentResponseDTO;
 import fashionmanager.lee.develop.entity.Comment;
 import fashionmanager.lee.develop.entity.FashionPost;
 import fashionmanager.lee.develop.entity.Member;
@@ -39,7 +39,7 @@ public class CommentService {
 
 
     // 1) 회원이 패션 게시판 게시물에 댓글 작성
-    public CommentResponse createOnFashion(Integer fashionPostId, Integer memberId, String content) {
+    public CommentResponseDTO createOnFashion(Integer fashionPostId, Integer memberId, String content) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));
 
@@ -55,12 +55,12 @@ public class CommentService {
 
 
         Comment saved = commentRepository.save(c);
-        return new CommentResponse(saved.getId(), saved.getMember().getId(), saved.getContent());
+        return new CommentResponseDTO(saved.getId(), saved.getMember().getId(), saved.getContent());
     }
 
 
     // 2) 회원이 패션 게시물의 댓글 수정(소유자만)
-    public CommentResponse updateOnFashion(Integer commentId, Integer memberId, String content) {
+    public CommentResponseDTO updateOnFashion(Integer commentId, Integer memberId, String content) {
         Comment c = commentRepository.findByIdAndMember_Id(commentId, memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Comment not found or not owned by member"));
 
@@ -70,7 +70,7 @@ public class CommentService {
             throw new IllegalStateException("Not a fashion-post comment");
         }
         c.updateContent(content);
-        return new CommentResponse(c.getId(), c.getMember().getId(), c.getContent());
+        return new CommentResponseDTO(c.getId(), c.getMember().getId(), c.getContent());
     }
 
 
@@ -84,7 +84,7 @@ public class CommentService {
         commentRepository.delete(c);
     }
     // 4) 회원이 후기 게시판 게시물에 댓글 작성
-    public CommentResponse createOnReview(Integer reviewPostId, Integer memberId, String
+    public CommentResponseDTO createOnReview(Integer reviewPostId, Integer memberId, String
             content) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));
@@ -95,10 +95,10 @@ public class CommentService {
         c.setReviewPost(post); // 후기 글에만 연결
         c.setContent(content);
         Comment saved = commentRepository.save(c);
-        return new CommentResponse(saved.getId(), saved.getMember().getId(), saved.getContent());
+        return new CommentResponseDTO(saved.getId(), saved.getMember().getId(), saved.getContent());
     }
     // 5) 회원이 후기 게시물의 댓글 수정(소유자만)
-    public CommentResponse updateOnReview(Integer commentId, Integer memberId, String
+    public CommentResponseDTO updateOnReview(Integer commentId, Integer memberId, String
             content) {
         Comment c = commentRepository.findByIdAndMember_Id(commentId, memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Comment not found or not owned by member"));
@@ -106,7 +106,7 @@ public class CommentService {
             throw new IllegalStateException("Not a review-post comment");
         }
         c.updateContent(content);
-        return new CommentResponse(c.getId(), c.getMember().getId(), c.getContent());
+        return new CommentResponseDTO(c.getId(), c.getMember().getId(), c.getContent());
     }
     // 6) 후기 게시물의 댓글 삭제(소유자만)
     public void deleteOnReview(Integer commentId, Integer memberId) {

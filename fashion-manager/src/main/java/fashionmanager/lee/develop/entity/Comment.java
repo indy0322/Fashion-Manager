@@ -31,12 +31,6 @@ public class Comment {
     @JoinColumn(name = "member_num", nullable = false)
     private Member member; // 작성자 FK
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mentoring_post_num")
-    private MentoringPost mentoringPost; // NULL 허용
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_post_num")
     private ReviewPost reviewPost; // NULL 허용
@@ -92,14 +86,6 @@ public class Comment {
         this.member = member;
     }
 
-    public MentoringPost getMentoringPost() {
-        return mentoringPost;
-    }
-
-    public void setMentoringPost(MentoringPost mentoringPost) {
-        this.mentoringPost = mentoringPost;
-    }
-
     public ReviewPost getReviewPost() {
         return reviewPost;
     }
@@ -124,7 +110,6 @@ public class Comment {
                 ", good=" + good +
                 ", cheer=" + cheer +
                 ", member=" + member +
-                ", mentoringPost=" + mentoringPost +
                 ", reviewPost=" + reviewPost +
                 ", fashionPost=" + fashionPost +
                 '}';
