@@ -26,12 +26,14 @@ public class PostController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/{postType}")
-    public ResponseEntity<ResponseRegistPostDTO> registPostByPath
+    @PostMapping("/{postType}")   // Path로 값을 받아 알맞은 service로 연결돼 글 작성
+    public ResponseEntity<ResponseRegistPostDTO> registPost
             (@PathVariable String postType, @RequestBody RequestRegistPostDTO newPost) {
         PostType type = PostType.valueOf(postType.toUpperCase());
-        PostService postService = postServiceFactory.getService(type);
-        ResponseRegistPostDTO response = postService.registPost(newPost);
+        PostService postService = postServiceFactory.getService(type);  // postService 결정
+
+        ResponseRegistPostDTO response = postService.registPost(newPost); // method 작동
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -57,7 +59,7 @@ public class PostController {
         return message;
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(IllegalArgumentException.class)  // Factory 생성, 게시글 수정/삭제 과정에서 Exception 설정
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());
