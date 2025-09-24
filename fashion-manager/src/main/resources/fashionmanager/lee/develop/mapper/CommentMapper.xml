@@ -2,80 +2,46 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="fashionmanager.lee.develop.mapper.CommentMapper">
 
-    <!-- 특정 게시물의 댓글 목록 조회 -->
-    <select id="findCommentsByPost" resultType="fashionmanager.lee.develop.dto.CommentDTO">
+    <select id="findCommentsByPost" parameterType="map" resultType="fashionmanager.lee.develop.dto.CommentDTO">
         SELECT
-        A.num,
-        A.content,
-        A.good,
-        A.cheer,
-        A.member_num,
-        B.name as memberName,
-        A.mentoring_post_num,
-        A.review_post_num,
-        A.fashion_post_num
-        FROM
-        COMMENT A
-        JOIN
-        MEMBER B ON A.member_num = B.num
+        A.NUM AS num
+        , A.CONTENT AS content
+        , A.GOOD AS good
+        , A.CHEER AS cheer
+        , A.MEMBER_NUM AS memberNum
+        , B.NAME AS memberName
+        FROM COMMENT A
+        JOIN MEMBER B ON A.MEMBER_NUM = B.NUM
         WHERE
         <choose>
             <when test="postType == 'fashion'">
-                A.fashion_post_num = #{postNum}
+                A.FASHION_POST_NUM = #{postNum}
             </when>
             <when test="postType == 'review'">
-                A.review_post_num = #{postNum}
+                A.REVIEW_POST_NUM = #{postNum}
             </when>
             <when test="postType == 'mentoring'">
-                A.mentoring_post_num = #{postNum}
+                A.MENTORING_POST_NUM = #{postNum}
             </when>
         </choose>
-        ORDER BY A.num ASC
+        ORDER BY
+        A.NUM ASC
     </select>
 
-    <!-- 댓글 번호로 단일 댓글 조회 -->
-    <select id="findCommentByNum" resultType="fashionmanager.lee.develop.dto.CommentDTO">
+    <select id="findCommentByNum" parameterType="_int" resultType="fashionmanager.lee.develop.dto.CommentDTO">
         SELECT
-            A.num,
-            A.content,
-            A.good,
-            A.cheer,
-            A.member_num,
-            B.name as memberName,
-            A.fashion_post_num,
-            A.review_post_num,
-            A.mentoring_post_num
-        FROM
-            COMMENT A
-                JOIN
-            MEMBER B ON A.member_num = B.num
-        WHERE
-            A.num = #{num}
+            A.NUM AS num
+             , A.CONTENT AS content
+             , A.GOOD AS good
+             , A.CHEER AS cheer
+             , A.MEMBER_NUM AS memberNum
+             , B.NAME AS memberName
+        FROM COMMENT A
+                 JOIN MEMBER B ON A.MEMBER_NUM = B.NUM
+        WHERE A.NUM = #{commentNum}
     </select>
-
-    <!-- 새 댓글 등록 -->
-    <insert id="insertComment" parameterType="fashionmanager.lee.develop.dto.CommentPostDTO" useGeneratedKeys="true" keyProperty="num">
-        INSERT INTO COMMENT (content, member_num,
-        <if test="postType == 'fashion'">fashion_post_num</if>
-        <if test="postType == 'review'">review_post_num</if>
-        <if test="postType == 'mentoring'">mentoring_post_num</if>
-        ) VALUES (#{content}, #{memberNum}, #{postNum})
-    </insert>
-
-
-    <!-- 댓글 내용 수정 -->
-    <update id="updateComment">
-        UPDATE COMMENT
-        SET content = #{content}
-        WHERE num = #{num}
-    </update>
-
-    <!-- 댓글 삭제 -->
-    <delete id="deleteComment">
-        DELETE FROM COMMENT
-        WHERE num = #{num}
-    </delete>
 
 </mapper>

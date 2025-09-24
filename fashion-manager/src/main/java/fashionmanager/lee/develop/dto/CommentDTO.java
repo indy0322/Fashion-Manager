@@ -6,13 +6,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDTO {
-    private Integer num;
+    private int num;
     private String content;
-    private Integer good;
-    private Integer cheer;
-    private Integer memberNum;
-    private String memberName; // Member 테이블과 조인하여 가져올 사용자 이름
-    private Integer mentoringPostNum;
-    private Integer reviewPostNum;
-    private Integer fashionPostNum;
+    private int good;
+    private int cheer;
+    private int memberNum;
+    private String memberName; // MEMBER 테이블과 JOIN하여 가져올 사용자 이름
 }
