@@ -1,6 +1,7 @@
 package fashionmanager.kim.develop.controller;
 
 import fashionmanager.kim.develop.dto.MessageCategoryDTO;
+import fashionmanager.kim.develop.dto.PhotoCategoryDTO;
 import fashionmanager.kim.develop.dto.ReportCategoryDTO;
 import fashionmanager.kim.develop.dto.ReviewCategoryDTO;
 import fashionmanager.kim.develop.service.CategoryService;
@@ -54,7 +55,7 @@ public class CategoryController {
     }
 
     @PostMapping("updatereviewcategory")
-    public ResponseEntity<String> updateReviewCategory(@RequestBody ReviewCategoryDTO reviewCategoryDTO) {
+    public ResponseEntity<String> updateReviewCategory(ReviewCategoryDTO reviewCategoryDTO) {
         List<ReviewCategoryDTO> list = cs.selectAllReviewCategories();
         for (ReviewCategoryDTO reviewCategory : list) {
             if(reviewCategory.getReviewCategoryName().equals(reviewCategoryDTO.getReviewCategoryName())){
@@ -115,7 +116,7 @@ public class CategoryController {
     }
 
     @PostMapping("/updatereportcategory")
-    public ResponseEntity<String> updateReportCategory(@RequestBody ReportCategoryDTO reportCategoryDTO) {
+    public ResponseEntity<String> updateReportCategory(ReportCategoryDTO reportCategoryDTO) {
         List<ReportCategoryDTO> list = cs.selectAllReportCategories();
         for (ReportCategoryDTO reportCategory : list) {
             if(reportCategory.getReportCategoryName().equals(reportCategoryDTO.getReportCategoryName())){
@@ -176,7 +177,7 @@ public class CategoryController {
     }
 
     @PostMapping("/updatemessagecategory")
-    public ResponseEntity<String> updateMessageCategory(@RequestBody MessageCategoryDTO messageCategoryDTO) {
+    public ResponseEntity<String> updateMessageCategory(MessageCategoryDTO messageCategoryDTO) {
         List<MessageCategoryDTO> list = cs.selectAllMessageCategories();
         for(MessageCategoryDTO messageCategory : list){
             if(messageCategory.getMessageCategoryName().equals(messageCategoryDTO.getMessageCategoryName())){
@@ -204,6 +205,67 @@ public class CategoryController {
         }else{
             log.info("쪽지 카테고리 " + deleteMessageCategoryNum + "번이 삭제에 실패했습니다.");
             return ResponseEntity.ok("쪽지 카테고리 " + deleteMessageCategoryNum + "번이 삭제에 실패했습니다.");
+        }
+    }
+
+    @GetMapping("/selectphotocategory")
+    public ResponseEntity<List<PhotoCategoryDTO>> selectAllPhotoCategories() {
+        List<PhotoCategoryDTO> list = cs.selectAllPhotoCategories();
+        for (PhotoCategoryDTO photoCategoryDTO : list) {
+            log.info("photoCategoryDTO: {}", photoCategoryDTO);
+        }
+        return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/insertphotocategory")
+    public ResponseEntity<String> insertPhotoCategory(String insertPhotoCategoryName) {
+        List<PhotoCategoryDTO> list = cs.selectAllPhotoCategories();
+        for(PhotoCategoryDTO photoCategoryDTO : list){
+            if(photoCategoryDTO.getPhotoCategoryName().equals(insertPhotoCategoryName)){
+                log.info("새로운 사진 카테고리 요소 등록에 실패했습니다.");
+                return ResponseEntity.ok("새로운 사진 카테고리 요소 등록에 실패했습니다.");
+            }
+        }
+
+        int result = cs.insertPhotoCategory(insertPhotoCategoryName);
+        if(result == 1){
+            log.info("새로운 사진 카테고리 요소가 등록되었습니다.");
+            return ResponseEntity.ok("새로운 사진 카테고리 요소가 등록되었습니다.");
+        }else{
+            log.info("새로운 사진 카테고리 요소 등록에 실패했습니다.");
+            return ResponseEntity.ok("새로운 사진 카테고리 요소 등록에 실패했습니다.");
+        }
+    }
+
+    @PostMapping("/updatephotocategory")
+    public ResponseEntity<String> updatePhotoCategory(PhotoCategoryDTO photoCategoryDTO) {
+        List<PhotoCategoryDTO> list = cs.selectAllPhotoCategories();
+        for(PhotoCategoryDTO photoCategoryDTO1 : list){
+            if(photoCategoryDTO1.getPhotoCategoryName().equals(photoCategoryDTO.getPhotoCategoryName())){
+                log.info("사진 카테고리 요소 수정에 실패했습니다.");
+                return ResponseEntity.ok("사진 카테고리 요소 수정에 실패했습니다.");
+            }
+        }
+
+        int result = cs.updatePhotoCategory(photoCategoryDTO);
+        if(result == 1){
+            log.info("사진 카테고리 요소를 수정했습니다.");
+            return ResponseEntity.ok("사진 카테고리 요소를 수정했습니다.");
+        }else{
+            log.info("사진 카테고리 요소 수정에 실패했습니다.");
+            return ResponseEntity.ok("사진 카테고리 요소 수정에 실패했습니다.");
+        }
+    }
+
+    @PostMapping("/deletephotocategory")
+    public ResponseEntity<String> deletePhotoCategory(int deletePhotoCategoryNum) {
+        int result = cs.deletePhotoCategory(deletePhotoCategoryNum);
+        if(result == 1){
+            log.info("사진 카테고리 요소가 삭제 되었습니다.");
+            return ResponseEntity.ok("사진 카테고리 요소가 삭제 되었습니다.");
+        }else{
+            log.info("사진 카테고리 요소 삭제에 실패했습니다.");
+            return ResponseEntity.ok("사진 카테고리 요소 삭제에 실패했습니다.");
         }
     }
 
