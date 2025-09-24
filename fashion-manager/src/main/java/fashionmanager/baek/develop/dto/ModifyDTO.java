@@ -2,6 +2,8 @@ package fashionmanager.baek.develop.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -12,6 +14,6 @@ public class ModifyDTO {
     private String title;
     private String content;
     private int member_num;
-//    private List<String> items;
-//    private String photo_name;
+    private List<String> item_names;
+    private String photo_name;
 }

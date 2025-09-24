@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class FashionPost {
+public class FashionPostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num")

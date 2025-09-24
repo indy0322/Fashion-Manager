@@ -7,6 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class ResponseRegistPostDTO {
+public class RegistResponseDTO {
     private int num;
+    private String title;
+    private String content;
+    private int member_num;
 }

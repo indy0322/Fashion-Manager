@@ -3,16 +3,17 @@ package fashionmanager.baek.develop.dto;
 import lombok.*;
 
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class RequestRegistPostDTO {
+public class RegistRequestDTO {
     private String title;
     private String content;
     private int member_num;
-//    private List<String> items;
-//    private String photo_name;
+    private List<Integer> hashtag;
+    private List<Integer> items;
 }
