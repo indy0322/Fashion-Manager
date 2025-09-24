@@ -21,7 +21,7 @@ public class CommentService {
     @Transactional(readOnly = true)
     public List<CommentDTO> findComments(String postType, Integer postNum) {
         if (!List.of("fashion", "review", "mentoring").contains(postType)) {
-            throw new IllegalArgumentException("Invalid post type: " + postType);
+            throw new IllegalArgumentException("게시판 타입이 틀립니다: " + postType);
         }
         return commentMapper.findCommentsByPost(postType, postNum);
     }
@@ -41,7 +41,7 @@ public class CommentService {
     @Transactional
     public CommentDTO updateComment(Integer commentNum, String content) {
         commentMapper.findCommentByNum(commentNum)
-                .orElseThrow(() -> new IllegalArgumentException("Comment not found: " + commentNum));
+                .orElseThrow(() -> new IllegalArgumentException("댓글이 존재하지 않습니다: " + commentNum));
 
         // TODO: 댓글 수정 권한 확인 로직
 
@@ -55,7 +55,7 @@ public class CommentService {
     @Transactional
     public void deleteComment(Integer commentNum) {
         commentMapper.findCommentByNum(commentNum)
-                .orElseThrow(() -> new IllegalArgumentException("Comment not found: " + commentNum));
+                .orElseThrow(() -> new IllegalArgumentException("댓글이 존재하지 않습니다: " + commentNum));
 
         // TODO: 댓글 삭제 권한 확인 로직
 
