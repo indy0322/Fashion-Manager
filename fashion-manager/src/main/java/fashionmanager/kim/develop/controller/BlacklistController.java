@@ -30,7 +30,7 @@ public class BlacklistController {
     }
 
     @PostMapping("/insertblacklist")
-    public ResponseEntity<String> insertBlacklist(BlacklistDTO blacklistDTO){
+    public ResponseEntity<String> insertBlacklist(@RequestBody BlacklistDTO blacklistDTO){
         int result = bs.insertBlacklist(blacklistDTO);
         if(result == 1){
             log.info("블랙리스트 등록을 완료했습니다.");
