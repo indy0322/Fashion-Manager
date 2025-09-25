@@ -2,7 +2,8 @@ package fashionmanager.baek.develop.controller;
 
 
 import fashionmanager.baek.develop.aggregate.PostType;
-import fashionmanager.baek.develop.dto.ModifyDTO;
+import fashionmanager.baek.develop.dto.ModifyRequestDTO;
+import fashionmanager.baek.develop.dto.ModifyResponseDTO;
 import fashionmanager.baek.develop.dto.RegistResponseDTO;
 import fashionmanager.baek.develop.dto.RegistRequestDTO;
 import fashionmanager.baek.develop.service.PostService;
@@ -19,12 +20,10 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
     private final PostServiceFactory postServiceFactory;
-    private final ModelMapper modelMapper;
 
     @Autowired
     public PostController(PostServiceFactory postServiceFactory, ModelMapper modelMapper) {
         this.postServiceFactory = postServiceFactory;
-        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/{postType}")   // Path로 값을 받아 알맞은 service로 연결돼 글 작성
@@ -41,14 +40,14 @@ public class PostController {
     }
 
     @PutMapping("/{postType}/{postNum}")
-    public ResponseEntity<ModifyDTO> modifyPost
+    public ResponseEntity<ModifyResponseDTO> modifyPost
             (@PathVariable String postType, @PathVariable int postNum,
-             @RequestPart("newPost") ModifyDTO modifyDTO,
+             @RequestPart("modifyPost") ModifyRequestDTO modifyRequestDTO,
              @RequestPart(value = "images", required = false) List<MultipartFile> imageFiles) {
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);
 
-        ModifyDTO response = postService.modifyPost(postNum, modifyDTO, imageFiles);
+        ModifyResponseDTO response = postService.modifyPost(postNum, modifyRequestDTO, imageFiles);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
