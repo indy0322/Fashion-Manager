@@ -6,5 +6,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan(basePackages = "fashionmanager.lee.develop", annotationClass = Mapper.class)
-public class AppConfiguration {
+public class AppConfiguration1 {
 }

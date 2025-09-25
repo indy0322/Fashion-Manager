@@ -3,7 +3,7 @@ package fashionmanager.kim.develop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "fashionPost")
 @Table(name = "fashion_post")
 @Getter
 @Setter
