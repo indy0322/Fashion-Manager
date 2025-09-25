@@ -1,4 +1,4 @@
-package fashionmanager.kim.develop;
+package fashionmanager.kim.develop.dto;
 
 import lombok.*;
 
