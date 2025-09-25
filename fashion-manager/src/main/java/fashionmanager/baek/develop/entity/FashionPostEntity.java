@@ -3,6 +3,7 @@ package fashionmanager.baek.develop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +44,15 @@ public class FashionPostEntity {
     public void addPhoto(PhotoEntity photo) {
         this.photos.add(photo);
         photo.setFashionPost(this);
+    }
+
+    @PreRemove
+    public void deletePhotos() {
+        for (PhotoEntity photo : photos) {
+            File file = new File(photo.getPath() + File.separator + photo.getName());
+            if (file.exists()) {
+                file.delete();
+            }
+        }
     }
 }

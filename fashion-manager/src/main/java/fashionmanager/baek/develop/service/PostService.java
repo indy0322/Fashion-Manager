@@ -15,5 +15,5 @@ public interface PostService {
 
     ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost, List<MultipartFile> imageFiles);
 
-    String deletePost(int postNum);
+    void deletePost(int postNum);
 }

@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,7 @@ public class PostController {
     }
 
     @PostMapping("/{postType}")   // Path로 값을 받아 알맞은 service로 연결돼 글 작성
+    @Transactional
     public ResponseEntity<RegistResponseDTO> registPost
             (@PathVariable String postType, @RequestPart("newPost") RegistRequestDTO newPost,
              @RequestPart(value = "images", required = false) List<MultipartFile> imageFiles) {
@@ -40,6 +42,7 @@ public class PostController {
     }
 
     @PutMapping("/{postType}/{postNum}")
+    @Transactional
     public ResponseEntity<ModifyResponseDTO> modifyPost
             (@PathVariable String postType, @PathVariable int postNum,
              @RequestPart("modifyPost") ModifyRequestDTO modifyRequestDTO,
@@ -53,13 +56,15 @@ public class PostController {
     }
 
     @DeleteMapping("/{postType}/{postNum}")
-    public String deletePost
+    @Transactional
+    public ResponseEntity deletePost
             (@PathVariable String postType, @PathVariable int postNum) {
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);
 
-        String message = postService.deletePost(postNum);
-        return message;
+        postService.deletePost(postNum);
+
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(IllegalArgumentException.class)  // Factory 생성, 게시글 수정/삭제 과정에서 Exception 설정

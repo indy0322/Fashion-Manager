@@ -11,4 +11,6 @@ public interface FashionItemRepository extends JpaRepository<FashionPostItemEnti
     List<FashionPostItemEntity> findAllByFashionPostItemPK_PostNum(int postNum);
 
     void deleteAllByFashionPostItemPK_PostNumAndFashionPostItemPK_ItemNumIn(int postNum, List<Integer> itemNum);
+
+    void deleteAllByFashionPostItemPK_PostNum(int postNum);
 }

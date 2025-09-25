@@ -10,4 +10,6 @@ public interface FashionHashRepository extends JpaRepository<FashionHashTagEntit
     List<FashionHashTagEntity> findAllByFashionHashTagPK_PostNum(int postNum);
 
     void deleteAllByFashionHashTagPK_PostNumAndFashionHashTagPK_TagNumIn(int postNum, List<Integer> tagNums);
+
+    void deleteAllByFashionHashTagPK_PostNum(int postNum);
 }

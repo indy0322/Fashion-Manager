@@ -212,7 +212,6 @@ public class FashionPostServiceImpl implements PostService {
 
         /* 설명. 2. 새로운 사진 파일 추가 */
         if (newImageFiles != null && !newImageFiles.isEmpty()) {
-            // 파일을 저장하고 새로운 PhotoEntity를 생성하여 post.getPhotos().add()로 추가해줍니다.
             saveNewPhotos(post, newImageFiles);
         }
 
@@ -239,7 +238,7 @@ public class FashionPostServiceImpl implements PostService {
             PhotoEntity newPhoto = new PhotoEntity();
             newPhoto.setName(savedFileName);
             newPhoto.setPath(uploadPath);
-            newPhoto.setPhotoCategoryNum(1); // 예: 1 = 패션 게시물 사진
+            newPhoto.setPhotoCategoryNum(1); // 1 = 패션 게시물 사진
 
             post.addPhoto(newPhoto);
         }
@@ -247,10 +246,28 @@ public class FashionPostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public String deletePost(int postNum) {
+    public void deletePost(int postNum) {
+        /* 설명. 1. 게시글 존재 여부 검사 */
         FashionPostEntity postToDelete = fashionPostRepository.findById(postNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
+
+        /* 설명. 2. 해시태그 삭제 */
+        deleteHashtags(postNum);
+
+        /* 설명. 3. 아이템 삭제 */
+        deleteItems(postNum);
+
+        /* 설명. 4. 사진과 게시물 삭제 */
         fashionPostRepository.delete(postToDelete);
-        return "게시글이 성공적으로 삭제됐습니다.";
+
+    }
+
+    private void deleteHashtags(int postNum) {
+        fashionHashRepository.deleteAllByFashionHashTagPK_PostNum(postNum);
+    }
+
+    private void deleteItems(int postNum) {
+        fashionItemRepository.deleteAllByFashionPostItemPK_PostNum(postNum);
+
     }
 }
