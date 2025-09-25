@@ -80,4 +80,12 @@ public class MessageServiceTest {
 
         Assertions.assertEquals(1, result, "상대방이 메세지 수신을 거부했습니다.");
     }
+
+    @DisplayName("메시지 삭제 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {6,7})
+    void testDeleteMessage(int num){
+        int result = messageService.deleteMessage(num);
+        Assertions.assertTrue(1 == result);
+    }
 }

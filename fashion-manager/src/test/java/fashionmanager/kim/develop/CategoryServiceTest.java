@@ -1,6 +1,7 @@
 package fashionmanager.kim.develop;
 
 import fashionmanager.kim.develop.dto.MessageCategoryDTO;
+import fashionmanager.kim.develop.dto.PhotoCategoryDTO;
 import fashionmanager.kim.develop.dto.ReportCategoryDTO;
 import fashionmanager.kim.develop.dto.ReviewCategoryDTO;
 import fashionmanager.kim.develop.service.CategoryService;
@@ -53,6 +54,17 @@ public class CategoryServiceTest {
         );
     }
 
+    @DisplayName("사진 카테고리 목록 조회 테스트 ")
+    @Test
+    void testSelectAllPhotoCategories() {
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    List<PhotoCategoryDTO> category = categoryService.selectAllPhotoCategories();
+                    category.forEach(System.out::println);
+                }
+        );
+    }
+
     @DisplayName("후기 카테고리 요소 추가 테스트")
     @Test
     void testInsertReviewCategory() {
@@ -77,6 +89,14 @@ public class CategoryServiceTest {
         String name = "조언";
 
         int result = categoryService.insertMessageCategory(name);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("사진 카테고리 요소 추가 테스트")
+    @Test
+    void testInsertPhotoCategory() {
+        String name = "테스트 요소";
+        int result = categoryService.insertPhotoCategory(name);
         Assertions.assertTrue(1 == result);
     }
 
@@ -116,6 +136,18 @@ public class CategoryServiceTest {
         Assertions.assertTrue(1 == result);
     }
 
+    @DisplayName("사진 카테고리 요소 수정 테스트")
+    @ParameterizedTest
+    @CsvSource({"1,카테고리요소1", "2,카테고리요소2"})
+    void testUpdatePhotoCategory(int num, String name) {
+        PhotoCategoryDTO testPhotoCategoryDTO = new PhotoCategoryDTO();
+        testPhotoCategoryDTO.setPhotoCategoryNum(num);
+        testPhotoCategoryDTO.setPhotoCategoryName(name);
+
+        int result = categoryService.updatePhotoCategory(testPhotoCategoryDTO);
+        Assertions.assertTrue(1 == result);
+    }
+
     @DisplayName("후기 카테고리 요소 삭제 테스트")
     @Test
     void testDeleteReviewCategory() {
@@ -137,6 +169,14 @@ public class CategoryServiceTest {
     void testDeleteMessageCategory() {
         int num = 2;
         int result = categoryService.deleteMessageCategory(num);
+        Assertions.assertTrue(1 == result);
+    }
+
+    @DisplayName("사진 카테고리 요소 삭제 테스트")
+    @Test
+    void testDeletePhotoCategory() {
+        int num = 9;
+        int result = categoryService.deletePhotoCategory(num);
         Assertions.assertTrue(1 == result);
     }
 }
