@@ -32,7 +32,7 @@ public class FashionPostServiceImpl implements PostService {
     private final FashionHashRepository fashionHashRepository;
     private final FashionItemRepository fashionItemRepository;
     private final PhotoRepository photoRepository;
-    private String uploadPath = "C:\\uploadFiles";
+    private String uploadPath = "C:\\uploadFiles\\fashion";
 
 
     @Autowired
