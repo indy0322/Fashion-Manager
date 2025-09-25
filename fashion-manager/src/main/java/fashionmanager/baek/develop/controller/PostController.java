@@ -23,7 +23,7 @@ public class PostController {
     private final PostServiceFactory postServiceFactory;
 
     @Autowired
-    public PostController(PostServiceFactory postServiceFactory, ModelMapper modelMapper) {
+    public PostController(PostServiceFactory postServiceFactory) {
         this.postServiceFactory = postServiceFactory;
     }
 

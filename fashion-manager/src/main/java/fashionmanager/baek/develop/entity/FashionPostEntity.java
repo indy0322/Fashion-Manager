@@ -37,22 +37,4 @@ public class FashionPostEntity {
 
     @Column(name = "member_num")
     private int member_num;
-
-    @OneToMany(mappedBy = "fashionPost", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PhotoEntity> photos = new ArrayList<>();
-
-    public void addPhoto(PhotoEntity photo) {
-        this.photos.add(photo);
-        photo.setFashionPost(this);
-    }
-
-    @PreRemove
-    public void deletePhotos() {
-        for (PhotoEntity photo : photos) {
-            File file = new File(photo.getPath() + File.separator + photo.getName());
-            if (file.exists()) {
-                file.delete();
-            }
-        }
-    }
 }

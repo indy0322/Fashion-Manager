@@ -16,4 +16,5 @@ public class ModifyResponseDTO {
     private int member_num;
     private List<Integer> hashtag;
     private List<Integer> items;
+    private int review_category_num;
 }

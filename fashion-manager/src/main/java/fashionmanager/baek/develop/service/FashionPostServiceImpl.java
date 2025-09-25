@@ -79,6 +79,8 @@ public class FashionPostServiceImpl implements PostService {
                 PhotoEntity photoEntity = new PhotoEntity();
                 photoEntity.setName(savedFileName); // 고유한 이름으로 저장
                 photoEntity.setPath(uploadPath);
+
+                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 저장
                 photoEntity.setPhotoCategoryNum(1);
 
                 photoRepository.save(photoEntity);
@@ -138,14 +140,14 @@ public class FashionPostServiceImpl implements PostService {
         updatePhotos(fashionPostEntity, imageFiles);
 
         /* 6. 최종 응답 DTO 생성 */
-        ModifyResponseDTO modifyResponseDTO = new ModifyResponseDTO();
-        modifyResponseDTO.setNum(postNum);
-        modifyResponseDTO.setTitle(fashionPostEntity.getTitle());
-        modifyResponseDTO.setContent(fashionPostEntity.getContent());
-        modifyResponseDTO.setMember_num(fashionPostEntity.getMember_num());
-        modifyResponseDTO.setHashtag(updateTags);
-        modifyResponseDTO.setItems(updateItems);
-        return modifyResponseDTO;
+        ModifyResponseDTO response = new ModifyResponseDTO();
+        response.setNum(postNum);
+        response.setTitle(fashionPostEntity.getTitle());
+        response.setContent(fashionPostEntity.getContent());
+        response.setMember_num(fashionPostEntity.getMember_num());
+        response.setHashtag(updateTags);
+        response.setItems(updateItems);
+        return response;
     }
 
     private List<Integer> updateHashtags(int postNum, List<Integer> newHashTagsId) {
@@ -202,13 +204,15 @@ public class FashionPostServiceImpl implements PostService {
 
     private void updatePhotos(FashionPostEntity post, List<MultipartFile> newImageFiles) {
         /* 설명. 1. 기존 사진 파일 및 DB 정보 삭제 */
-        for (PhotoEntity photo : post.getPhotos()) {
+        int postNum = post.getNum();
+        List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 1);
+        for (PhotoEntity photo : photosToUpdate) {
             File fileToDelete = new File(photo.getPath() + File.separator + photo.getName());
             if (fileToDelete.exists()) {
                 fileToDelete.delete();
             }
         }
-        post.getPhotos().clear(); // 컬렉션에서 모든 사진 제거
+        photoRepository.deleteAll(photosToUpdate);
 
         /* 설명. 2. 새로운 사진 파일 추가 */
         if (newImageFiles != null && !newImageFiles.isEmpty()) {
@@ -219,6 +223,7 @@ public class FashionPostServiceImpl implements PostService {
 
     private void saveNewPhotos(FashionPostEntity post, List<MultipartFile> imageFiles) {
         File uploadDir = new File(uploadPath);
+        int postNum = post.getNum();
         if (!uploadDir.exists()) { uploadDir.mkdirs(); }
         for (MultipartFile imageFile : imageFiles) {
             String originalFileName = imageFile.getOriginalFilename();
@@ -238,9 +243,10 @@ public class FashionPostServiceImpl implements PostService {
             PhotoEntity newPhoto = new PhotoEntity();
             newPhoto.setName(savedFileName);
             newPhoto.setPath(uploadPath);
+            newPhoto.setPostNum(postNum);
             newPhoto.setPhotoCategoryNum(1); // 1 = 패션 게시물 사진
 
-            post.addPhoto(newPhoto);
+            photoRepository.save(newPhoto);
         }
     }
 
@@ -257,9 +263,18 @@ public class FashionPostServiceImpl implements PostService {
         /* 설명. 3. 아이템 삭제 */
         deleteItems(postNum);
 
-        /* 설명. 4. 사진과 게시물 삭제 */
-        fashionPostRepository.delete(postToDelete);
+        /* 설명. 4. 사진 삭제 */
+        List<PhotoEntity> photosToDelete = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 1);
+        for (PhotoEntity photo : photosToDelete) {
+            File file = new File(photo.getPath() + File.separator + photo.getName());
+            if(file.exists()) {
+                file.delete();
+            }
+        }
+        photoRepository.deleteAll(photosToDelete);
 
+        /* 설명. 5. 게시물 삭제 */
+        fashionPostRepository.deleteById(postNum);
     }
 
     private void deleteHashtags(int postNum) {
@@ -268,6 +283,5 @@ public class FashionPostServiceImpl implements PostService {
 
     private void deleteItems(int postNum) {
         fashionItemRepository.deleteAllByFashionPostItemPK_PostNum(postNum);
-
     }
 }

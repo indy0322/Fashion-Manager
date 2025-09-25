@@ -18,16 +18,12 @@ public class PhotoEntity {
     @Column(name = "name")
     private String name;
 
-//    @Column(name = "post_num")
-//    private int postNum;
+    @Column(name = "post_num")
+    private int postNum;
 
     @Column(name = "path")
     private String path;
 
     @Column(name = "photo_category_num")
     private int photoCategoryNum;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_num")
-    private FashionPostEntity fashionPost;
 }
