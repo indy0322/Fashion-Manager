@@ -31,7 +31,8 @@ public class PostController {
     @Transactional
     public ResponseEntity<RegistResponseDTO> registPost
             (@PathVariable String postType, @RequestPart("newPost") RegistRequestDTO newPost,
-             @RequestPart(value = "images", required = false) List<MultipartFile> imageFiles) {
+             @RequestPart(value = "postImages", required = false) List<MultipartFile> imageFiles,
+            @RequestPart(value= "itemImages", required = false)  List<MultipartFile> itemImages) {
             // 사진은 Nullable하므로 required = false
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);  // postService 결정
