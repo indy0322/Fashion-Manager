@@ -1,4 +1,4 @@
-package fashionmanager;
+package fashionmanager.song.develop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FashionManagerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(FashionManagerApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(FashionManagerApplication.class, args);
+	}
 
 }
