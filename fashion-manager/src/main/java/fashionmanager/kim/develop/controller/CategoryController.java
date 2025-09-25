@@ -55,7 +55,7 @@ public class CategoryController {
     }
 
     @PostMapping("updatereviewcategory")
-    public ResponseEntity<String> updateReviewCategory(ReviewCategoryDTO reviewCategoryDTO) {
+    public ResponseEntity<String> updateReviewCategory(@RequestBody ReviewCategoryDTO reviewCategoryDTO) {
         List<ReviewCategoryDTO> list = cs.selectAllReviewCategories();
         for (ReviewCategoryDTO reviewCategory : list) {
             if(reviewCategory.getReviewCategoryName().equals(reviewCategoryDTO.getReviewCategoryName())){
@@ -116,7 +116,7 @@ public class CategoryController {
     }
 
     @PostMapping("/updatereportcategory")
-    public ResponseEntity<String> updateReportCategory(ReportCategoryDTO reportCategoryDTO) {
+    public ResponseEntity<String> updateReportCategory(@RequestBody ReportCategoryDTO reportCategoryDTO) {
         List<ReportCategoryDTO> list = cs.selectAllReportCategories();
         for (ReportCategoryDTO reportCategory : list) {
             if(reportCategory.getReportCategoryName().equals(reportCategoryDTO.getReportCategoryName())){
@@ -177,7 +177,7 @@ public class CategoryController {
     }
 
     @PostMapping("/updatemessagecategory")
-    public ResponseEntity<String> updateMessageCategory(MessageCategoryDTO messageCategoryDTO) {
+    public ResponseEntity<String> updateMessageCategory(@RequestBody MessageCategoryDTO messageCategoryDTO) {
         List<MessageCategoryDTO> list = cs.selectAllMessageCategories();
         for(MessageCategoryDTO messageCategory : list){
             if(messageCategory.getMessageCategoryName().equals(messageCategoryDTO.getMessageCategoryName())){
@@ -238,7 +238,7 @@ public class CategoryController {
     }
 
     @PostMapping("/updatephotocategory")
-    public ResponseEntity<String> updatePhotoCategory(PhotoCategoryDTO photoCategoryDTO) {
+    public ResponseEntity<String> updatePhotoCategory(@RequestBody PhotoCategoryDTO photoCategoryDTO) {
         List<PhotoCategoryDTO> list = cs.selectAllPhotoCategories();
         for(PhotoCategoryDTO photoCategoryDTO1 : list){
             if(photoCategoryDTO1.getPhotoCategoryName().equals(photoCategoryDTO.getPhotoCategoryName())){

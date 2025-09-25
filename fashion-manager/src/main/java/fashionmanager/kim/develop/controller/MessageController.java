@@ -52,7 +52,7 @@ public class MessageController {
     }
 
     @PostMapping("/insertmessage")
-    public ResponseEntity<String> insertMessage(InsertMessageDTO insertMessageDTO){
+    public ResponseEntity<String> insertMessage(@RequestBody InsertMessageDTO insertMessageDTO){
         int result = ms.insertMessage(insertMessageDTO);
         if(result == 1){
             log.info("메시지가 보내졌습니다.");
