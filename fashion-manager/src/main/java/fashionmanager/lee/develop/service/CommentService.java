@@ -37,7 +37,8 @@ public class CommentService {
                 commentPostDto.getPostNum(),
                 commentPostDto.getPostType()
         );
-        Comment savedComment = commentRepository.save(commentToSave);
+        Comment savedComment = commentRepository.saveAndFlush(commentToSave);
+//        Comment savedComment = commentRepository.save(commentToSave);
         return commentMapper
                 .findCommentByNum(savedComment.getNum())
                 .orElseThrow(() -> new RuntimeException("댓글 생성 후 정보를 가져오는 데 실패했습니다."));
@@ -49,6 +50,7 @@ public class CommentService {
                 .findById(commentNum)
                 .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다. 번호: " + commentNum));
         comment.setContent(content);
+        commentRepository.flush();
         return commentMapper
                 .findCommentByNum(commentNum)
                 .orElseThrow(() -> new RuntimeException("댓글 수정 후 정보를 가져오는 데 실패했습니다."));
@@ -98,7 +100,8 @@ public class CommentService {
                 comment.setCheer(comment.getCheer() + 1);
             }
         }
-
+        commentRepository.flush();
+        
         return commentMapper
                 .findCommentByNum(commentNum)
                 .orElseThrow(() -> new RuntimeException("댓글 정보를 갱신하는 데 실패했습니다."));
