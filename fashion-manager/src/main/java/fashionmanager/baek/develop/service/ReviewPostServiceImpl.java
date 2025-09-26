@@ -2,14 +2,12 @@ package fashionmanager.baek.develop.service;
 
 
 import fashionmanager.baek.develop.aggregate.PostType;
-import fashionmanager.baek.develop.dto.ModifyRequestDTO;
-import fashionmanager.baek.develop.dto.ModifyResponseDTO;
-import fashionmanager.baek.develop.dto.RegistRequestDTO;
-import fashionmanager.baek.develop.dto.RegistResponseDTO;
+import fashionmanager.baek.develop.dto.*;
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.entity.ReviewPostEntity;
 import fashionmanager.baek.develop.entity.ReviewPostItemEntity;
 import fashionmanager.baek.develop.entity.pk.ReviewPostItemPK;
+import fashionmanager.baek.develop.mapper.ReviewPostMapper;
 import fashionmanager.baek.develop.repository.PhotoRepository;
 import fashionmanager.baek.develop.repository.ReviewItemRepository;
 import fashionmanager.baek.develop.repository.ReviewPostRepository;
@@ -31,15 +29,22 @@ public class ReviewPostServiceImpl implements PostService{
     private final ReviewPostRepository reviewPostRepository;
     private final ReviewItemRepository reviewItemRepository;
     private final PhotoRepository photoRepository;
+    private final ReviewPostMapper reviewPostMapper;
     private String postUploadPath = "C:\\uploadFiles\\review";
     private String reviewItemUploadPath = "C:\\uploadFiles\\review_items";
 
     @Autowired
     public ReviewPostServiceImpl(ReviewPostRepository reviewPostRepository,
-                                 ReviewItemRepository reviewItemRepository, PhotoRepository photoRepository) {
+                                 ReviewItemRepository reviewItemRepository, PhotoRepository photoRepository, ReviewPostMapper reviewPostMapper) {
         this.reviewPostRepository = reviewPostRepository;
         this.reviewItemRepository = reviewItemRepository;
         this.photoRepository = photoRepository;
+        this.reviewPostMapper = reviewPostMapper;
+    }
+
+    @Override
+    public List<SelectAllPostDTO> getPostList() {
+        return reviewPostMapper.findAll();
     }
 
     @Override

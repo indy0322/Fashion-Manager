@@ -1,16 +1,14 @@
 package fashionmanager.baek.develop.service;
 
 import fashionmanager.baek.develop.aggregate.PostType;
-import fashionmanager.baek.develop.dto.ModifyRequestDTO;
-import fashionmanager.baek.develop.dto.ModifyResponseDTO;
-import fashionmanager.baek.develop.dto.RegistResponseDTO;
-import fashionmanager.baek.develop.dto.RegistRequestDTO;
+import fashionmanager.baek.develop.dto.*;
 import fashionmanager.baek.develop.entity.FashionHashTagEntity;
 import fashionmanager.baek.develop.entity.FashionPostEntity;
 import fashionmanager.baek.develop.entity.FashionPostItemEntity;
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.entity.pk.FashionHashTagPK;
 import fashionmanager.baek.develop.entity.pk.FashionPostItemPK;
+import fashionmanager.baek.develop.mapper.FashionPostMapper;
 import fashionmanager.baek.develop.repository.FashionHashRepository;
 import fashionmanager.baek.develop.repository.FashionItemRepository;
 import fashionmanager.baek.develop.repository.FashionPostRepository;
@@ -34,6 +32,7 @@ public class FashionPostServiceImpl implements PostService {
     private final FashionHashRepository fashionHashRepository;
     private final FashionItemRepository fashionItemRepository;
     private final PhotoRepository photoRepository;
+    private final FashionPostMapper fashionPostMapper;
     private String postUploadPath = "C:\\uploadFiles\\fashion";
     private String fashionItemsUploadPath = "C:\\uploadFiles\\fashion_items";
 
@@ -41,11 +40,18 @@ public class FashionPostServiceImpl implements PostService {
 
     @Autowired
     public FashionPostServiceImpl(FashionPostRepository fashionPostRepository, FashionHashRepository fashionHashRepository,
-                                  FashionItemRepository fashionItemRepository, PhotoRepository photoRepository) {
+                                  FashionItemRepository fashionItemRepository, PhotoRepository photoRepository,
+                                  FashionPostMapper fashionPostMapper) {
         this.fashionPostRepository = fashionPostRepository;
         this.fashionHashRepository = fashionHashRepository;
         this.fashionItemRepository = fashionItemRepository;
         this.photoRepository = photoRepository;
+        this.fashionPostMapper = fashionPostMapper;
+    }
+
+    @Override
+    public List<SelectAllPostDTO> getPostList() {
+        return fashionPostMapper.findAll();
     }
 
     @Override

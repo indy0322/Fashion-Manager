@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fashionmanager.baek.develop.mapper.FashionPostMapper">
+    <select id="findAll" resultType="fashionmanager.baek.develop.dto.SelectAllPostDTO">
+        SELECT
+               num
+             , title
+             , member_num
+             , good
+             , cheer
+          FROM fashion_post
+         ORDER BY num desc;
+    </select>
+</mapper>
