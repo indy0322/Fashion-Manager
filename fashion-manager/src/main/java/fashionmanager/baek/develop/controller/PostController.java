@@ -31,13 +31,13 @@ public class PostController {
     @Transactional
     public ResponseEntity<RegistResponseDTO> registPost
             (@PathVariable String postType, @RequestPart("newPost") RegistRequestDTO newPost,
-             @RequestPart(value = "postImages", required = false) List<MultipartFile> imageFiles,
-            @RequestPart(value= "itemImages", required = false)  List<MultipartFile> itemImages) {
+             @RequestPart(value = "postImages", required = false) List<MultipartFile> postFiles,
+            @RequestPart(value= "itemImages", required = false)  List<MultipartFile> itemFiles) {
             // 사진은 Nullable하므로 required = false
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);  // postService 결정
 
-        RegistResponseDTO response = postService.registPost(newPost, imageFiles); // method 작동
+        RegistResponseDTO response = postService.registPost(newPost, postFiles, itemFiles); // method 작동
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -47,11 +47,12 @@ public class PostController {
     public ResponseEntity<ModifyResponseDTO> modifyPost
             (@PathVariable String postType, @PathVariable int postNum,
              @RequestPart("modifyPost") ModifyRequestDTO modifyRequestDTO,
-             @RequestPart(value = "images", required = false) List<MultipartFile> imageFiles) {
+             @RequestPart(value = "postImages", required = false) List<MultipartFile> postFiles,
+             @RequestPart(value = "itemImages", required = false) List<MultipartFile> itemFiles) {
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);
 
-        ModifyResponseDTO response = postService.modifyPost(postNum, modifyRequestDTO, imageFiles);
+        ModifyResponseDTO response = postService.modifyPost(postNum, modifyRequestDTO, postFiles, itemFiles);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

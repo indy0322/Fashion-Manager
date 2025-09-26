@@ -10,10 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface PostService {
-    RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> imageFiles);
+    RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> postFiles,
+                                 List<MultipartFile> itemFiles);
     PostType getPostType();
 
-    ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost, List<MultipartFile> imageFiles);
+    ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost,
+                                 List<MultipartFile> postFiles, List<MultipartFile> itemFiles);
 
     void deletePost(int postNum);
 }

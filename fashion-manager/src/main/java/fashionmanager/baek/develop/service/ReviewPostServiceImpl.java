@@ -29,7 +29,8 @@ public class ReviewPostServiceImpl implements PostService{
     private final ReviewPostRepository reviewPostRepository;
     private final ReviewItemRepository reviewItemRepository;
     private final PhotoRepository photoRepository;
-    private String uploadPath = "C:\\uploadFiles\\review";
+    private String postUploadPath = "C:\\uploadFiles\\review";
+    private String reviewItemUploadPath = "C:\\uploadFiles\\review_items";
 
     @Autowired
     public ReviewPostServiceImpl(ReviewPostRepository reviewPostRepository,
@@ -41,7 +42,8 @@ public class ReviewPostServiceImpl implements PostService{
 
     @Override
     @Transactional
-    public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> imageFiles) {
+    public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> postFiles,
+                                        List<MultipartFile> itemFiles) {
         /* 설명. 1. fashion_post table에 게시글 등록 */
         ReviewPostEntity reviewPostEntity = changeToRegistPost(newPost);
         ReviewPostEntity registReviewPost = reviewPostRepository.save(reviewPostEntity);
@@ -55,29 +57,52 @@ public class ReviewPostServiceImpl implements PostService{
         }
 
         /* 설명. 3. photo table에 사진 등록, 사진 카테고리 번호 1 = 패션 게시물 */
-        if (imageFiles != null && !imageFiles.isEmpty()) {
-            File uploadDir = new File(uploadPath);
+        if (postFiles != null && !postFiles.isEmpty()) {
+            File uploadDir = new File(postUploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs(); // 경로에 해당하는 폴더가 없으면 생성해줌
             }
-            for (MultipartFile imageFile : imageFiles) {
+            for (MultipartFile imageFile : postFiles) {
                 String originalFileName = imageFile.getOriginalFilename();
                 String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 String savedFileName = UUID.randomUUID().toString() + extension;
 
-                File targetFile = new File(uploadPath + File.separator + savedFileName);
+                File targetFile = new File(postUploadPath + File.separator + savedFileName);
                 try {
                     imageFile.transferTo(targetFile);
                 } catch (IOException e) {
                     throw new RuntimeException("파일 저장에 실패했습니다", e);
                 }
-
                 PhotoEntity photoEntity = new PhotoEntity();
-                photoEntity.setName(savedFileName);   // 고유한 이름으로 저장
-                photoEntity.setPath(uploadPath);
-                photoEntity.setPostNum(postNum);
-                photoEntity.setPhotoCategoryNum(2);   // 리뷰 게시판은 2
+                photoEntity.setName(savedFileName); // 고유한 이름으로 저장
+                photoEntity.setPath(postUploadPath);
+                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 저장
+                photoEntity.setPhotoCategoryNum(2); // 후기 게시물 사진은 2
+                photoRepository.save(photoEntity);
+            }
+        }
+        /* 설명. 3-2. 패션 아이템 사진 등록, 사진 카테고리 번호 4 = 패션 아이템 */
+        if (itemFiles != null && !itemFiles.isEmpty()) {
+            File uploadDir = new File(reviewItemUploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs(); // 경로에 해당하는 폴더가 없으면 생성해줌
+            }
+            for (MultipartFile imageFile : itemFiles) {
+                String originalFileName = imageFile.getOriginalFilename();
+                String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                String savedFileName = UUID.randomUUID().toString() + extension;
 
+                File targetFile = new File(reviewItemUploadPath + File.separator + savedFileName);
+                try {
+                    imageFile.transferTo(targetFile);
+                } catch (IOException e) {
+                    throw new RuntimeException("파일 저장에 실패했습니다", e);
+                }
+                PhotoEntity photoEntity = new PhotoEntity();
+                photoEntity.setName(savedFileName); // 고유한 이름으로 저장
+                photoEntity.setPath(reviewItemUploadPath);
+                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 저장
+                photoEntity.setPhotoCategoryNum(5); // 후기 아이템 사진은 5
                 photoRepository.save(photoEntity);
             }
         }
@@ -108,7 +133,7 @@ public class ReviewPostServiceImpl implements PostService{
 
     @Override
     public ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost,
-                                        List<MultipartFile> imageFiles) {
+                                        List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
         ReviewPostEntity reviewPostEntity = reviewPostRepository.findById(postNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. id=" + postNum));
 
@@ -118,7 +143,8 @@ public class ReviewPostServiceImpl implements PostService{
 
         List<Integer> updateItems = updateItems(postNum, updatePost.getItems());
 
-        updatePhotos(reviewPostEntity, imageFiles);
+        updatePhotos(reviewPostEntity,this.postUploadPath, postFiles, 2);
+        updatePhotos(reviewPostEntity,this.reviewItemUploadPath, itemFiles, 5);
 
         ModifyResponseDTO response = new ModifyResponseDTO();
         response.setNum(postNum);
@@ -130,9 +156,9 @@ public class ReviewPostServiceImpl implements PostService{
         return response;
     }
 
-    private void updatePhotos(ReviewPostEntity post, List<MultipartFile> newImageFiles) {
+    private void updatePhotos(ReviewPostEntity post, String uploadPath, List<MultipartFile> newImageFiles, int categoryNum) {
         int postNum = post.getNum();
-        List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 2);
+        List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum);
         for (PhotoEntity photo : photosToUpdate) {
             File fileToDelete = new File(photo.getPath() + File.separator + photo.getName());
             if (fileToDelete.exists()) {
@@ -142,11 +168,12 @@ public class ReviewPostServiceImpl implements PostService{
         photoRepository.deleteAll(photosToUpdate);
 
         if (newImageFiles != null && !newImageFiles.isEmpty()) {
-            saveNewPhotos(post, newImageFiles);
+            saveNewPhotos(post, uploadPath, newImageFiles, categoryNum);
         }
     }
 
-    private void saveNewPhotos(ReviewPostEntity post, List<MultipartFile> imageFiles) {
+    private void saveNewPhotos(ReviewPostEntity post, String uploadPath,
+                               List<MultipartFile> imageFiles, int categoryNum) {
         int postNum = post.getNum();
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) { uploadDir.mkdirs(); }
@@ -169,8 +196,7 @@ public class ReviewPostServiceImpl implements PostService{
             newPhoto.setName(savedFileName);
             newPhoto.setPath(uploadPath);
             newPhoto.setPostNum(postNum);
-            newPhoto.setPhotoCategoryNum(2); // 2 = 리뷰 게시물 사진
-
+            newPhoto.setPhotoCategoryNum(categoryNum); // 해당 카테고리 넘버
             photoRepository.save(newPhoto);
         }
     }
@@ -205,7 +231,8 @@ public class ReviewPostServiceImpl implements PostService{
 
         deleteItems(postNum);
 
-        List<PhotoEntity> photosToDelete = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 1);
+        List<PhotoEntity> photosToDelete = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 2);
+        photosToDelete.addAll(photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 5));
         for (PhotoEntity photo : photosToDelete) {
             File file = new File(photo.getPath() + File.separator + photo.getName());
             if(file.exists()) {

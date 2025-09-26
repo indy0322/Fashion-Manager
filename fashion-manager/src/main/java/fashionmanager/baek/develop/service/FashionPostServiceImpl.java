@@ -15,6 +15,7 @@ import fashionmanager.baek.develop.repository.FashionHashRepository;
 import fashionmanager.baek.develop.repository.FashionItemRepository;
 import fashionmanager.baek.develop.repository.FashionPostRepository;
 import fashionmanager.baek.develop.repository.PhotoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +28,15 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class FashionPostServiceImpl implements PostService {
     private final FashionPostRepository fashionPostRepository;
     private final FashionHashRepository fashionHashRepository;
     private final FashionItemRepository fashionItemRepository;
     private final PhotoRepository photoRepository;
-    private String uploadPath = "C:\\uploadFiles\\fashion";
+    private String postUploadPath = "C:\\uploadFiles\\fashion";
+    private String fashionItemsUploadPath = "C:\\uploadFiles\\fashion_items";
+
 
 
     @Autowired
@@ -46,7 +50,8 @@ public class FashionPostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> imageFiles) {
+    public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> postFiles,
+                                        List<MultipartFile> itemFiles) {
         /* 설명. 1. fashion_post table에 게시글 등록 */
         FashionPostEntity fashionPostEntity = changeToRegistPost(newPost);
         FashionPostEntity registFashionPost = fashionPostRepository.save(fashionPostEntity);
@@ -58,31 +63,53 @@ public class FashionPostServiceImpl implements PostService {
             FashionHashTagEntity fashionHashTagEntity = new FashionHashTagEntity(fashionHashTagPK);
             fashionHashRepository.save(fashionHashTagEntity);
         }
-        /* 설명. 3. photo table에 사진 등록, 사진 카테고리 번호 1 = 패션 게시물 */
-        if (imageFiles != null && !imageFiles.isEmpty()) {
-            File uploadDir = new File(uploadPath);
+        /* 설명. 3-1. photo table에 게시물 사진 등록, 사진 카테고리 번호 1 = 패션 게시물 */
+        if (postFiles != null && !postFiles.isEmpty()) {
+            File uploadDir = new File(postUploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs(); // 경로에 해당하는 폴더가 없으면 생성해줌
             }
-            for (MultipartFile imageFile : imageFiles) {
+            for (MultipartFile imageFile : postFiles) {
                 String originalFileName = imageFile.getOriginalFilename();
                 String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 String savedFileName = UUID.randomUUID().toString() + extension;
 
-                File targetFile = new File(uploadPath + File.separator + savedFileName);
+                File targetFile = new File(postUploadPath + File.separator + savedFileName);
                 try {
                     imageFile.transferTo(targetFile);
                 } catch (IOException e) {
                     throw new RuntimeException("파일 저장에 실패했습니다", e);
                 }
-
                 PhotoEntity photoEntity = new PhotoEntity();
                 photoEntity.setName(savedFileName); // 고유한 이름으로 저장
-                photoEntity.setPath(uploadPath);
-
+                photoEntity.setPath(postUploadPath);
                 photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 저장
-                photoEntity.setPhotoCategoryNum(1);
+                photoEntity.setPhotoCategoryNum(1); // 패션 게시물 사진은 1
+                photoRepository.save(photoEntity);
+            }
+        }
+        /* 설명. 3-2. 패션 아이템 사진 등록, 사진 카테고리 번호 4 = 패션 아이템 */
+        if (itemFiles != null && !itemFiles.isEmpty()) {
+            File uploadDir = new File(fashionItemsUploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs(); // 경로에 해당하는 폴더가 없으면 생성해줌
+            }
+            for (MultipartFile imageFile : itemFiles) {
+                String originalFileName = imageFile.getOriginalFilename();
+                String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                String savedFileName = UUID.randomUUID().toString() + extension;
 
+                File targetFile = new File(fashionItemsUploadPath + File.separator + savedFileName);
+                try {
+                    imageFile.transferTo(targetFile);
+                } catch (IOException e) {
+                    throw new RuntimeException("파일 저장에 실패했습니다", e);
+                }
+                PhotoEntity photoEntity = new PhotoEntity();
+                photoEntity.setName(savedFileName); // 고유한 이름으로 저장
+                photoEntity.setPath(fashionItemsUploadPath);
+                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 저장
+                photoEntity.setPhotoCategoryNum(4); // 패션 아이템 사진은 4
                 photoRepository.save(photoEntity);
             }
         }
@@ -121,7 +148,7 @@ public class FashionPostServiceImpl implements PostService {
     @Override
     @Transactional
     public ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost,
-                                        List<MultipartFile> imageFiles) {
+                                        List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
         /* 설명. 1. 수정할 게시글이 존재하는지 확인 */
         FashionPostEntity fashionPostEntity = fashionPostRepository.findById(postNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. id=" + postNum));
@@ -137,7 +164,8 @@ public class FashionPostServiceImpl implements PostService {
         List<Integer> updateItems = updateItems(postNum, updatePost.getItems());
 
         /* 5. 사진 업데이트 (파일 처리는 기존의 'Delete & Insert' 방식 유지) */
-        updatePhotos(fashionPostEntity, imageFiles);
+        updatePhotos(fashionPostEntity, postFiles, 1); // 게시물 사진 업데이트
+        updatePhotos(fashionPostEntity, itemFiles, 4); // 패션 아이템 사진 업데이트
 
         /* 6. 최종 응답 DTO 생성 */
         ModifyResponseDTO response = new ModifyResponseDTO();
@@ -202,10 +230,11 @@ public class FashionPostServiceImpl implements PostService {
         return newItemId;
     }
 
-    private void updatePhotos(FashionPostEntity post, List<MultipartFile> newImageFiles) {
+    private void updatePhotos(FashionPostEntity post, List<MultipartFile> newImageFiles, int categoryNum) {
         /* 설명. 1. 기존 사진 파일 및 DB 정보 삭제 */
         int postNum = post.getNum();
-        List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 1);
+        List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum);
+        String uploadPath = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum).get(0).getPath();
         for (PhotoEntity photo : photosToUpdate) {
             File fileToDelete = new File(photo.getPath() + File.separator + photo.getName());
             if (fileToDelete.exists()) {
@@ -213,16 +242,19 @@ public class FashionPostServiceImpl implements PostService {
             }
         }
         photoRepository.deleteAll(photosToUpdate);
+        log.info("수정될 사진의 uploadPath는: " + uploadPath);
 
         /* 설명. 2. 새로운 사진 파일 추가 */
         if (newImageFiles != null && !newImageFiles.isEmpty()) {
-            saveNewPhotos(post, newImageFiles);
+            saveNewPhotos(post, uploadPath, newImageFiles, categoryNum);
         }
 
     }
 
-    private void saveNewPhotos(FashionPostEntity post, List<MultipartFile> imageFiles) {
+    private void saveNewPhotos(FashionPostEntity post, String uploadPath,
+                               List<MultipartFile> imageFiles, int categoryNum) {
         File uploadDir = new File(uploadPath);
+        log.info("수정될 사진의 uploadPath는: " + uploadDir.getPath());
         int postNum = post.getNum();
         if (!uploadDir.exists()) { uploadDir.mkdirs(); }
         for (MultipartFile imageFile : imageFiles) {
@@ -244,8 +276,7 @@ public class FashionPostServiceImpl implements PostService {
             newPhoto.setName(savedFileName);
             newPhoto.setPath(uploadPath);
             newPhoto.setPostNum(postNum);
-            newPhoto.setPhotoCategoryNum(1); // 1 = 패션 게시물 사진
-
+            newPhoto.setPhotoCategoryNum(categoryNum); // 해당 카테고리 넘버
             photoRepository.save(newPhoto);
         }
     }
@@ -265,6 +296,7 @@ public class FashionPostServiceImpl implements PostService {
 
         /* 설명. 4. 사진 삭제 */
         List<PhotoEntity> photosToDelete = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 1);
+        photosToDelete.addAll(photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 4));
         for (PhotoEntity photo : photosToDelete) {
             File file = new File(photo.getPath() + File.separator + photo.getName());
             if(file.exists()) {
