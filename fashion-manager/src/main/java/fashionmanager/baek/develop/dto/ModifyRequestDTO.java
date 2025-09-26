@@ -9,10 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class RequestRegistPostDTO {
+public class ModifyRequestDTO {
+    private int num;
     private String title;
     private String content;
     private int member_num;
-//    private List<String> items;
-//    private String photo_name;
+    private List<Integer> hashtag;
+    private List<Integer> items;
+    private int review_category_num;
+    private boolean finish;
 }

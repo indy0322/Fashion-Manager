@@ -7,11 +7,10 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class ModifyDTO {
+public class RegistResponseDTO {
     private int num;
     private String title;
     private String content;
     private int member_num;
-//    private List<String> items;
-//    private String photo_name;
+    private boolean finish;
 }

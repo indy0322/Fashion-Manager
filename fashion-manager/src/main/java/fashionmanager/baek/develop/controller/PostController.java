@@ -2,61 +2,71 @@ package fashionmanager.baek.develop.controller;
 
 
 import fashionmanager.baek.develop.aggregate.PostType;
-import fashionmanager.baek.develop.dto.ModifyDTO;
-import fashionmanager.baek.develop.dto.ResponseRegistPostDTO;
-import fashionmanager.baek.develop.dto.RequestRegistPostDTO;
+import fashionmanager.baek.develop.dto.ModifyRequestDTO;
+import fashionmanager.baek.develop.dto.ModifyResponseDTO;
+import fashionmanager.baek.develop.dto.RegistResponseDTO;
+import fashionmanager.baek.develop.dto.RegistRequestDTO;
 import fashionmanager.baek.develop.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
 public class PostController {
     private final PostServiceFactory postServiceFactory;
-    private final ModelMapper modelMapper;
 
     @Autowired
-
-
-    public PostController(PostServiceFactory postServiceFactory, ModelMapper modelMapper) {
+    public PostController(PostServiceFactory postServiceFactory) {
         this.postServiceFactory = postServiceFactory;
-        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/{postType}")   // Path로 값을 받아 알맞은 service로 연결돼 글 작성
-    public ResponseEntity<ResponseRegistPostDTO> registPost
-            (@PathVariable String postType, @RequestBody RequestRegistPostDTO newPost) {
+    @Transactional
+    public ResponseEntity<RegistResponseDTO> registPost
+            (@PathVariable String postType, @RequestPart("newPost") RegistRequestDTO newPost,
+             @RequestPart(value = "postImages", required = false) List<MultipartFile> postFiles,
+            @RequestPart(value= "itemImages", required = false)  List<MultipartFile> itemFiles) {
+            // 사진은 Nullable하므로 required = false
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);  // postService 결정
 
-        ResponseRegistPostDTO response = postService.registPost(newPost); // method 작동
+        RegistResponseDTO response = postService.registPost(newPost, postFiles, itemFiles); // method 작동
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{postType}/{postNum}")
-    public ResponseEntity<ModifyDTO> modifyPost
+    @Transactional
+    public ResponseEntity<ModifyResponseDTO> modifyPost
             (@PathVariable String postType, @PathVariable int postNum,
-             @RequestBody ModifyDTO modifyDTO) {
+             @RequestPart("modifyPost") ModifyRequestDTO modifyRequestDTO,
+             @RequestPart(value = "postImages", required = false) List<MultipartFile> postFiles,
+             @RequestPart(value = "itemImages", required = false) List<MultipartFile> itemFiles) {
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);
 
-        ModifyDTO response = postService.modifyPost(postNum, modifyDTO);
+        ModifyResponseDTO response = postService.modifyPost(postNum, modifyRequestDTO, postFiles, itemFiles);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{postType}/{postNum}")
-    public String deletePost
+    @Transactional
+    public ResponseEntity deletePost
             (@PathVariable String postType, @PathVariable int postNum) {
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);
 
-        String message = postService.deletePost(postNum);
-        return message;
+        postService.deletePost(postNum);
+
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(IllegalArgumentException.class)  // Factory 생성, 게시글 수정/삭제 과정에서 Exception 설정
