@@ -30,7 +30,7 @@ public class ReportController {
     }
 
     @PostMapping("/insertreport")
-    public ResponseEntity<String> insertReport(ReportDTO reportDTO) {
+    public ResponseEntity<String> insertReport(@RequestBody ReportDTO reportDTO) {
         int result = rs.insertReport(reportDTO);
         if (result == 1) {
             log.info("신고가 신청되었습니다.");
