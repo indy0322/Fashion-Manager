@@ -83,7 +83,7 @@ public class FashionPostServiceImpl implements PostService {
                 PhotoEntity photoEntity = new PhotoEntity();
                 photoEntity.setName(savedFileName); // 고유한 이름으로 저장
                 photoEntity.setPath(postUploadPath);
-                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 저장
+                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 지정
                 photoEntity.setPhotoCategoryNum(1); // 패션 게시물 사진은 1
                 photoRepository.save(photoEntity);
             }
@@ -164,8 +164,8 @@ public class FashionPostServiceImpl implements PostService {
         List<Integer> updateItems = updateItems(postNum, updatePost.getItems());
 
         /* 5. 사진 업데이트 (파일 처리는 기존의 'Delete & Insert' 방식 유지) */
-        updatePhotos(fashionPostEntity, postFiles, 1); // 게시물 사진 업데이트
-        updatePhotos(fashionPostEntity, itemFiles, 4); // 패션 아이템 사진 업데이트
+        updatePhotos(fashionPostEntity,this.postUploadPath, postFiles, 1); // 게시물 사진 업데이트
+        updatePhotos(fashionPostEntity,this.fashionItemsUploadPath, itemFiles, 4); // 패션 아이템 사진 업데이트
 
         /* 6. 최종 응답 DTO 생성 */
         ModifyResponseDTO response = new ModifyResponseDTO();
@@ -230,11 +230,10 @@ public class FashionPostServiceImpl implements PostService {
         return newItemId;
     }
 
-    private void updatePhotos(FashionPostEntity post, List<MultipartFile> newImageFiles, int categoryNum) {
+    private void updatePhotos(FashionPostEntity post,String uploadPath, List<MultipartFile> newImageFiles, int categoryNum) {
         /* 설명. 1. 기존 사진 파일 및 DB 정보 삭제 */
         int postNum = post.getNum();
         List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum);
-        String uploadPath = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum).get(0).getPath();
         for (PhotoEntity photo : photosToUpdate) {
             File fileToDelete = new File(photo.getPath() + File.separator + photo.getName());
             if (fileToDelete.exists()) {
@@ -242,7 +241,6 @@ public class FashionPostServiceImpl implements PostService {
             }
         }
         photoRepository.deleteAll(photosToUpdate);
-        log.info("수정될 사진의 uploadPath는: " + uploadPath);
 
         /* 설명. 2. 새로운 사진 파일 추가 */
         if (newImageFiles != null && !newImageFiles.isEmpty()) {
@@ -253,9 +251,8 @@ public class FashionPostServiceImpl implements PostService {
 
     private void saveNewPhotos(FashionPostEntity post, String uploadPath,
                                List<MultipartFile> imageFiles, int categoryNum) {
-        File uploadDir = new File(uploadPath);
-        log.info("수정될 사진의 uploadPath는: " + uploadDir.getPath());
         int postNum = post.getNum();
+        File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) { uploadDir.mkdirs(); }
         for (MultipartFile imageFile : imageFiles) {
             String originalFileName = imageFile.getOriginalFilename();

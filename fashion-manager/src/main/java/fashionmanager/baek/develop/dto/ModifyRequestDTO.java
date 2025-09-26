@@ -17,4 +17,5 @@ public class ModifyRequestDTO {
     private List<Integer> hashtag;
     private List<Integer> items;
     private int review_category_num;
+    private boolean finish;
 }

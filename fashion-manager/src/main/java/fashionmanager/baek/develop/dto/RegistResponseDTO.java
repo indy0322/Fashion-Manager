@@ -12,4 +12,5 @@ public class RegistResponseDTO {
     private String title;
     private String content;
     private int member_num;
+    private boolean finish;
 }

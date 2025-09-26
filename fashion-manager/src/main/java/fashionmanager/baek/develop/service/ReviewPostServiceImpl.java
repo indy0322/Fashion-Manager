@@ -13,6 +13,7 @@ import fashionmanager.baek.develop.entity.pk.ReviewPostItemPK;
 import fashionmanager.baek.develop.repository.PhotoRepository;
 import fashionmanager.baek.develop.repository.ReviewItemRepository;
 import fashionmanager.baek.develop.repository.ReviewPostRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ReviewPostServiceImpl implements PostService{
     private final ReviewPostRepository reviewPostRepository;
@@ -76,7 +78,7 @@ public class ReviewPostServiceImpl implements PostService{
                 PhotoEntity photoEntity = new PhotoEntity();
                 photoEntity.setName(savedFileName); // 고유한 이름으로 저장
                 photoEntity.setPath(postUploadPath);
-                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 저장
+                photoEntity.setPostNum(postNum);    // postNum과 CategoryNum 지정
                 photoEntity.setPhotoCategoryNum(2); // 후기 게시물 사진은 2
                 photoRepository.save(photoEntity);
             }
@@ -132,6 +134,7 @@ public class ReviewPostServiceImpl implements PostService{
     }
 
     @Override
+    @Transactional
     public ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost,
                                         List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
         ReviewPostEntity reviewPostEntity = reviewPostRepository.findById(postNum)
@@ -225,6 +228,7 @@ public class ReviewPostServiceImpl implements PostService{
     }
 
     @Override
+    @Transactional
     public void deletePost(int postNum) {
         ReviewPostEntity reviewToDelete = reviewPostRepository.findById(postNum)
                 .orElseThrow(() ->new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
