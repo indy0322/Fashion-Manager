@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fashionmanager.song.develop.MenteeApply.mapper.MenteeApplyMapper">
+    <resultMap id="menteeApplyMap" type="fashionmanager.song.develop.MenteeApply.dto.MenteeApplyResponseDTO">
+        <id property="num" column="num"/>
+        <result property="content" column="content"/>
+        <result property="accept" column="accept"/>
+        <result property="mentoringPostNum" column="mentoring_post_num"/>
+        <result property="memberNum" column="member_num"/>
+    </resultMap>
+
+    <select id="selectResultApply" resultMap="menteeApplyMap">
+        SELECT
+               NUM
+             , CONTENT
+             , ACCEPT
+             , mentoring_post_num
+             , MEMBER_NUM
+        FROM MENTEE_APPLY
+        ORDER BY num DESC
+    </select>
+
+    <insert id="insertMenteeApply"
+            parameterType="fashionmanager.song.develop.MenteeApply.dto.MenteeApplyCreateRequestDTO"
+            useGeneratedKeys="true" keyProperty="num">
+        INSERT
+        INTO MENTEE_APPLY
+        (
+          content
+        , mentoring_post_num
+        , member_num
+        )
+        VALUES
+        (
+          #{content}
+        , #{mentoringPostNum}
+        , #{memberNum}
+        )
+    </insert>
+
+    <update id="updateMenteeApply">
+        UPDATE MENTEE_APPLY
+        SET
+              content = #{content}
+        WHERE num = #{num}
+          AND member_num = #{memberNum}
+    </update>
+
+    <!-- delete title로만 지우면 다른것도 같이 지워져서 memberNum 추가 -->
+    <delete id="deleteMenteeApplyByMentoringPostNumAndMemberNum">
+        DELETE
+        FROM MENTEE_APPLY
+        WHERE content = #{content}
+          AND mentoring_post_num = #{mentoringPostNum}
+          AND member_num = #{memberNum}
+    </delete>
+</mapper>

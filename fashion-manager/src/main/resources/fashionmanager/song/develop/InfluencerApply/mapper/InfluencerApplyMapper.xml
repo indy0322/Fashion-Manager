@@ -13,8 +13,13 @@
     </resultMap>
 
     <select id="selectResultApply" resultMap="influencerApplyMap">
-        SELECT num, title, content, accept, member_num
-        FROM Influencer_Apply
+        SELECT
+               NUM
+             , TITLE
+             , CONTENT
+             , ACCEPT
+             , MEMBER_NUM
+        FROM INFLUENCER_APPLY
         ORDER BY num DESC
     </select>
 
@@ -22,24 +27,36 @@
     <insert id="insertInfluencerApply"
             parameterType="fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyCreateRequestDTO"
             useGeneratedKeys="true" keyProperty="num">
-        INSERT INTO Influencer_Apply (title, content, accept, member_num)
-        VALUES (#{title}, #{content}, #{accept}, #{memberNum})
+        INSERT
+        INTO Influencer_Apply
+        (
+          title
+        , content
+        , member_num
+        )
+        VALUES
+            (
+              #{title}
+            , #{content}
+            , #{memberNum}
+            )
     </insert>
 
     <update id="updateInfluencerApply">
         UPDATE Influencer_Apply
         SET
-            title = #{title},
-            content = #{content}
+            title = #{title}
+          , content = #{content}
         WHERE num = #{num}
           AND member_num = #{memberNum}
     </update>
 
     <!-- delete title로만 지우면 다른것도 같이 지워져서 memberNum 추가 -->
-    <delete id="deleteInfluencerApplyByTitleAndMember">
-        DELETE FROM Influencer_Apply
+    <delete id="deleteInfluencerApplyByTitleAndMemberNum">
+        DELETE
+        FROM Influencer_Apply
         WHERE title = #{title}
-        AND member_num = #{memberNum}
+          AND member_num = #{memberNum}
     </delete>
 
 </mapper>

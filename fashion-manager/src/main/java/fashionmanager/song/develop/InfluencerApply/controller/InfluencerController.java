@@ -31,16 +31,14 @@ public class InfluencerController {
         return influencerApplyService.insertInfluencerApply(req);
     }
 
-
     @PostMapping("/updateInfluencerApply")
-    public int updateInfluencerApply(@RequestBody InfluencerApplyCreateRequestDTO req) {
+    public int updateInfluencerApply(@RequestBody InfluencerApplyResponseDTO req) {
         return influencerApplyService.updateInfluencerApply(req);
     }
 
-    // delete: title + memberNum 기준
     @DeleteMapping("/deleteInfluencerApply")
-    public int deleteByTitleAndMember(@RequestParam String title,
-                                      @RequestParam int memberNum) {
-        return influencerApplyService.deleteInfluencerApplyByTitleAndMember(title, memberNum);
+    public int deleteInfluencerApplyByTitleAndMemberNum(@RequestParam String title,
+                                                        @RequestParam int memberNum) {
+        return influencerApplyService.deleteInfluencerApplyByTitleAndMemberNum(title, memberNum);
     }
 }

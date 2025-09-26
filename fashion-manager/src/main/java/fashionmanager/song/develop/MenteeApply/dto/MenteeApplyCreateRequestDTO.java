@@ -1,4 +1,4 @@
-package fashionmanager.song.develop.InfluencerApply.dto;
+package fashionmanager.song.develop.MenteeApply.dto;
 
 import lombok.*;
 
@@ -7,11 +7,12 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class InfluencerApplyResponseDTO {
+public class MenteeApplyCreateRequestDTO {
     // int -> Integer : null 가능하게
     private Integer num;
-    private String title;
     private String content;
     private String accept;
+    private Integer mentoringPostNum;
     private Integer memberNum;
+
 }

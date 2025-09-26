@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 public class InfluencerApplyCreateRequestDTO {
-
+    // int -> Integer : null 가능하게
     private Integer num;
     private String title;
     private String content;
