@@ -1,9 +1,6 @@
 package fashionmanager.kim.develop.controller;
 
-import fashionmanager.kim.develop.dto.AssignedRightDTO;
-import fashionmanager.kim.develop.dto.InsertMemberDTO;
-import fashionmanager.kim.develop.dto.MemberDTO;
-import fashionmanager.kim.develop.dto.UpdateRightDTO;
+import fashionmanager.kim.develop.dto.*;
 import fashionmanager.kim.develop.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +42,7 @@ public class MemberController {
 
         int result = ms.insertAdmin(insertMemberDTO);
         if(result == 1){
-            MemberDTO member = ms.selectMessageAllow(insertMemberDTO.getMemberId()); //관리자로 회원가입한 회원의 회원 번호를 확인하기 위한 코드
+            MemberDTO member = ms.selectMemberById(insertMemberDTO.getMemberId()); //관리자로 회원가입한 회원의 회원 번호를 확인하기 위한 코드
             int insertAdminNum = member.getMemberNum();
             AssignedRightDTO assignedRightDTO = new AssignedRightDTO();
             assignedRightDTO.setAssignedRightMemberStateNum(1);
@@ -75,5 +72,12 @@ public class MemberController {
             log.info("회원의 권한 변경이 실패하였습니다.");
             return ResponseEntity.ok("회원의 권한 변경이 실패하였습니다.");
         }
+    }
+
+    @PostMapping("/memberlogin")
+    public ResponseEntity<String> memberLogin(String memberId, String memberPwd){
+        String result = ms.memberLogin(memberId, memberPwd);
+
+        return ResponseEntity.ok(result);
     }
 }

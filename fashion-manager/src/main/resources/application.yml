@@ -11,3 +11,6 @@ mybatis:
   mapper-locations: classpath:/mappers/**/*.xml
   type-aliases-package: fashionmanager.song.develop
 
+token:
+  expiration_time: 86400000
+  secret: CxCdBy6P0vET6d/oKN9YSXzUBwfYGR+petj55jmBGrk3XaTqpaCMdgYbv7Q7ccrwjc2441jyOY0OKCFqbZPOHQ==
