@@ -11,6 +11,7 @@ import fashionmanager.kim.develop.repository.MessageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -64,5 +65,15 @@ public class MessageService {
             log.info("상대방이 메세지 수신을 거부했습니다.");
             return 0;
         }
+    }
+
+    @Transactional
+    public int deleteMessage(int messageNum) {
+         int result = messageRepository.deleteMessage(messageNum);
+         if(result == 1){
+             return 1;
+         }else{
+             return 0;
+         }
     }
 }

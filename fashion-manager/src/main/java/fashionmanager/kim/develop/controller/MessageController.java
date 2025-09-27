@@ -51,13 +51,27 @@ public class MessageController {
         return ResponseEntity.ok(messageList);
     }
 
-    @PostMapping("insertmessage")
+    @PostMapping("/insertmessage")
     public ResponseEntity<String> insertMessage(@RequestBody InsertMessageDTO insertMessageDTO){
         int result = ms.insertMessage(insertMessageDTO);
         if(result == 1){
+            log.info("메시지가 보내졌습니다.");
             return ResponseEntity.ok("메시지가 보내졌습니다.");
         }else{
+            log.info("메시지를 보내는데, 실패했습니다.");
             return ResponseEntity.ok("메시지를 보내는데, 실패했습니다.");
+        }
+    }
+
+    @PostMapping("/deletemessage")
+    public ResponseEntity<String> deleteMessage(int messageNum){
+        int result = ms.deleteMessage(messageNum);
+        if(result == 1){
+            log.info("메시지를 삭제하였습니다.");
+            return ResponseEntity.ok("메시지를 삭제하였습니다.");
+        }else{
+            log.info("메시지 삭제에 실패했습니다.");
+            return ResponseEntity.ok("메시지 삭제에 실패했습니다.");
         }
     }
 
