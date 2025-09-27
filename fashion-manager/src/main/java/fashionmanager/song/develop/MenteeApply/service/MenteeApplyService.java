@@ -29,7 +29,7 @@ public class MenteeApplyService {
     }
 
     @Transactional
-    public MenteeApplyResponseDTO insertMenteeApply(MenteeApplyCreateRequestDTO req) {
+    public MenteeApplyCreateRequestDTO insertMenteeApply(MenteeApplyCreateRequestDTO req) {
 
         if (req.getAccept() == null || req.getAccept().isBlank()) {
             req.setAccept("대기");
@@ -43,7 +43,7 @@ public class MenteeApplyService {
 
         MenteeApplyEntity entitySaved = menteeRepository.save(entity);
 
-        return new MenteeApplyResponseDTO(
+        return new MenteeApplyCreateRequestDTO(
                 entitySaved.getNum(),
                 entitySaved.getContent(),
                 entitySaved.getAccept(),

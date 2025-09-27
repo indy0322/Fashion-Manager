@@ -14,4 +14,6 @@ public class MenteeApplyResponseDTO {
     private String accept;
     private Integer mentoringPostNum;
     private Integer memberNum;
+
+//    private String memberName;
 }

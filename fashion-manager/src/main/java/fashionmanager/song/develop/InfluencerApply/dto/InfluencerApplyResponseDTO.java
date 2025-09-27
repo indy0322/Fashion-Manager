@@ -14,4 +14,6 @@ public class InfluencerApplyResponseDTO {
     private String content;
     private String accept;
     private Integer memberNum;
+
+//    private String memberName;
 }

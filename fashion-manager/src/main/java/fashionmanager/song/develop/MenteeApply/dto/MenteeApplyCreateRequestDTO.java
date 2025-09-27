@@ -15,4 +15,6 @@ public class MenteeApplyCreateRequestDTO {
     private Integer mentoringPostNum;
     private Integer memberNum;
 
+//    private String memberName;
+
 }

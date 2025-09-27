@@ -10,4 +10,3 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mappers/**/*.xml
   type-aliases-package: fashionmanager.song.develop
-

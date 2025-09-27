@@ -2,61 +2,24 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="fashionmanager.song.develop.InfluencerApply.mapper.InfluencerApplyMapper">
 
     <resultMap id="influencerApplyMap" type="fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyResponseDTO">
-        <id property="num" column="num"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="accept" column="accept"/>
-        <result property="memberNum" column="member_num"/>
+        <id property="num" column="NUM"/>
+        <result property="title" column="TITLE"/>
+        <result property="content" column="CONTENT"/>
+        <result property="accept" column="ACCEPT"/>
+        <result property="memberNum" column="MEMBER_NUM"/>
     </resultMap>
 
     <select id="selectResultApply" resultMap="influencerApplyMap">
         SELECT
-               NUM
-             , TITLE
-             , CONTENT
-             , ACCEPT
-             , MEMBER_NUM
-        FROM INFLUENCER_APPLY
-        ORDER BY num DESC
+              NUM
+            , TITLE
+            , CONTENT
+            , ACCEPT
+            , MEMBER_NUM
+         FROM INFLUENCER_APPLY
     </select>
-
-    <!-- insert accept notnull인지 확인 -->
-    <insert id="insertInfluencerApply"
-            parameterType="fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyCreateRequestDTO"
-            useGeneratedKeys="true" keyProperty="num">
-        INSERT
-        INTO Influencer_Apply
-        (
-          title
-        , content
-        , member_num
-        )
-        VALUES
-            (
-              #{title}
-            , #{content}
-            , #{memberNum}
-            )
-    </insert>
-
-    <update id="updateInfluencerApply">
-        UPDATE Influencer_Apply
-        SET
-            title = #{title}
-          , content = #{content}
-        WHERE num = #{num}
-          AND member_num = #{memberNum}
-    </update>
-
-    <!-- delete title로만 지우면 다른것도 같이 지워져서 memberNum 추가 -->
-    <delete id="deleteInfluencerApplyByTitleAndMemberNum">
-        DELETE
-        FROM Influencer_Apply
-        WHERE title = #{title}
-          AND member_num = #{memberNum}
-    </delete>
-
 </mapper>
