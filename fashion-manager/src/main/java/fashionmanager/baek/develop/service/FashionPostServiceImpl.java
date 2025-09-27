@@ -55,6 +55,15 @@ public class FashionPostServiceImpl implements PostService {
     }
 
     @Override
+    public SelectDetailPostDTO getDetailPost(int postNum) {
+        SelectDetailPostDTO postDetail = fashionPostMapper.findById(postNum);
+        if (postDetail == null) {
+            throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
+        }
+        return postDetail;
+    }
+
+    @Override
     @Transactional
     public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> postFiles,
                                         List<MultipartFile> itemFiles) {

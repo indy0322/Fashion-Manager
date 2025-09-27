@@ -17,4 +17,6 @@ public interface PostService {
     void deletePost(int postNum);
 
     List<SelectAllPostDTO> getPostList();
+
+    SelectDetailPostDTO getDetailPost(int postNum);
 }

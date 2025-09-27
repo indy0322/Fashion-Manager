@@ -33,6 +33,18 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{postType}/{postNum}")
+    public ResponseEntity<SelectDetailPostDTO> getDetailPost(
+            @PathVariable String postType, @PathVariable int postNum) {
+        PostType type = PostType.valueOf(postType.toUpperCase());
+        PostService postService = postServiceFactory.getService(type);
+
+        SelectDetailPostDTO response = postService.getDetailPost(postNum);
+        return ResponseEntity.ok(response);
+    }
+
+
+
 
     @PostMapping("/{postType}")   // Path로 값을 받아 알맞은 service로 연결돼 글 작성
     @Transactional
