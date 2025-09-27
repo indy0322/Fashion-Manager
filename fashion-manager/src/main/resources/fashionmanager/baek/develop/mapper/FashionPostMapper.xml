@@ -14,24 +14,26 @@
          ORDER BY num desc;
     </select>
     <resultMap id="selectDetailPostResultMap" type="fashionmanager.baek.develop.dto.SelectDetailPostDTO">
-        <id property="num" column="num"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="good" column="good"/>
-        <result property="cheer" column="cheer"/>
+        <id property="num" column="post_num"/>
+        <result property="title" column="post_title"/>
+        <result property="content" column="post_content"/>
+        <result property="good" column="post_good"/>
+        <result property="cheer" column="post_cheer"/>
         <result property="temp" column="temp"/>
         <result property="memberNum" column="member_num"/>
+
         <collection property="items" ofType="fashionmanager.baek.develop.dto.ItemDTO">
-            <id property="num" column="num"/>
-            <result property="name" column="name"/>
+            <id property="num" column="item_num"/>
+            <result property="name" column="item_name"/>
         </collection>
-        <collection property="hashtags" ofType="fashionmanager.kim.develop.dto.HashTagDTO">
-            <id property="num" column="num"/>
-            <result property="name" column="name"/>
+
+        <collection property="hashtags" ofType="fashionmanager.baek.develop.dto.ResponseHashtagsDTO">
+            <id property="num" column="tag_num"/>
+            <result property="name" column="tag_name"/>
         </collection>
+
         <collection property="photos" ofType="fashionmanager.baek.develop.dto.PhotoDTO">
             <id property="num" column="num"/>
-            <result property="postNum" column="post_num"/>
             <result property="name" column="name"/>
             <result property="path" column="path"/>
             <result property="photoCategoryNum" column="photo_category_num"/>
@@ -53,8 +55,8 @@
              , p.name AS photo_name
              , p.path AS photo_path
           FROM fashion_post fp
-          LEFT JOIN fahion_item pi ON pi.item_num = fi.num
           LEFT JOIN post_item pi ON fp.num = pi.post_num
+          LEFT JOIN fashion_item fi ON pi.item_num = fi.num
           LEFT JOIN fashion_hashtag fh ON fp.num = fh.post_num
           LEFT JOIN hash_tag ht ON fh.tag_num = ht.num
           LEFT JOIN photo p ON fp.num = p.post_num AND p.photo_category_num = 1
