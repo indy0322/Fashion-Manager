@@ -14,8 +14,6 @@
 
         <!--조인을 위한 추가 매핑-->
         <result property="memberName" column="MEMBER_NAME"/>
-<!--        <result property="thumbName"  column="THUMB_NAME"/>-->
-<!--        <result property="thumbPath"  column="THUMB_PATH"/>-->
     </resultMap>
 
     <select id="selectResultApply" parameterType="map" resultMap="influencerApplyMap">
