@@ -60,6 +60,13 @@ public class FashionPostServiceImpl implements PostService {
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }
+        int good = postDetail.getGood();
+        int cheer = postDetail.getCheer();
+        double temp = 0.0;
+        if(good + cheer > 0) {
+            temp = ((double) good / (good + cheer)) * 100.0;
+        }
+        postDetail.setTemp(temp);
         return postDetail;
     }
 
