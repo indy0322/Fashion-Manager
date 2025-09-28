@@ -65,7 +65,7 @@ public class InfluencerApplyServiceTest {
 
         InfluencerApplyCreateRequestDTO res
                 = Assertions.assertDoesNotThrow(
-                () ->  influencerApplyService.insertInfluencerApply(req)
+                () ->  influencerApplyService.insertInfluencerApply(req, null)
         );
 
         // 생성 된 신청 맞는지 확인

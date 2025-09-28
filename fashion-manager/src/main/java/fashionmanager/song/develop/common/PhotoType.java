@@ -1,7 +1,5 @@
 package fashionmanager.song.develop.common;
 
-import jakarta.persistence.*;
-import lombok.*;
 
 public enum PhotoType {
 
@@ -27,5 +25,4 @@ public enum PhotoType {
     public int getCode() {
         return code;
     }
-
 }

@@ -2,6 +2,8 @@ package fashionmanager.song.develop.menteeApply.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,5 +18,8 @@ public class MenteeApplyCreateRequestDTO {
     private Integer memberNum;
 
     private String memberName;
+
+    //  이미지 관련 코드
+    private List<String> photoPaths;
 
 }

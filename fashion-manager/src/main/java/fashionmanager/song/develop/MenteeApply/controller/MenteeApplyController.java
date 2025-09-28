@@ -5,8 +5,10 @@ import fashionmanager.song.develop.menteeApply.dto.MenteeApplyResponseDTO;
 import fashionmanager.song.develop.menteeApply.service.MenteeApplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,11 +44,12 @@ public class MenteeApplyController {
     }
 
     // 멘토링 신청
-    @PostMapping("/insertMenteeApply")
+    // consumes = 이거 써서 반드시 multipart/form-data 로 요청해야 함 (JSON+파일 동시 전송), 이미지 멀티로 보낼때
+    @PostMapping(value = "/insertMenteeApply", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MenteeApplyCreateRequestDTO> insertMenteeApply(
-            @RequestBody MenteeApplyCreateRequestDTO req) {
-        MenteeApplyCreateRequestDTO saved = menteeApplyService.insertMenteeApply(req);
-
+            @ModelAttribute MenteeApplyCreateRequestDTO req,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
+        MenteeApplyCreateRequestDTO saved = menteeApplyService.insertMenteeApply(req, files);
         if (saved != null) {
             log.info("멘토링 신청 완료!: {}", saved);
             return ResponseEntity.ok(saved);
@@ -59,7 +62,7 @@ public class MenteeApplyController {
     // 멘토링 신청 수정
     @PutMapping("/updateMenteeApply")
     public ResponseEntity<Map<String,Object>> updateMenteeApply(
-            @RequestBody MenteeApplyResponseDTO req) {
+                                               @RequestBody MenteeApplyResponseDTO req) {
         int result = menteeApplyService.updateMenteeApply(req);
 
         Map<String, Object> body = new HashMap<>();
@@ -69,8 +72,8 @@ public class MenteeApplyController {
             log.info("멘토링 신청서 수정 완료!: {}", result);
             return ResponseEntity.ok(body);
         } else {
-            log.warn("멘토링 신청서 수정 실패!: {}", result);
-            return ResponseEntity.badRequest().body(body);
+            log.warn("멘토링 신청서 수정 실패!: {}", req);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -85,14 +88,14 @@ public class MenteeApplyController {
                 .deleteMenteeApplyByMentoringPostNumAndMemberNum(content, mentoringPostNum, memberNum);
 
         Map<String, Object> body = new HashMap<>();
-        body.put("delete", delete);
+        body.put("멘토링 신청서 삭제", delete);
 
         if (delete > 0) {
             log.info("멘토링 신청서 삭제 완료!: {}", delete);
-            return ResponseEntity.ok(body); // 200 OK
+            return ResponseEntity.ok(body);
         } else {
             log.info("멘토링 신청서 삭제 실패!: {}", delete);
-            return ResponseEntity.badRequest().body(body); // 400 Bad Request
+            return ResponseEntity.badRequest().body(body);
         }
     }
 

@@ -61,7 +61,7 @@ public class MenteeApplyServiceTest {
 
         MenteeApplyCreateRequestDTO res
                 = Assertions.assertDoesNotThrow(
-                () -> menteeApplyService.insertMenteeApply(req)
+                () -> menteeApplyService.insertMenteeApply(req,null)
         );
 
         Assertions.assertEquals("대기", res.getAccept());

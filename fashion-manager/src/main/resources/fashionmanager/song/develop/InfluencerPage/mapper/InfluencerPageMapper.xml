@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="fashionmanager.song.develop.InfluencerPage.mapper.InfluencerPageMapper">
+<mapper namespace="fashionmanager.song.develop.influencerPage.mapper.InfluencerPageMapper">
 
-    <resultMap id="influencerPageMap" type="fashionmanager.song.develop.InfluencerPage.dto.InfluencerPageResponseDTO">
+    <resultMap id="influencerPageMap" type="fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO">
         <id property="num" column="NUM"/>
         <result property="title" column="TITLE"/>
         <result property="content" column="CONTENT"/>
@@ -18,15 +18,15 @@
 
     <select id="selectResultPage" parameterType="map" resultMap="influencerPageMap">
         SELECT
-        A.NUM,
-        A.TITLE,
-        A.CONTENT,
-        A.MEMBER_NUM,
-        B.NAME AS MEMBER_NAME,
-        A.INSTA,
-        A.PHONE
-        FROM INFLUENCER_PAGE A
-        JOIN MEMBER B ON B.NUM = A.MEMBER_NUM
+               A.NUM
+             , A.TITLE
+             , A.CONTENT
+             , A.MEMBER_NUM
+             , B.NAME AS MEMBER_NAME
+             , A.INSTA
+             , A.PHONE
+          FROM INFLUENCER_PAGE A
+          JOIN MEMBER B ON B.NUM = A.MEMBER_NUM
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="title != null and title != ''">
                 A.TITLE LIKE CONCAT('%', #{title}, '%')
