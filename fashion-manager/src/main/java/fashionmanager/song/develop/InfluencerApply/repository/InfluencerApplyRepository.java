@@ -1,6 +1,6 @@
-package fashionmanager.song.develop.InfluencerApply.repository;
+package fashionmanager.song.develop.influencerApply.repository;
 
-import fashionmanager.song.develop.InfluencerApply.aggregate.InfluencerApplyEntity;
+import fashionmanager.song.develop.influencerApply.aggregate.InfluencerApplyEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

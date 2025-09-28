@@ -3,23 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="fashionmanager.song.develop.InfluencerApply.mapper.InfluencerApplyMapper">
+<mapper namespace="fashionmanager.song.develop.influencerApply.mapper.InfluencerApplyMapper">
 
-    <resultMap id="influencerApplyMap" type="fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyResponseDTO">
+    <resultMap id="influencerApplyMap" type="fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDTO">
         <id property="num" column="NUM"/>
         <result property="title" column="TITLE"/>
         <result property="content" column="CONTENT"/>
         <result property="accept" column="ACCEPT"/>
         <result property="memberNum" column="MEMBER_NUM"/>
+
+        <!--조인을 위한 추가 매핑-->
+        <result property="memberName" column="MEMBER_NAME"/>
+<!--        <result property="thumbName"  column="THUMB_NAME"/>-->
+<!--        <result property="thumbPath"  column="THUMB_PATH"/>-->
     </resultMap>
 
-    <select id="selectResultApply" resultMap="influencerApplyMap">
+    <select id="selectResultApply" parameterType="map" resultMap="influencerApplyMap">
         SELECT
-              NUM
-            , TITLE
-            , CONTENT
-            , ACCEPT
-            , MEMBER_NUM
-         FROM INFLUENCER_APPLY
+               A.NUM
+             , A.TITLE
+             , A.CONTENT
+             , A.ACCEPT
+             , A.MEMBER_NUM
+             , B.NAME AS MEMBER_NAME
+          FROM INFLUENCER_APPLY A
+          JOIN MEMBER B ON B.NUM = A.MEMBER_NUM
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="title != null and title != ''">
+                A.TITLE LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="content != null and content != ''">
+                AND A.CONTENT LIKE CONCAT('%', #{content}, '%')
+            </if>
+            <if test="accept != null and accept != ''">
+                AND A.ACCEPT LIKE CONCAT('%', #{accept}, '%')
+            </if>
+            <if test="memberNum != null">
+                AND A.MEMBER_NUM = #{memberNum}
+            </if>
+            <if test="memberName != null and memberName != ''">
+                AND B.NAME LIKE CONCAT('%', #{memberName}, '%')
+            </if>
+        </trim>
     </select>
 </mapper>
