@@ -2,12 +2,8 @@ package fashionmanager.baek.develop.controller;
 
 
 import fashionmanager.baek.develop.aggregate.PostType;
-import fashionmanager.baek.develop.dto.ModifyRequestDTO;
-import fashionmanager.baek.develop.dto.ModifyResponseDTO;
-import fashionmanager.baek.develop.dto.RegistResponseDTO;
-import fashionmanager.baek.develop.dto.RegistRequestDTO;
+import fashionmanager.baek.develop.dto.*;
 import fashionmanager.baek.develop.service.PostService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +23,36 @@ public class PostController {
         this.postServiceFactory = postServiceFactory;
     }
 
+    @GetMapping("/{postType}")
+    public ResponseEntity<List<SelectAllPostDTO>> getPostList(@PathVariable String postType){
+        PostType type = PostType.valueOf(postType.toUpperCase());
+        PostService postService = postServiceFactory.getService(type);
+
+        List<SelectAllPostDTO> response = postService.getPostList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{postType}/{postNum}")
+    public ResponseEntity<SelectDetailPostDTO> getDetailPost(
+            @PathVariable String postType, @PathVariable int postNum) {
+        PostType type = PostType.valueOf(postType.toUpperCase());
+        PostService postService = postServiceFactory.getService(type);
+
+        SelectDetailPostDTO response = postService.getDetailPost(postNum);
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
     @PostMapping("/{postType}")   // Path로 값을 받아 알맞은 service로 연결돼 글 작성
     @Transactional
     public ResponseEntity<RegistResponseDTO> registPost
             (@PathVariable String postType, @RequestPart("newPost") RegistRequestDTO newPost,
              @RequestPart(value = "postImages", required = false) List<MultipartFile> postFiles,
-            @RequestPart(value= "itemImages", required = false)  List<MultipartFile> itemFiles) {
-            // 사진은 Nullable하므로 required = false
+             @RequestPart(value = "itemImages", required = false) List<MultipartFile> itemFiles) {
+        // 사진은 Nullable하므로 required = false
         PostType type = PostType.valueOf(postType.toUpperCase());
         PostService postService = postServiceFactory.getService(type);  // postService 결정
 
