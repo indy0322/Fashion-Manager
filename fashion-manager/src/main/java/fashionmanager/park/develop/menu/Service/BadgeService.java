@@ -45,7 +45,9 @@ public class BadgeService {
         Badge badge = badgeRepository.findById(badgeNum)
                 .orElseThrow(() -> new RuntimeException("뱃지 없음"));
 
-        user.getBadges().remove(badge); // 관계 해제
+        user.getBadges().remove(badge);
+        badge.getUsers().remove(user);
+
         userRepository.save(user); // JPA가 assigned_badge 테이블에서 DELETE 실행
     }
 }

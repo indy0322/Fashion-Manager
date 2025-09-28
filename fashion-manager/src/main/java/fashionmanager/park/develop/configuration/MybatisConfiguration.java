@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@MapperScan(basePackages = "park.ohgiraffers.fashionmanager", annotationClass = Mapper.class)
+@MapperScan(basePackages = "fashionmanager.park.develop", annotationClass = Mapper.class)
 public class MybatisConfiguration {
 
 
