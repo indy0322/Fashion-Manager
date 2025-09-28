@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: member-service
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/fashion_manager
@@ -14,3 +16,13 @@ mybatis:
 token:
   expiration_time: 86400000
   secret: CxCdBy6P0vET6d/oKN9YSXzUBwfYGR+petj55jmBGrk3XaTqpaCMdgYbv7Q7ccrwjc2441jyOY0OKCFqbZPOHQ==
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance-id}:${random.value}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
