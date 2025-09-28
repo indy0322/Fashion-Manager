@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>회원 번호 </th>
+        <th>회원 아이디 </th>
+        <th>회원 비밀번호 </th>
+        <th>회원 이메일 </th>
+        <th>회원 이름 </th>
+        <th>회원 나이 </th>
+        <th>회원 성별 </th>
+
+    </tr>
+    <tr>
+        <td th:text="${ user.userNum }"></td>
+        <td th:text="${ user.userId }"></td>
+        <td th:text="${ user.userPwd }"></td>
+        <td th:text="${ user.userEmail }"></td>
+        <td th:text="${ user.userName }"></td>
+        <td th:text="${ user.userAge }"></td>
+        <td th:text="${ user.userGender }"></td>
+    </tr>
+</table>
+</body>
+</html>
