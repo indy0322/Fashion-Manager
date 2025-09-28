@@ -21,9 +21,12 @@
 <p>성별: <span th:text="${user.userGender}"></span></p>
 
 
-<h4>보유 뱃지: </h4>
+
+<h4>보유 뱃지</h4>
 <ul>
-    <li th:each="badge : ${user.badges}" th:text="${badge.badgeName}"></li>
+    <li th:each="badge : ${user.badges}">
+        <span th:text="${badge.badgeName}"></span>
+    </li>
 </ul>
 
 

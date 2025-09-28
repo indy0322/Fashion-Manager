@@ -1,9 +1,9 @@
 package fashionmanager.park.develop.menu.DTO;
 
 
-
 import lombok.*;
 
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class UserDTO {
     private int ReportCount;
     private int DailyReportCount;
 
-
+    private List<BadgeDTO> badges;
 
 
 

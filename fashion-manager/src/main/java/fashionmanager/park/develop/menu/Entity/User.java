@@ -56,11 +56,18 @@ public class User {
             joinColumns = @JoinColumn(name = "member_num"),    // User FK
             inverseJoinColumns = @JoinColumn(name = "badge_num") // Badge FK
     )
+
+    // 뱃지 수여
     private List<Badge> badges = new ArrayList<>();
 
     // 편의 메소드
     public void addBadge(Badge badge) {
         this.badges.add(badge);
+    }
+
+    // 뱃지 삭제
+    public void removeBadge(Badge badge) {
+        this.badges.remove(badge);
     }
 
 
