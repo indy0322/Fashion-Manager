@@ -1,4 +1,5 @@
-package fashionmanager.song.develop.InfluencerPage.aggregate;
+package fashionmanager.song.develop.common;
+
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num")
@@ -61,4 +63,3 @@ public class MemberEntity {
     @Column(name = "message_allow")
     private boolean memberMessageAllow;
 }
-

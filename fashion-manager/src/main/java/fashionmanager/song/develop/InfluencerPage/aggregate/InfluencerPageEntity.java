@@ -1,5 +1,7 @@
-package fashionmanager.song.develop.InfluencerPage.aggregate;
+package fashionmanager.song.develop.influencerPage.aggregate;
 
+import fashionmanager.song.develop.common.MemberEntity;
+import fashionmanager.song.develop.common.PhotoType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,19 +26,15 @@ public class InfluencerPageEntity {
     @Column(name = "insta")
     private String insta;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone")
     private String phone;
 
-    @Column(name = "member_num", nullable = false)
+    @Column(name = "member_num", nullable = false) // fk라서 null 불가
     private int memberNum;
 
-
+    // join을 위한 ManyToOne과 JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_num", insertable = false, updatable = false)
     private MemberEntity member;
-
-
-
-
 
 }

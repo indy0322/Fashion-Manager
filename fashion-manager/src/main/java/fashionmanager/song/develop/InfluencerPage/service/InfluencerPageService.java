@@ -1,29 +1,36 @@
-package fashionmanager.song.develop.InfluencerPage.service;
+package fashionmanager.song.develop.influencerPage.service;
 
-import fashionmanager.song.develop.InfluencerPage.aggregate.InfluencerPageEntity;
-import fashionmanager.song.develop.InfluencerPage.dto.InfluencerPageCreateRequestDTO;
-import fashionmanager.song.develop.InfluencerPage.dto.InfluencerPageResponseDTO;
-import fashionmanager.song.develop.InfluencerPage.mapper.InfluencerPageMapper;
-import fashionmanager.song.develop.InfluencerPage.repository.InfluencerPageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import fashionmanager.baek.develop.entity.PhotoEntity;
+import fashionmanager.baek.develop.repository.PhotoRepository;
+import fashionmanager.song.develop.influencerPage.aggregate.InfluencerPageEntity;
+import fashionmanager.song.develop.influencerPage.dto.InfluencerPageCreateRequestDTO;
+import fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO;
+import fashionmanager.song.develop.influencerPage.mapper.InfluencerPageMapper;
+import fashionmanager.song.develop.influencerPage.repository.InfluencerPageRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor   // 생성자 자동으로 해주는 어노테이션
 public class InfluencerPageService {
 
     private final InfluencerPageMapper influencerPageMapper;
     private final InfluencerPageRepository influencerPageRepository;
 
-
-    @Autowired
-    public InfluencerPageService(InfluencerPageMapper influencerPageMapper,
-                                 InfluencerPageRepository influencerPageRepository) {
-        this.influencerPageMapper = influencerPageMapper;
-        this.influencerPageRepository = influencerPageRepository;
-    }
+//    /*이미지 파일 업로드 코드 추가*/
+//    private final PhotoRepository photoRepository;
+//    private String UploadPath = "C:\\uploadFiles\\Influencer_Page";
+//    private static final int CATEGORY_CODE = 6;
+//
+//    /*이미지 파일 경로 지정*/
+//    @Value(("${C:/lecture/uploadFiles}"))
+//    private String filePath;
 
 
     // 페이지 조건 조회, 혹은 전체 조회
@@ -31,15 +38,32 @@ public class InfluencerPageService {
                                                             String insta,
                                                             String phone,
                                                             Integer memberNum) {
+
         return influencerPageMapper.selectResultPage(title, insta, phone, memberNum);
 
+//        사진 테스트중
+//        return List<InfluencerPageResponseDTO> list
+//                = influencerPageMapper.selectResultPage(title, insta, phone, memberNum);
+//
+//        for (InfluencerPageResponseDTO influencerPageResponseDTO : list) {
+//            int pageNum = influencerPageResponseDTO.getNum();
+//
+//            List<String> paths = photoRepository
+//                    .findAllByPostNumAndPhotoCategoryNum(pageNum, CATEGORY_CODE)
+//                    .stream()
+//                    .map(p -> p.getPath() + File.separator + p.getName())
+//                    .toList();
+//            influencerPageResponseDTO.setPhotoPaths(paths);
+//        }
+//        return list;
     }
+
+
     // 페이지 생성
     @Transactional
-    public InfluencerPageCreateRequestDTO insertInfluencerPage(InfluencerPageCreateRequestDTO req) {
+    public InfluencerPageCreateRequestDTO insertInfluencerPage(InfluencerPageCreateRequestDTO req, List<MultipartFile> files) {
 
-        //  여기서 인스타랑 폰 이랑은 null 확인
-
+        //  여기서 인스타랑 폰은 null 확인
         InfluencerPageEntity entity = new InfluencerPageEntity();
         entity.setTitle(req.getTitle());
         entity.setContent(req.getContent());
@@ -49,18 +73,18 @@ public class InfluencerPageService {
 
         InfluencerPageEntity saved = influencerPageRepository.save(entity);
 
-        InfluencerPageCreateRequestDTO res = new InfluencerPageCreateRequestDTO();
-        res.setNum(saved.getNum());
-        res.setTitle(saved.getTitle());
-        res.setContent(saved.getContent());
-        res.setInsta(saved.getInsta());
-        res.setPhone(saved.getPhone());
-        res.setMemberNum(saved.getMemberNum());
-        return res;
+
+        InfluencerPageCreateRequestDTO reqSaved = new InfluencerPageCreateRequestDTO();
+        reqSaved.setNum(saved.getNum());
+        reqSaved.setTitle(saved.getTitle());
+        reqSaved.setContent(saved.getContent());
+        reqSaved.setInsta(saved.getInsta());
+        reqSaved.setPhone(saved.getPhone());
+        reqSaved.setMemberNum(saved.getMemberNum());
+        return reqSaved;
     }
 
     // 페이지 수정
-
     @Transactional
     public int updateInfluencerPage(InfluencerPageResponseDTO req) {
         return influencerPageRepository
@@ -80,4 +104,7 @@ public class InfluencerPageService {
     public int deleteInfluencerPageTitleAndMemberNum(String title, int memberNum) {
         return influencerPageRepository.deleteInfluencerPageTitleAndMemberNum(title, memberNum);
     }
+
+
+
 }

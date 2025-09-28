@@ -1,4 +1,4 @@
-package fashionmanager.song.develop.InfluencerApply.dto;
+package fashionmanager.song.develop.influencerApply.dto;
 
 import lombok.*;
 
@@ -15,5 +15,6 @@ public class InfluencerApplyResponseDTO {
     private String accept;
     private Integer memberNum;
 
-//    private String memberName;
+    private String memberName;
+
 }

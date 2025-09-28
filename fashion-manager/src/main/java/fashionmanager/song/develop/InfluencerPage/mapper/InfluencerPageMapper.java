@@ -1,6 +1,6 @@
-package fashionmanager.song.develop.InfluencerPage.mapper;
+package fashionmanager.song.develop.influencerPage.mapper;
 
-import fashionmanager.song.develop.InfluencerPage.dto.InfluencerPageResponseDTO;
+import fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

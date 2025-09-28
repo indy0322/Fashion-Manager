@@ -1,6 +1,6 @@
-package fashionmanager.song.develop.InfluencerApply.mapper;
+package fashionmanager.song.develop.influencerApply.mapper;
 
-import fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyResponseDTO;
+import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -8,5 +8,9 @@ import java.util.List;
 @Mapper
 public interface InfluencerApplyMapper {
 
-    List<InfluencerApplyResponseDTO> selectResultApply();
+    List<InfluencerApplyResponseDTO> selectResultApply(@Param("title") String title,
+                                                       @Param("content") String content,
+                                                       @Param("accept") String accept,
+                                                       @Param("memberNum") Integer memberNum,
+                                                       @Param("memberName") String memberName);
 }

@@ -1,8 +1,8 @@
-package fashionmanager.song.develop.InfluencerApply.controller;
+package fashionmanager.song.develop.influencerApply.controller;
 
-import fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyCreateRequestDTO;
-import fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyResponseDTO;
-import fashionmanager.song.develop.InfluencerApply.service.InfluencerApplyService;
+import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyCreateRequestDTO;
+import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDTO;
+import fashionmanager.song.develop.influencerApply.service.InfluencerApplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,15 @@ public class InfluencerApplyController {
 
     // 인플루언서 신청 조회
     @GetMapping("/selectInfluencerApply")
-    public ResponseEntity<List<InfluencerApplyResponseDTO>> selectResultApply(){
-        List<InfluencerApplyResponseDTO> influencerApplyList = influencerApplyService.selectResultApply();
+    public ResponseEntity<List<InfluencerApplyResponseDTO>> selectResultApply(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String content,
+            @RequestParam(required = false) String accept,
+            @RequestParam(required = false) Integer memberNum,
+            @RequestParam(required = false) String memberName){
+        List<InfluencerApplyResponseDTO> influencerApplyList
+                = influencerApplyService.selectResultApply(
+                        title,content,accept,memberNum,memberName);
         for(InfluencerApplyResponseDTO InfluencerApply : influencerApplyList){
             log.info("인플루언서 신청 조회: {}", InfluencerApply);
         }
@@ -50,7 +57,7 @@ public class InfluencerApplyController {
     }
 
     // 인플루언서 신청 수정
-    @PostMapping("/updateInfluencerApply")
+    @PutMapping("/updateInfluencerApply")
     public ResponseEntity<Map<String, Object>> updateInfluencerApply(
             @RequestBody InfluencerApplyResponseDTO req) {
         int result = influencerApplyService.updateInfluencerApply(req);

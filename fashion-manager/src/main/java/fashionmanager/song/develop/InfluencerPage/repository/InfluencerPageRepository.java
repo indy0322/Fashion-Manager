@@ -1,6 +1,6 @@
-package fashionmanager.song.develop.InfluencerPage.repository;
+package fashionmanager.song.develop.influencerPage.repository;
 
-import fashionmanager.song.develop.InfluencerPage.aggregate.InfluencerPageEntity;
+import fashionmanager.song.develop.influencerPage.aggregate.InfluencerPageEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

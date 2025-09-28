@@ -1,4 +1,4 @@
-package fashionmanager.song.develop.InfluencerPage.dto;
+package fashionmanager.song.develop.influencerPage.dto;
 
 import lombok.*;
 

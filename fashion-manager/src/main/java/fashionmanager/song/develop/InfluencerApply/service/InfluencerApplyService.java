@@ -1,13 +1,14 @@
-package fashionmanager.song.develop.InfluencerApply.service;
+package fashionmanager.song.develop.influencerApply.service;
 
-import fashionmanager.song.develop.InfluencerApply.aggregate.InfluencerApplyEntity;
-import fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyCreateRequestDTO;
-import fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyResponseDTO;
-import fashionmanager.song.develop.InfluencerApply.mapper.InfluencerApplyMapper;
-import fashionmanager.song.develop.InfluencerApply.repository.InfluencerApplyRepository;
+import fashionmanager.song.develop.influencerApply.aggregate.InfluencerApplyEntity;
+import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyCreateRequestDTO;
+import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDTO;
+import fashionmanager.song.develop.influencerApply.mapper.InfluencerApplyMapper;
+import fashionmanager.song.develop.influencerApply.repository.InfluencerApplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,8 +25,12 @@ public class InfluencerApplyService {
         this.influencerApplyRepository = influencerApplyRepository;
     }
     // 인플루언서 신청 전체 조회
-    public List<InfluencerApplyResponseDTO> selectResultApply() {
-        return influencerApplyMapper.selectResultApply();
+    public List<InfluencerApplyResponseDTO> selectResultApply(String title,
+                                                              String content,
+                                                              String accept,
+                                                              Integer memberNum,
+                                                              String memberName) {
+        return influencerApplyMapper.selectResultApply(title, content, accept, memberNum, memberName);
     }
 
     // 인플루언서 신청
@@ -44,13 +49,14 @@ public class InfluencerApplyService {
 
         InfluencerApplyEntity entitySaved = influencerApplyRepository.save(entity);
 
-        return new InfluencerApplyCreateRequestDTO(
-                entitySaved.getNum(),
-                entitySaved.getTitle(),
-                entitySaved.getContent(),
-                entitySaved.getAccept(),
-                entitySaved.getMemberNum()
-        );
+        InfluencerApplyCreateRequestDTO reqSaved = new InfluencerApplyCreateRequestDTO();
+        reqSaved.setNum(entitySaved.getNum());
+        reqSaved.setTitle(entitySaved.getTitle());
+        reqSaved.setContent(entitySaved.getContent());
+        reqSaved.setAccept(entitySaved.getAccept());
+        reqSaved.setMemberNum(entitySaved.getMemberNum());
+        return reqSaved;
+
     }
     // 인플루언서 신청 수정
     // 왜 이렇게 했냐 하면

@@ -1,6 +1,8 @@
-package fashionmanager.song.develop.InfluencerPage.dto;
+package fashionmanager.song.develop.influencerPage.dto;
 
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,9 @@ public class InfluencerPageResponseDTO {
     private int memberNum;
 
     private String memberName;
+
+
+    //  이미지 관련 코드
+    private List<String> photoPaths;
+
 }

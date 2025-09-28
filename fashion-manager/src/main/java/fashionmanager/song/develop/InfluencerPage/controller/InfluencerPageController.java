@@ -1,12 +1,14 @@
-package fashionmanager.song.develop.InfluencerPage.controller;
+package fashionmanager.song.develop.influencerPage.controller;
 
-import fashionmanager.song.develop.InfluencerPage.dto.InfluencerPageCreateRequestDTO;
-import fashionmanager.song.develop.InfluencerPage.dto.InfluencerPageResponseDTO;
-import fashionmanager.song.develop.InfluencerPage.service.InfluencerPageService;
+import fashionmanager.baek.develop.entity.PhotoEntity;
+import fashionmanager.song.develop.influencerPage.dto.InfluencerPageCreateRequestDTO;
+import fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO;
+import fashionmanager.song.develop.influencerPage.service.InfluencerPageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +33,8 @@ public class InfluencerPageController {
             @RequestParam(required = false) String insta,
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) Integer memberNum) {
-        List<InfluencerPageResponseDTO> searchPageList = influencerPageService.selectResultPage(title, insta, phone, memberNum);
+        List<InfluencerPageResponseDTO> searchPageList
+                = influencerPageService.selectResultPage(title, insta, phone, memberNum);
         for (InfluencerPageResponseDTO influencerPage : searchPageList) {
             log.info("인플루언서 페이지 조건 조회: {}", influencerPage);
         }
@@ -40,12 +43,14 @@ public class InfluencerPageController {
     }
 
 
-    // 인플루언서 페이지 생성
+    // 인플루언서 페이지 생성 + 사진 추가
+    // 파일 이미지와 DTO를 같이 받으려면 RequestPart를 써야함
     @PostMapping("/insertInfluencerPage")
     public ResponseEntity<InfluencerPageCreateRequestDTO> insertInfluencerPage(
-            @RequestBody InfluencerPageCreateRequestDTO req) {
+            @RequestPart("data") InfluencerPageCreateRequestDTO req,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
 
-        InfluencerPageCreateRequestDTO saved = influencerPageService.insertInfluencerPage(req);
+        InfluencerPageCreateRequestDTO saved = influencerPageService.insertInfluencerPage(req, files);
 
         if (saved != null) {
             log.info("인플루언서 페이지 생성 완료!: {}", saved);
@@ -57,7 +62,7 @@ public class InfluencerPageController {
     }
 
     // 인플루언서 페이지 수정
-    @PostMapping("/updateInfluencerPage")
+    @PutMapping("/updateInfluencerPage")
     public ResponseEntity<Map<String, Object>> updateInfluencerPage(
                                                 @RequestBody InfluencerPageResponseDTO req) {
         int result = influencerPageService.updateInfluencerPage(req);
@@ -92,4 +97,6 @@ public class InfluencerPageController {
             return ResponseEntity.badRequest().body(body); // 400 Bad Request
         }
     }
+
+
 }
