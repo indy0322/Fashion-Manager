@@ -1,5 +1,6 @@
-package fashionmanager.song.develop.MenteeApply.aggregate;
+package fashionmanager.song.develop.menteeApply.aggregate;
 
+import fashionmanager.song.develop.common.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,4 +30,8 @@ public class MenteeApplyEntity {
     @Column(name = "member_num")
     private int memberNum;
 
+    // join을 위한 ManyToOne과 JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_num", insertable = false, updatable = false)
+    private MemberEntity member;
 }

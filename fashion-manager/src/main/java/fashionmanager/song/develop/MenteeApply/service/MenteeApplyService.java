@@ -1,10 +1,10 @@
-package fashionmanager.song.develop.MenteeApply.service;
+package fashionmanager.song.develop.menteeApply.service;
 
-import fashionmanager.song.develop.MenteeApply.aggregate.MenteeApplyEntity;
-import fashionmanager.song.develop.MenteeApply.dto.MenteeApplyCreateRequestDTO;
-import fashionmanager.song.develop.MenteeApply.dto.MenteeApplyResponseDTO;
-import fashionmanager.song.develop.MenteeApply.mapper.MenteeApplyMapper;
-import fashionmanager.song.develop.MenteeApply.repository.MenteeRepository;
+import fashionmanager.song.develop.menteeApply.aggregate.MenteeApplyEntity;
+import fashionmanager.song.develop.menteeApply.dto.MenteeApplyCreateRequestDTO;
+import fashionmanager.song.develop.menteeApply.dto.MenteeApplyResponseDTO;
+import fashionmanager.song.develop.menteeApply.mapper.MenteeApplyMapper;
+import fashionmanager.song.develop.menteeApply.repository.MenteeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +24,12 @@ public class MenteeApplyService {
         this.menteeRepository = menteeRepository;
     }
 
-    public List<MenteeApplyResponseDTO> selectResultApply() {
-        return menteeApplyMapper.selectResultApply();
+    // 멘토링 신청 조회
+    public List<MenteeApplyResponseDTO> selectResultApply(String content,
+                                                          String accept,
+                                                          Integer mentoringPostNum,
+                                                          String memberName) {
+        return menteeApplyMapper.selectResultApply(content, accept, mentoringPostNum, memberName);
     }
 
     @Transactional
@@ -43,14 +47,12 @@ public class MenteeApplyService {
 
         MenteeApplyEntity entitySaved = menteeRepository.save(entity);
 
-        return new MenteeApplyCreateRequestDTO(
-                entitySaved.getNum(),
-                entitySaved.getContent(),
-                entitySaved.getAccept(),
-                entitySaved.getMentoringPostNum(),
-                entitySaved.getMemberNum()
-        );
-
+        MenteeApplyCreateRequestDTO reqSaved = new MenteeApplyCreateRequestDTO();
+        reqSaved.setContent(entitySaved.getContent());
+        reqSaved.setAccept(entitySaved.getAccept());
+        reqSaved.setMentoringPostNum(entitySaved.getMentoringPostNum());
+        reqSaved.setMemberNum(entitySaved.getMemberNum());
+        return reqSaved;
     }
 
     @Transactional

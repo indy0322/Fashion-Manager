@@ -1,30 +1,18 @@
-package fashionmanager.song.develop.MenteeApply.repository;
+package fashionmanager.song.develop.menteeApply.repository;
 
-import fashionmanager.song.develop.MenteeApply.aggregate.MenteeApplyEntity;
+import fashionmanager.song.develop.menteeApply.aggregate.MenteeApplyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 public interface MenteeRepository extends JpaRepository<MenteeApplyEntity, Integer> {
 
-    @Modifying
-    @Transactional
-    @Query(value = """
-    UPDATE MENTEE_APPLY
-       SET 
-           content = :content
-     WHERE num = :num
-       AND member_num = :memberNum
-""", nativeQuery = true)
-    int updateMenteeApply(@Param("num") Integer num,
-                          @Param("memberNum") Integer memberNum,
-                          @Param("content") String content,
-                          @Param("MentoringPostNum") String title,
-                          @Param("accept") String accept);
-
+    Optional<MenteeApplyEntity> findById(Integer id);
 
     @Modifying
     @Transactional

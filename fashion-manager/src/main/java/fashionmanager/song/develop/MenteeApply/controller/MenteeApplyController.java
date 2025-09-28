@@ -1,8 +1,8 @@
-package fashionmanager.song.develop.MenteeApply.controller;
+package fashionmanager.song.develop.menteeApply.controller;
 
-import fashionmanager.song.develop.MenteeApply.dto.MenteeApplyCreateRequestDTO;
-import fashionmanager.song.develop.MenteeApply.dto.MenteeApplyResponseDTO;
-import fashionmanager.song.develop.MenteeApply.service.MenteeApplyService;
+import fashionmanager.song.develop.menteeApply.dto.MenteeApplyCreateRequestDTO;
+import fashionmanager.song.develop.menteeApply.dto.MenteeApplyResponseDTO;
+import fashionmanager.song.develop.menteeApply.service.MenteeApplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,29 +11,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/menteeApply")
 @Slf4j
-public class MenteeController {
+public class MenteeApplyController {
 
     private final MenteeApplyService menteeApplyService;
 
     @Autowired
-    public MenteeController(MenteeApplyService menteeApplyService) {
+    public MenteeApplyController(MenteeApplyService menteeApplyService) {
         this.menteeApplyService = menteeApplyService;
     }
 
 
     // 멘토링 신청 조회
     @GetMapping("/selectMenteeApply")
-    public ResponseEntity<List<MenteeApplyResponseDTO>> selectResultApply() {
-        List<MenteeApplyResponseDTO> MenteeApply = menteeApplyService.selectResultApply();
-        for (MenteeApplyResponseDTO MenteeApplyDTO : MenteeApply) {
+    public ResponseEntity<List<MenteeApplyResponseDTO>> selectResultApply(
+            @RequestParam(required = false) String content,
+            @RequestParam(required = false) String accept,
+            @RequestParam(required = false) Integer mentoringPostNum,
+            @RequestParam(required = false) String memberName) {
+        List<MenteeApplyResponseDTO> MenteeApplyList
+                = menteeApplyService.selectResultApply(
+                        content,accept,mentoringPostNum,memberName);
+        for (MenteeApplyResponseDTO MenteeApplyDTO : MenteeApplyList) {
             log.info("멘토링 신청 조회: {}", MenteeApplyDTO);
         }
-        return ResponseEntity.ok(MenteeApply);
+        return ResponseEntity.ok(MenteeApplyList);
     }
 
     // 멘토링 신청
@@ -52,7 +57,7 @@ public class MenteeController {
     }
 
     // 멘토링 신청 수정
-    @PostMapping("/updateMenteeApply")
+    @PutMapping("/updateMenteeApply")
     public ResponseEntity<Map<String,Object>> updateMenteeApply(
             @RequestBody MenteeApplyResponseDTO req) {
         int result = menteeApplyService.updateMenteeApply(req);

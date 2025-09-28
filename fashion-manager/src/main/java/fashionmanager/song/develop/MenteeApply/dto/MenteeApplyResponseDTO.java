@@ -1,4 +1,4 @@
-package fashionmanager.song.develop.MenteeApply.dto;
+package fashionmanager.song.develop.menteeApply.dto;
 
 import lombok.*;
 
@@ -15,5 +15,5 @@ public class MenteeApplyResponseDTO {
     private Integer mentoringPostNum;
     private Integer memberNum;
 
-//    private String memberName;
+    private String memberName;
 }
