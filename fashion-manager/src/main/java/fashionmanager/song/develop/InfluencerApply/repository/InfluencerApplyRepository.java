@@ -25,5 +25,6 @@ public interface InfluencerApplyRepository extends JpaRepository<InfluencerApply
     WHERE title = :title 
     AND member_num = :memberNum
         """, nativeQuery = true)
-    int deleteInfluencerApplyByTitleAndMemberNum(@Param("title") String title, @Param("memberNum") Integer memberNum);
+    int deleteInfluencerApplyByTitleAndMemberNum(@Param("title") String title,
+                                                 @Param("memberNum") Integer memberNum);
 }

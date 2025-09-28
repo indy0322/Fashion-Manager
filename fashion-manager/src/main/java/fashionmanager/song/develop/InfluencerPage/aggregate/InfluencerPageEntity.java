@@ -1,7 +1,6 @@
 package fashionmanager.song.develop.influencerPage.aggregate;
 
 import fashionmanager.song.develop.common.MemberEntity;
-import fashionmanager.song.develop.common.PhotoType;
 import jakarta.persistence.*;
 import lombok.*;
 

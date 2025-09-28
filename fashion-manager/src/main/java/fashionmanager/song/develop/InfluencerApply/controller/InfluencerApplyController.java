@@ -5,8 +5,10 @@ import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDT
 import fashionmanager.song.develop.influencerApply.service.InfluencerApplyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,12 +43,13 @@ public class InfluencerApplyController {
         return ResponseEntity.ok(influencerApplyList);
     }
 
-    // 인플루언서 신청
-    @PostMapping("/insertInfluencerApply")
+    // 인플루언서 신청 생성 + 사진 추가
+    //  consumes = 이거 써서 반드시 multipart/form-data 로 요청해야 함 (JSON+파일 동시 전송), 이미지 멀티로 보낼때
+    @PostMapping(value = "/insertInfluencerApply", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<InfluencerApplyCreateRequestDTO> insertInfluencerApply(
-            @RequestBody InfluencerApplyCreateRequestDTO req) {
-        InfluencerApplyCreateRequestDTO saved = influencerApplyService.insertInfluencerApply(req);
-
+                                    @ModelAttribute InfluencerApplyCreateRequestDTO req,
+                                    @RequestPart(value = "files", required = false) List<MultipartFile> files) {
+        InfluencerApplyCreateRequestDTO saved = influencerApplyService.insertInfluencerApply(req, files);
         if (saved != null) {
             log.info("인플루언서 신청 완료!: {}", saved);
             return ResponseEntity.ok(saved);
@@ -59,7 +62,7 @@ public class InfluencerApplyController {
     // 인플루언서 신청 수정
     @PutMapping("/updateInfluencerApply")
     public ResponseEntity<Map<String, Object>> updateInfluencerApply(
-            @RequestBody InfluencerApplyResponseDTO req) {
+                                                @RequestBody InfluencerApplyResponseDTO req) {
         int result = influencerApplyService.updateInfluencerApply(req);
 
         Map<String, Object> body = new HashMap<>();
@@ -90,7 +93,7 @@ public class InfluencerApplyController {
             return ResponseEntity.ok(body); // 200 OK
         } else {
             log.info("인플루언서 신청서 삭제 실패!: {}", delete);
-            return ResponseEntity.badRequest().body(body); // 400 Bad Request
+            return ResponseEntity.badRequest().body(body);
         }
     }
 }
