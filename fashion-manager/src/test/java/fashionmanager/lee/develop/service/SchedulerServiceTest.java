@@ -45,8 +45,7 @@ public class SchedulerServiceTest {
         Map<String, Object> afterResult = jdbcTemplate.queryForMap("SELECT SUM(monthly_good_count) as total FROM member");
         long afterTotal = ((Number) afterResult.get("total")).longValue();
         System.out.println("초기화 후 총 좋아요 수: " + afterTotal);
-
-        // 검증
+        
         Assertions.assertEquals(0, afterTotal, "월간 좋아요 수가 정상적으로 초기화되지 않았습니다.");
     }
 }
