@@ -71,6 +71,9 @@ public class FashionPostService {
     public FashionRegistResponseDTO registPost(FashionRegistRequestDTO newPost, List<MultipartFile> postFiles,
                                         List<MultipartFile> itemFiles) {
         /* 설명. 1. fashion_post table에 게시글 등록 */
+        if (newPost.getTitle() == null || newPost.getTitle().isBlank()) {
+            throw new IllegalArgumentException("제목을 입력해주세요");
+        }
         FashionPostEntity fashionPostEntity = changeToRegistPost(newPost);
         FashionPostEntity registFashionPost = fashionPostRepository.save(fashionPostEntity);
         int postNum = registFashionPost.getNum();
