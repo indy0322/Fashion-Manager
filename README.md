@@ -12,7 +12,7 @@
 
 |   |   |   |   |   |
 | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------------------: | :-----------------------------------------------------------: | :--------------------------------------------------------------: |
-|      <img src="./image/park.jpg" width="120px;" alt=""/>      |      <img src="./image/paik.webp" width="120px;" alt=""/>      |            <img src="./image/lee.jpeg" width="120px;" alt=""/>            |    <img src="./image/song.jpeg" width="120px;" alt=""/>     |      <img src="./image/kim.jpg" width="120px;" alt=""/>      |
+|      <img src="./image/park.png" width="120px;" alt=""/>      |      <img src="./image/paik.png" width="120px;" alt=""/>      |            <img src="./image/lee.png" width="120px;" alt=""/>            |    <img src="./image/song.png" width="120px;" alt=""/>     |      <img src="./image/kim.png" width="120px;" alt=""/>      |
 |      [박상윤](https://github.com/sangyoun1020)      |      [백준승](https://github.com/seoguhoe2)      |      [이순우](https://github.com/SoonWooLee1)      |      [송형석](https://github.com/thdgudtjr0415)      |      [김승민](https://github.com/indy0322)      |
 
 </div>
@@ -147,7 +147,7 @@
 
 ## 1-4. WBS
 
-<img src = "./image/wbs.png" width = "1000"> </img> <br>
+<img src = "./image/WBS.png" width = "1000"> </img> <br>
 ---
 
 ## 1-5. 요구사항 명세서 
@@ -155,9 +155,10 @@
 <img src = "./image/요구사항1.png" width = "1000"> </img>
 <img src = "./image/요구사항2.png" width = "1000"> </img> <br>
 ---
-## 1-6. UML
+## 1-6. DDD
 
-<img src = "./image/UML.png" width = "1000"> </img> <br>
+<img src = "./image/DDD1.png" width = "1000"> </img>
+<img src = "./image/DDD2.png" width = "1000"> </img> <br>
 ---
 
 ## 2. DB 모델링
@@ -168,11 +169,11 @@
 ---
 ### 2-2. 논리 모델링
 
-<img src = "./image/논리erd.png" width = "1000"> </img> <br>
+<img src = "./image/barker.png" width = "1000"> </img> <br>
 ---
 ### 2-3. 물리 모델링
 
-<img src = "./image/물리erd.png" width = "1000"> </img> <br>
+<img src = "./image/erd.png" width = "1000"> </img> <br>
 ---
 ## 3. 서버 구축
 
@@ -182,8 +183,12 @@
 <img src = "./image/리눅스slave2.png" width = "1000"> </img> <br>
 
 ---
-## 4. DDL
+## 4. DB
 
+  <details>
+    <summary> DDL</summary>
+    <img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
+  </details>
 
 
 <br>
@@ -203,10 +208,16 @@
 <div align=center><h1>STACKS</h1></div>
 
 <div align=center> 
-  <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white"> 
-  <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> 
-  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"> 
+  <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"> 
+  <img src="https://img.shields.io/badge/spring boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+  <img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white">
+  ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+  <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+  <img src="https://img.shields.io/badge/JPA-Hibernate-blue?style=for-the-badge&logo=hibernate&logoColor=white">
+  <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
+  
+
   <br>
 </div>
 
