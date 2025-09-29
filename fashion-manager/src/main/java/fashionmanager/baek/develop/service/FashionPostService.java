@@ -337,4 +337,6 @@ public class FashionPostService {
     private void deleteItems(int postNum) {
         fashionItemRepository.deleteAllByFashionPostItemPK_PostNum(postNum);
     }
+
+
 }
