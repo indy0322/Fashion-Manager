@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -30,7 +32,6 @@ public class InfluencerPageService {
     private String UploadPath = "C:\\uploadFiles\\Influencer_Page";
     // PhotoType에서 페이지 코드 가져옴
     private static final int INFLUENCER_PAGE_CODE = PhotoType.INFLUENCER_PAGE.getCode();
-
 
 
     // 페이지 조건 조회 또는 전체 조회 + 각 페이지별 사진 세팅
@@ -139,7 +140,5 @@ public class InfluencerPageService {
     public int deleteInfluencerPageTitleAndMemberNum(String title, int memberNum) {
         return influencerPageRepository.deleteInfluencerPageTitleAndMemberNum(title, memberNum);
     }
-
-
 
 }
