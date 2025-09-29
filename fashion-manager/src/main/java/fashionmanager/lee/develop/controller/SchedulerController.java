@@ -13,7 +13,7 @@ public class SchedulerController {
 
     @GetMapping("/scheduler/reset-counts")
     public String ResetMonthlyCounts() {
-        monthlyCountScheduler.resetMonthlyGoodCountManually();
-        return "Monthly good counts가 성공적으로 초기화 되었습니다!";
+        // 스케줄러가 반환하는 결과 문자열을 그대로 클라이언트에게 전달
+        return monthlyCountScheduler.resetMonthlyGoodCountManually();
     }
 }

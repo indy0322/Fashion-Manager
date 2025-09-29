@@ -12,4 +12,7 @@ public interface SchedulerMemberRepository extends JpaRepository<Member, Integer
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Member m SET m.memberMonthlyGoodCount = 0")
     void resetAllMonthlyGoodCounts();
+
+    @Query("SELECT SUM(m.memberMonthlyGoodCount) FROM Member m")
+    Long sumMonthlyGoodCounts();
 }

@@ -1,6 +1,5 @@
-package fashionmanager.lee.develop.service; // 패키지 경로는 사용자님 프로젝트에 맞게 유지
+package fashionmanager.lee.develop.service;
 
-// import 경로가 MemberRepository를 올바르게 가리키는지 확인
 import fashionmanager.lee.develop.repository.SchedulerMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,5 +14,11 @@ public class SchedulerService {
     @Transactional
     public void resetMonthlyGoodCounts() {
         schedulerMemberRepository.resetAllMonthlyGoodCounts();
+    }
+
+    public Long getTotalMonthlyGoodCounts() {
+        Long total = schedulerMemberRepository.sumMonthlyGoodCounts();
+        // 만약 회원 데이터가 하나도 없어서 합계가 NULL이면 0을 반환
+        return total == null ? 0L : total;
     }
 }
