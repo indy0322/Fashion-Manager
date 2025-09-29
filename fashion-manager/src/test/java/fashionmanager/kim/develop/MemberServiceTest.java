@@ -51,6 +51,18 @@ public class MemberServiceTest {
         int result = memberService.updateRight(new UpdateRightDTO(memberNum, memberStateNum));
         Assertions.assertEquals(result,1);
     }
+
+    @DisplayName("회원과 권한 동시 조회 테스트")
+    @Test
+    void testSelectMemberRight(){
+        String memberId = "user06";
+        Assertions.assertDoesNotThrow(
+                ()->{
+                    MemberRightDTO memberRight = memberService.selectMemberRightById(memberId);
+                    System.out.println(memberRight);
+                }
+        );
+    }
 }
 
 
