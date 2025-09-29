@@ -40,7 +40,6 @@
              , A.MEMBER_NUM AS memberNum
              , B.NAME AS memberName
         FROM COMMENT A
-        LEFT JOIN MEMBER B ON A.MEMBER_NUM = B.NUM
         WHERE A.NUM = #{commentNum}
     </select>
 
