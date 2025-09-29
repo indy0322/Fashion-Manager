@@ -1,8 +1,8 @@
 package fashionmanager.song.develop.influencerPage.controller;
 
-import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.song.develop.influencerPage.dto.InfluencerPageCreateRequestDTO;
 import fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO;
+import fashionmanager.song.develop.influencerPage.service.InfluencerPageReadService;
 import fashionmanager.song.develop.influencerPage.service.InfluencerPageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,13 @@ import java.util.Map;
 public class InfluencerPageController {
     private final InfluencerPageService influencerPageService;
 
+
+
     @Autowired
-    public InfluencerPageController(InfluencerPageService influencerPageService) {
+    public InfluencerPageController(InfluencerPageService influencerPageService,
+                                    InfluencerPageReadService influencerPageReadService) {
         this.influencerPageService = influencerPageService;
+        this.influencerPageReadService = influencerPageReadService;
     }
 
 
@@ -42,6 +46,24 @@ public class InfluencerPageController {
         }
         return ResponseEntity.ok(searchPageList);
     }
+
+
+    // 페이지네이션
+    private final InfluencerPageReadService influencerPageReadService;
+
+    @GetMapping("/selectInfluencerPage/{page}")
+    public ResponseEntity<List<InfluencerPageResponseDTO>> selectInfluencerPage(
+            @PathVariable int page,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String insta,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) Integer memberNum
+    ) {
+        return ResponseEntity.ok(
+                influencerPageReadService.getList(page, title, insta, phone, memberNum)
+        );
+    }
+
 
 
     //  인플루언서 페이지 생성 + 사진 추가
