@@ -1,14 +1,15 @@
 package fashionmanager.baek.develop.mapper;
 
-import fashionmanager.baek.develop.dto.SelectAllPostDTO;
-import fashionmanager.baek.develop.dto.SelectDetailPostDTO;
+import fashionmanager.baek.develop.dto.SelectAllFashionPostDTO;
+import fashionmanager.baek.develop.dto.SelectAllMentoringPostDTO;
+import fashionmanager.baek.develop.dto.SelectDetailMentoringPostDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface MentoringPostMapper {
-    List<SelectAllPostDTO> findAll();
+    List<SelectAllMentoringPostDTO> findAll();
 
-    SelectDetailPostDTO findById(int postNum);
+    SelectDetailMentoringPostDTO findById(int postNum);
 }
