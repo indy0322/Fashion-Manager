@@ -40,10 +40,7 @@
              , A.MEMBER_NUM AS memberNum
              , B.NAME AS memberName
         FROM COMMENT A
-<<<<<<< HEAD
         LEFT JOIN MEMBER B ON A.MEMBER_NUM = B.NUM
-=======
->>>>>>> features
         WHERE A.NUM = #{commentNum}
     </select>
 
