@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fashionmanager.song.develop.InfluencerApply.mapper.InfluencerApplyMapper">
+
+    <resultMap id="influencerApplyMap" type="fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyResponseDTO">
+        <id property="num" column="num"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="accept" column="accept"/>
+        <result property="memberNum" column="member_num"/>
+    </resultMap>
+
+    <select id="selectResultApply" resultMap="influencerApplyMap">
+        SELECT num, title, content, accept, member_num
+        FROM Influencer_Apply
+        ORDER BY num DESC
+    </select>
+
+    <!-- insert accept notnull인지 확인 -->
+    <insert id="insertInfluencerApply"
+            parameterType="fashionmanager.song.develop.InfluencerApply.dto.InfluencerApplyCreateRequestDTO"
+            useGeneratedKeys="true" keyProperty="num">
+        INSERT INTO Influencer_Apply (title, content, accept, member_num)
+        VALUES (#{title}, #{content}, #{accept}, #{memberNum})
+    </insert>
+
+    <update id="updateInfluencerApply">
+        UPDATE Influencer_Apply
+        SET
+            title = #{title},
+            content = #{content}
+        WHERE num = #{num}
+          AND member_num = #{memberNum}
+    </update>
+
+    <!-- delete title로만 지우면 다른것도 같이 지워져서 memberNum 추가 -->
+    <delete id="deleteInfluencerApplyByTitleAndMember">
+        DELETE FROM Influencer_Apply
+        WHERE title = #{title}
+        AND member_num = #{memberNum}
+    </delete>
+
+</mapper>

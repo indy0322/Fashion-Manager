@@ -1,6 +1,12 @@
 package fashionmanager.lee.develop.dto;
 
 import lombok.*;
+<<<<<<< HEAD
+=======
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+>>>>>>> features
 
 @Data
 @AllArgsConstructor
