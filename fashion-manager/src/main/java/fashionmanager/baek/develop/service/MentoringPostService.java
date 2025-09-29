@@ -42,7 +42,26 @@ public class MentoringPostService {
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }
+        if(postDetail.getPhotos() != null) {
+            for(PhotoDTO photo : postDetail.getPhotos()) {
+                String subPath = "";
+                if(photo.getPhotoCategoryNum() == 2) {
+                    subPath = "review/";
+                } else if(photo.getPhotoCategoryNum() == 5) {
+                    subPath = "review_items/";
+                }
+                String imageUrl = "/images/" + extractFolderName(photo.getPath()) + "/" + photo.getName();
+                photo.setImageUrl(imageUrl);
+            }
+        }
         return postDetail;
+    }
+
+    private String extractFolderName(String path) {
+        if(path == null || path.isEmpty()) {
+            return "";
+        }
+        return new File(path).getName();
     }
 
     @Transactional

@@ -62,7 +62,7 @@
           LEFT JOIN fashion_item fi ON pi.item_num = fi.num
           LEFT JOIN fashion_hashtag fh ON fp.num = fh.post_num
           LEFT JOIN hash_tag ht ON fh.tag_num = ht.num
-          LEFT JOIN photo p ON fp.num = p.post_num AND p.photo_category_num = 1
+          LEFT JOIN photo p ON fp.num = p.post_num AND p.photo_category_num IN (1,4)
          WHERE fp.num = #{num}
     </select>
 </mapper>

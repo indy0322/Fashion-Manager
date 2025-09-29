@@ -64,7 +64,27 @@ public class FashionPostService {
             temp = ((double) good / (good + cheer)) * 100.0;
         }
         postDetail.setTemp(temp);
+
+        if(postDetail.getPhotos() != null) {
+            for(PhotoDTO photo : postDetail.getPhotos()) {
+                String subPath = "";
+                if(photo.getPhotoCategoryNum() == 1) {
+                    subPath = "fashion/";
+                } else if(photo.getPhotoCategoryNum() == 4) {
+                    subPath = "fashion_items/";
+                }
+                String imageUrl = "/images/" + extractFolderName(photo.getPath()) + "/" + photo.getName();
+                photo.setImageUrl(imageUrl);
+            }
+        }
         return postDetail;
+    }
+
+    private String extractFolderName(String path) {
+        if(path == null || path.isEmpty()) {
+            return "";
+        }
+        return new File(path).getName();
     }
 
     @Transactional
