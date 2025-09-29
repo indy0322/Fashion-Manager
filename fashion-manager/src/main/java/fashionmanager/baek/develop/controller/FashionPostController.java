@@ -58,8 +58,15 @@ public class FashionPostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping("/react/{postNum}")
+    public ResponseEntity<ReactionResponseDTO> insertReaction(@PathVariable int postNum,
+                        @RequestBody ReactionRequestDTO reactionRequestDTO){
+        ReactionResponseDTO responseReaction = fashionPostService.insertReact(postNum, reactionRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseReaction);
+    }
+
     @DeleteMapping("/{postNum}")
-    public ResponseEntity<String> deletePost (@PathVariable int postNum) {
+    public ResponseEntity<String> deletePost(@PathVariable int postNum) {
 
         fashionPostService.deletePost(postNum);
 
