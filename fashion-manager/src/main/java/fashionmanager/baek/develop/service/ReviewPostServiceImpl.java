@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class ReviewPostServiceImpl implements PostService{
+public class ReviewPostServiceImpl {
     private final ReviewPostRepository reviewPostRepository;
     private final ReviewItemRepository reviewItemRepository;
     private final PhotoRepository photoRepository;
@@ -42,12 +42,10 @@ public class ReviewPostServiceImpl implements PostService{
         this.reviewPostMapper = reviewPostMapper;
     }
 
-    @Override
     public List<SelectAllPostDTO> getPostList() {
         return reviewPostMapper.findAll();
     }
 
-    @Override
     public SelectDetailPostDTO getDetailPost(int postNum) {
         SelectDetailPostDTO postDetail = reviewPostMapper.findById(postNum);
         if (postDetail == null) {
@@ -56,9 +54,8 @@ public class ReviewPostServiceImpl implements PostService{
         return postDetail;
     }
 
-    @Override
     @Transactional
-    public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> postFiles,
+    public ReviewRegistResponseDTO registPost(ReviewRegistRequestDTO newPost, List<MultipartFile> postFiles,
                                         List<MultipartFile> itemFiles) {
         /* 설명. 1. fashion_post table에 게시글 등록 */
         ReviewPostEntity reviewPostEntity = changeToRegistPost(newPost);
@@ -123,53 +120,49 @@ public class ReviewPostServiceImpl implements PostService{
             }
         }
 
-        RegistResponseDTO response = new RegistResponseDTO();
+        ReviewRegistResponseDTO response = new ReviewRegistResponseDTO();
         response.setNum(postNum);
         response.setTitle(registReviewPost.getTitle());
         response.setContent(registReviewPost.getContent());
-        response.setMember_num(registReviewPost.getMemberNum());
+        response.setItems(newPost.getItems());
+        response.setMemberNum(registReviewPost.getMemberNum());
         return response;
     }
 
-    private ReviewPostEntity changeToRegistPost(RegistRequestDTO newPost) {
+    private ReviewPostEntity changeToRegistPost(ReviewRegistRequestDTO newPost) {
         ReviewPostEntity reviewPostEntity = new ReviewPostEntity();
         reviewPostEntity.setTitle(newPost.getTitle());
         reviewPostEntity.setContent(newPost.getContent());
         reviewPostEntity.setGood(0);
         reviewPostEntity.setCheer(0);
-        reviewPostEntity.setMemberNum(newPost.getMember_num());
-        reviewPostEntity.setReviewCategoryNum(newPost.getReview_category_num());
+        reviewPostEntity.setMemberNum(newPost.getMemberNum());
+        reviewPostEntity.setReviewCategoryNum(newPost.getReviewCategoryNum());
         return reviewPostEntity;
     }
 
-    @Override
-    public PostType getPostType() {
-        return PostType.REVIEW;
-    }
 
-    @Override
     @Transactional
-    public ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost,
+    public ReviewModifyResponseDTO modifyPost(int postNum, ReviewModifyRequestDTO updatePost,
                                         List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
         ReviewPostEntity reviewPostEntity = reviewPostRepository.findById(postNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. id=" + postNum));
 
         reviewPostEntity.setTitle(updatePost.getTitle());
         reviewPostEntity.setContent(updatePost.getContent());
-        reviewPostEntity.setReviewCategoryNum(updatePost.getReview_category_num());
+        reviewPostEntity.setReviewCategoryNum(updatePost.getReviewCategoryNum());
 
         List<Integer> updateItems = updateItems(postNum, updatePost.getItems());
 
         updatePhotos(reviewPostEntity,this.postUploadPath, postFiles, 2);
         updatePhotos(reviewPostEntity,this.reviewItemUploadPath, itemFiles, 5);
 
-        ModifyResponseDTO response = new ModifyResponseDTO();
+        ReviewModifyResponseDTO response = new ReviewModifyResponseDTO();
         response.setNum(postNum);
         response.setTitle(reviewPostEntity.getTitle());
         response.setContent(reviewPostEntity.getContent());
-        response.setMember_num(reviewPostEntity.getMemberNum());
+        response.setMemberNum(reviewPostEntity.getMemberNum());
         response.setItems(updateItems);
-        response.setReview_category_num(reviewPostEntity.getReviewCategoryNum());
+        response.setReviewCategoryNum(reviewPostEntity.getReviewCategoryNum());
         return response;
     }
 
@@ -178,8 +171,9 @@ public class ReviewPostServiceImpl implements PostService{
         List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum);
         for (PhotoEntity photo : photosToUpdate) {
             File fileToDelete = new File(photo.getPath() + File.separator + photo.getName());
-            if (fileToDelete.exists()) {
-                fileToDelete.delete();
+            boolean deleted = fileToDelete.delete();
+            if (!deleted) {
+                log.info("수정 중 사진 파일 삭제에 실패했습니다. {}", fileToDelete.getPath());  // 삭제 실패했다면 log로 남김
             }
         }
         photoRepository.deleteAll(photosToUpdate);
@@ -241,7 +235,6 @@ public class ReviewPostServiceImpl implements PostService{
         return newItemId;
     }
 
-    @Override
     @Transactional
     public void deletePost(int postNum) {
         ReviewPostEntity reviewToDelete = reviewPostRepository.findById(postNum)
@@ -254,7 +247,10 @@ public class ReviewPostServiceImpl implements PostService{
         for (PhotoEntity photo : photosToDelete) {
             File file = new File(photo.getPath() + File.separator + photo.getName());
             if(file.exists()) {
-                file.delete();
+                boolean deleted = file.delete();
+                if (!deleted) {
+                    log.info("파일 삭제 중 이미지 파일 삭제에 실패했습니다");
+                }
             }
         }
         photoRepository.deleteAll(photosToDelete);
