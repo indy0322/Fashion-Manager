@@ -49,6 +49,8 @@ public class User {
     @Column(name="DailyReportCount")
     private int DailyReportCount;
 
+
+
     // 뱃지와 다대다 관계
     @ManyToMany
     @JoinTable(
@@ -60,15 +62,14 @@ public class User {
     // 뱃지 수여
     private List<Badge> badges = new ArrayList<>();
 
+
+
     // 편의 메소드
     public void addBadge(Badge badge) {
         this.badges.add(badge);
+        badge.getUsers().add(this); // 반대쪽도 업데이트
     }
 
-    // 뱃지 삭제
-    public void removeBadge(Badge badge) {
-        this.badges.remove(badge);
-    }
 
 
 }

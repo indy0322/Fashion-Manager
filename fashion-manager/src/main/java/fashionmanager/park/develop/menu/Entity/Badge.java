@@ -1,37 +1,35 @@
 package fashionmanager.park.develop.menu.Entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "badge")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Badge {
+
     @Id
-    @GeneratedValue
-    @Column(name="num")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "num")
     private int badgeNum;
 
+    @Column(name = "name")
+    private String badgeName;
 
-
-    @ManyToMany(mappedBy = "badges")  // 주인은 User, Badge는 거울 역할
-    private Set<User> users = new HashSet<>();
-
-    // getter
-    public Set<User> getUsers() {
-        return users;
-    }
+    @ManyToMany(mappedBy = "badges")
+    private List<User> users = new ArrayList<>();
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Badge)) return false;
-        Badge badge = (Badge) o;
-        return badgeNum == badge.badgeNum;
+    public String toString() {
+        return "Badge{" +
+                "badgeNum=" + badgeNum +
+                ", badgeName='" + badgeName + '\'' +
+                '}';
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(badgeNum);
-    }
-
 }

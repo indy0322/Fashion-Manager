@@ -3,6 +3,7 @@ package fashionmanager.park.develop.menu.DTO;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class UserDTO {
     private int ReportCount;
     private int DailyReportCount;
 
-    private List<BadgeDTO> badges;
+    private List<BadgeDTO> badges = new ArrayList<>();
 
 
 

@@ -1,13 +1,16 @@
 package fashionmanager.park.develop.menu.Controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import fashionmanager.park.develop.menu.DTO.BadgeAssignRequest;
+import fashionmanager.park.develop.menu.DTO.UserDTO;
 import fashionmanager.park.develop.menu.Service.BadgeService;
 import fashionmanager.park.develop.menu.Service.UserService;
 import fashionmanager.park.develop.menu.repository.BadgeRepository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/menu")
@@ -25,26 +28,27 @@ public class BadgeController {
         this.badgeRepository = badgeRepository;
     }
 
-    @GetMapping("/assignBadge")
-    public void assignBadgeForm() {
-        // 뱃지 부여 입력 폼
+
+    // 회원에게 칭호 등록
+
+    @PostMapping("/badges/assign")
+    public ResponseEntity<UserDTO> assignBadge(@RequestBody BadgeAssignRequest request) {
+        UserDTO updatedUser = badgeService.assignBadge(request.getUserNum(), request.getBadgeNum());
+        return ResponseEntity.ok(updatedUser);
     }
 
-    @PostMapping("/assignBadge")
-    public String assignBadge(@RequestParam int userNum, @RequestParam int badgeNum) {
-        badgeService.assignBadge(userNum, badgeNum);
-        return "redirect:/menu/selectResult?userNum=" + userNum;
-    }
 
 
-    @GetMapping("/removeBadge")
-    public void removeBadgeForm() {
-        // 그냥 menu/removeBadge.html 열어줌
-    }
+    // 회원에게서 칭호 삭제
 
-    @PostMapping("/removeBadge")
-    public String removeBadge(@RequestParam int userNum, @RequestParam int badgeNum) {
-        badgeService.removeBadge(userNum, badgeNum);
-        return "redirect:/menu/selectResult?userNum=" + userNum;
+    @DeleteMapping("/badges/remove")
+    public ResponseEntity<Map<String, String>>  removeBadge(@RequestBody BadgeAssignRequest request) {
+        badgeService.removeBadge(request.getUserNum(), request.getBadgeNum());
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "뱃지가 삭제되었습니다.");
+
+
+        return ResponseEntity.ok(response);
     }
 }

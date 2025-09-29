@@ -1,20 +1,17 @@
 package fashionmanager.park.develop.menu.Controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import fashionmanager.park.develop.common.Pagination;
-import fashionmanager.park.develop.common.PagingButtonInfo;
 import fashionmanager.park.develop.menu.DTO.UserDTO;
-import fashionmanager.park.develop.menu.Entity.User;
 import fashionmanager.park.develop.menu.Service.SelectService;
 import fashionmanager.park.develop.menu.Service.UserService;
 
-@Controller
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
 @RequestMapping("/menu")
 @Slf4j
 public class UserController {
@@ -31,24 +28,29 @@ public class UserController {
 
 
 
+//    // 1. 회원 조회 페이지(JPA)
+//
+//    @GetMapping("/select")
+//    public void selectMenu() {
+//
+//    }
+
+
+
+
+    // 2. 회원 조회 페이지 결과(Mybatis)
+
     @GetMapping("/selectResult")
-    public String selectResult(@RequestParam int userNum, Model model) {
+    public ResponseEntity<UserDTO> selectResult(@RequestParam int userNum) {
+
         UserDTO user = selectService.findUserByNum(userNum);
-        model.addAttribute("user", user);   // 👈 여기서 모델에 담음
-        return "menu/selectResult";         // templates/menu/selectResult.html
-    }
 
-
-    // 1. 회원 조회 페이지
-
-    @GetMapping("/select")
-    public void selectMenu() {
-
+        return ResponseEntity.ok(user);
     }
 
 
 
-     // 2. 회원 조회 페이지 결과
+     // 2. 회원 조회 페이지 결과(JPA)
 
 //    @GetMapping("/selectResult")
 //    public String findUserById(@RequestParam int userNum, Model model) {
@@ -58,109 +60,110 @@ public class UserController {
 //    }
 
 
-    // 3. 전체 회원 조회
 
+
+//    // 3. 전체 회원 조회(JPA)
+//
+//    @GetMapping("/list")
+//    public String findUserList(@PageableDefault(size=15) Pageable pageable, Model model) {
+//        log.debug("pageable: {}", pageable);
+//
+//        Page<UserDTO> userList = userService.findUserList(pageable);
+//
+//        /* 설명. Page객체를 통해 PagingButtonInfo(front가 페이징 처리 버튼을 그리기 위한 재료를 지닌) 추출 */
+//        PagingButtonInfo paging = Pagination.getPagingButtonInfo(userList);
+//
+//        model.addAttribute("userList", userList);
+//        model.addAttribute("paging", paging);
+//
+//        return "menu/list";
+//    }
+
+
+
+    // 3. 전체 회원 조회 (Mybatis)
     @GetMapping("/list")
-    public String findUserList(@PageableDefault(size=15) Pageable pageable, Model model) {
-        log.debug("pageable: {}", pageable);
+    public ResponseEntity<List<UserDTO>> findUserList() {
+        List<UserDTO> userList = selectService.findAllUsers();
 
-        Page<UserDTO> userList = userService.findUserList(pageable);
+        return ResponseEntity.ok(userList);
 
-        /* 설명. Page객체를 통해 PagingButtonInfo(front가 페이징 처리 버튼을 그리기 위한 재료를 지닌) 추출 */
-        PagingButtonInfo paging = Pagination.getPagingButtonInfo(userList);
-
-        model.addAttribute("userList", userList);
-        model.addAttribute("paging", paging);
-
-        return "menu/list";
     }
+
 
 
     // 4. 회원가입 기능
 
-    @GetMapping("/regist")
-    public void registMenu() {}
-
-
     @PostMapping("/regist")
-    public String registMenu(UserDTO newUser) {
-        User savedUser = userService.registUser(newUser);
-
-        return "redirect:/menu/selectResult?userNum=" + savedUser.getUserNum();
+    public ResponseEntity<UserDTO> registMenu(@RequestBody UserDTO newUser) {
+        UserDTO savedUser = userService.registUser(newUser);
+        return ResponseEntity.ok(savedUser);
     }
 
 
-    // 5. 회원정보 수정 <인적사항 수정>
 
-    @GetMapping("/modify")
-    public void modifyMenuPage() {}
+//    // 5. 회원정보 수정 <인적사항 수정> (JPA)
+//
+//
+//    @PostMapping("/modify")
+//    public String modifyMenu(UserDTO modifyMenu) {
+//        userService.modifyMenu(modifyMenu);
+//
+//        return "redirect:/menu/selectResult?userNum=" + modifyMenu.getUserNum();
+//    }
 
-    @PostMapping("/modify")
-    public String modifyMenu(UserDTO modifyMenu) {
-        userService.modifyMenu(modifyMenu);
 
-        return "redirect:/menu/selectResult?userNum=" + modifyMenu.getUserNum();
+    // 5. 회원 정보  수정
+    @PatchMapping("/{userNum}")
+    public ResponseEntity<UserDTO> modifyMenu(
+            @PathVariable int userNum,
+            @RequestBody Map<String, Object> updates) {
+
+        UserDTO updatedUser = userService.modifyMenu(userNum, updates);
+
+        return ResponseEntity.ok(updatedUser);
     }
 
     // 6. 메시지 수신 여부 수정
 
-    @GetMapping("/MessageResult")
-    public String showMessageResult(@RequestParam int userNum, Model model) {
-        UserDTO user = userService.findUserById(userNum);
-        model.addAttribute("user", user);
-        return "menu/MessageResult";
-    }
 
-    @GetMapping("/modifyMessage")
-    public void showMenuPage() {
+    @PatchMapping("/message-allow/{userNum}")
+    public ResponseEntity<UserDTO> modifyMessage(
+            @PathVariable int userNum,
+            @RequestBody Map<String, Object> updates) {
 
-    }
-
-    @PostMapping("/modifyMessage")
-    public String modifyMessage(UserDTO modifyMessage) {
-        userService.modifyMessage(modifyMessage);
-
-        return "redirect:/menu/MessageResult?userNum=" + modifyMessage.getUserNum();
+        UserDTO updatedUser = userService.modifyMessage(userNum, updates);
+        return ResponseEntity.ok(updatedUser);
     }
 
 
     // 7. 신고 누적 or 하루 신고 가능 횟수 수정(관리자 권한)
 
-    @GetMapping("/ReportResult")
-    public String showReportResult(@RequestParam int userNum, Model model) {
-        UserDTO user = userService.findUserById(userNum);
-        model.addAttribute("user", user);
-        return "menu/ReportResult";
-    }
 
-    @GetMapping("/modifyReport")
-    public void showReportPage() {
 
-    }
+    @PatchMapping("/report/{userNum}")
+    public ResponseEntity<UserDTO> modifyReport(
+            @PathVariable int userNum,
+            @RequestBody Map<String, Object> updates) {
 
-    @PostMapping("/modifyReport")
-    public String modifyReport(UserDTO modifyReport) {
-        userService.modifyReport(modifyReport);
-
-        return "redirect:/menu/ReportResult?userNum=" + modifyReport.getUserNum();
+        UserDTO updatedUser = userService.modifyReport(userNum, updates);
+        return ResponseEntity.ok(updatedUser);
     }
 
 
+    // 8. 회원정보 삭제
 
-    // 8. 회원탈퇴 기능
-
-    @GetMapping("/delete")
-    public void deleteMenuPage() {}
-
-    @PostMapping("/delete")
-    public String deleteUserMenu(@RequestParam int userNum) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<Map<String, Object>> deleteUser(@RequestBody UserDTO userDTO) {
+        int userNum = userDTO.getUserNum(); // Body에서 userNum 꺼냄
         userService.userDelete(userNum);
 
-        return "redirect:/menu/list";
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "회원이 삭제되었습니다.");
+        response.put("deletedUserNum", userNum);
+
+        return ResponseEntity.ok(response);
     }
-
-
-
 
 
 }
