@@ -1,7 +1,6 @@
 package fashionmanager.kim.develop;
 
-import fashionmanager.kim.develop.dto.MemberDTO;
-import fashionmanager.kim.develop.dto.SelectMassageDTO;
+import fashionmanager.kim.develop.dto.*;
 import fashionmanager.kim.develop.service.MemberService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 
 import java.util.List;
 
@@ -18,6 +18,17 @@ public class MemberServiceTest {
 
     @Autowired
     private MemberService memberService;
+
+    @DisplayName("전체 회원 조회")
+    @Test
+    void testSelectMember(){
+        Assertions.assertDoesNotThrow(
+                ()->{
+                    List<MemberDTO> members = memberService.selectMember();
+                    System.out.println(members);
+                }
+        );
+    }
 
     @DisplayName("회원 번호로 회원 조회")
     @ParameterizedTest
@@ -31,4 +42,15 @@ public class MemberServiceTest {
                 }
         );
     }
+
+    @DisplayName("회원 권한 변경 테스트")
+    @Test
+    void testUpdateRight(){
+        int memberNum = 8;
+        int memberStateNum = 3;
+        int result = memberService.updateRight(new UpdateRightDTO(memberNum, memberStateNum));
+        Assertions.assertEquals(result,1);
+    }
 }
+
+

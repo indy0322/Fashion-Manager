@@ -3,6 +3,7 @@ package fashionmanager.kim.develop.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data

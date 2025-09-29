@@ -1,5 +1,6 @@
 package fashionmanager.kim.develop.repository;
 
+import fashionmanager.kim.develop.dto.InsertReportDTO;
 import fashionmanager.kim.develop.entity.Report;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;

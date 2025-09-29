@@ -3,6 +3,7 @@ package fashionmanager.baek.develop.dto;
 import lombok.*;
 
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
