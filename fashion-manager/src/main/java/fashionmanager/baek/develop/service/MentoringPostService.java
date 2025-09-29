@@ -19,26 +19,26 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class MentoringPostServiceImpl {
+public class MentoringPostService {
     private final MentoringPostRespository mentoringPostRespository;
     private final PhotoRepository photoRepository;
     private final MentoringPostMapper mentoringPostMapper;
     private String postUploadPath = "C:\\uploadFiles\\mentoring";
 
     @Autowired
-    public MentoringPostServiceImpl(MentoringPostRespository mentoringPostRespository,
-                                    PhotoRepository photoRepository, MentoringPostMapper mentoringPostMapper) {
+    public MentoringPostService(MentoringPostRespository mentoringPostRespository,
+                                PhotoRepository photoRepository, MentoringPostMapper mentoringPostMapper) {
         this.mentoringPostRespository = mentoringPostRespository;
         this.photoRepository = photoRepository;
         this.mentoringPostMapper = mentoringPostMapper;
     }
 
-    public List<SelectAllPostDTO> getPostList() {
+    public List<SelectAllMentoringPostDTO> getPostList() {
         return mentoringPostMapper.findAll();
     }
 
-    public SelectDetailPostDTO getDetailPost(int postNum) {
-        SelectDetailPostDTO postDetail = mentoringPostMapper.findById(postNum);
+    public SelectDetailMentoringPostDTO getDetailPost(int postNum) {
+        SelectDetailMentoringPostDTO postDetail = mentoringPostMapper.findById(postNum);
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }

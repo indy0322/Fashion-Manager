@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class FashionPostServiceImpl  {
+public class FashionPostService {
     private final FashionPostRepository fashionPostRepository;
     private final FashionHashRepository fashionHashRepository;
     private final FashionItemRepository fashionItemRepository;
@@ -38,9 +38,9 @@ public class FashionPostServiceImpl  {
 
 
     @Autowired
-    public FashionPostServiceImpl(FashionPostRepository fashionPostRepository, FashionHashRepository fashionHashRepository,
-                                  FashionItemRepository fashionItemRepository, PhotoRepository photoRepository,
-                                  FashionPostMapper fashionPostMapper) {
+    public FashionPostService(FashionPostRepository fashionPostRepository, FashionHashRepository fashionHashRepository,
+                              FashionItemRepository fashionItemRepository, PhotoRepository photoRepository,
+                              FashionPostMapper fashionPostMapper) {
         this.fashionPostRepository = fashionPostRepository;
         this.fashionHashRepository = fashionHashRepository;
         this.fashionItemRepository = fashionItemRepository;
@@ -48,12 +48,12 @@ public class FashionPostServiceImpl  {
         this.fashionPostMapper = fashionPostMapper;
     }
 
-    public List<SelectAllPostDTO> getPostList() {
+    public List<SelectAllFashionPostDTO> getPostList() {
         return fashionPostMapper.findAll();
     }
 
-    public SelectDetailPostDTO getDetailPost(int postNum) {
-        SelectDetailPostDTO postDetail = fashionPostMapper.findById(postNum);
+    public SelectDetailFashionPostDTO getDetailPost(int postNum) {
+        SelectDetailFashionPostDTO postDetail = fashionPostMapper.findById(postNum);
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }

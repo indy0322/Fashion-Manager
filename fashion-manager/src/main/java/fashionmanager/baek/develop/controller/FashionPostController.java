@@ -1,12 +1,10 @@
 package fashionmanager.baek.develop.controller;
 
-import fashionmanager.baek.develop.aggregate.PostType;
 import fashionmanager.baek.develop.dto.*;
-import fashionmanager.baek.develop.service.FashionPostServiceImpl;
+import fashionmanager.baek.develop.service.FashionPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,23 +13,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts/fashion")
 public class FashionPostController {
-    private final FashionPostServiceImpl fashionPostService;
+    private final FashionPostService fashionPostService;
 
     @Autowired
-    public FashionPostController(FashionPostServiceImpl fashionPostService) {
+    public FashionPostController(FashionPostService fashionPostService) {
         this.fashionPostService = fashionPostService;
     }
 
     @GetMapping
-    public ResponseEntity<List<SelectAllPostDTO>> getPostList() {
-        List<SelectAllPostDTO> response = fashionPostService.getPostList();
+    public ResponseEntity<List<SelectAllFashionPostDTO>> getPostList() {
+        List<SelectAllFashionPostDTO> response = fashionPostService.getPostList();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{postNum}")
-    public ResponseEntity<SelectDetailPostDTO> getDetailPost(@PathVariable int postNum) {
+    public ResponseEntity<SelectDetailFashionPostDTO> getDetailPost(@PathVariable int postNum) {
 
-        SelectDetailPostDTO response = fashionPostService.getDetailPost(postNum);
+        SelectDetailFashionPostDTO response = fashionPostService.getDetailPost(postNum);
 
         return ResponseEntity.ok(response);
     }

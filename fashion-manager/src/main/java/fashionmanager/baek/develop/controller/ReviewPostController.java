@@ -1,7 +1,7 @@
 package fashionmanager.baek.develop.controller;
 
 import fashionmanager.baek.develop.dto.*;
-import fashionmanager.baek.develop.service.ReviewPostServiceImpl;
+import fashionmanager.baek.develop.service.ReviewPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,23 +13,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts/review")
 public class ReviewPostController {
-    private ReviewPostServiceImpl reviewPostService;
+    private final ReviewPostService reviewPostService;
 
     @Autowired
-    public ReviewPostController(ReviewPostServiceImpl reviewPostService) {
+    public ReviewPostController(ReviewPostService reviewPostService) {
         this.reviewPostService = reviewPostService;
     }
 
     @GetMapping
-    public ResponseEntity<List<SelectAllPostDTO>> getPostList() {
-        List<SelectAllPostDTO> response = reviewPostService.getPostList();
+    public ResponseEntity<List<SelectAllReviewPostDTO>> getPostList() {
+        List<SelectAllReviewPostDTO> response = reviewPostService.getPostList();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{postNum}")
-    public ResponseEntity<SelectDetailPostDTO> getDetailPost(@PathVariable int postNum) {
+    public ResponseEntity<SelectDetailReviewPostDTO> getDetailPost(@PathVariable int postNum) {
 
-        SelectDetailPostDTO response = reviewPostService.getDetailPost(postNum);
+        SelectDetailReviewPostDTO response = reviewPostService.getDetailPost(postNum);
 
         return ResponseEntity.ok(response);
     }

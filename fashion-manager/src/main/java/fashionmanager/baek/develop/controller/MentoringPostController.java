@@ -1,8 +1,7 @@
 package fashionmanager.baek.develop.controller;
 
 import fashionmanager.baek.develop.dto.*;
-import fashionmanager.baek.develop.service.FashionPostServiceImpl;
-import fashionmanager.baek.develop.service.MentoringPostServiceImpl;
+import fashionmanager.baek.develop.service.MentoringPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,23 +13,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts/mentoring")
 public class MentoringPostController {
-    private final MentoringPostServiceImpl mentoringPostService;
+    private final MentoringPostService mentoringPostService;
 
     @Autowired
-    public MentoringPostController(MentoringPostServiceImpl mentoringPostService) {
+    public MentoringPostController(MentoringPostService mentoringPostService) {
         this.mentoringPostService = mentoringPostService;
     }
 
     @GetMapping
-    public ResponseEntity<List<SelectAllPostDTO>> getPostList() {
-        List<SelectAllPostDTO> response = mentoringPostService.getPostList();
+    public ResponseEntity<List<SelectAllMentoringPostDTO>> getPostList() {
+        List<SelectAllMentoringPostDTO> response = mentoringPostService.getPostList();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{postNum}")
-    public ResponseEntity<SelectDetailPostDTO> getDetailPost(@PathVariable int postNum) {
+    public ResponseEntity<SelectDetailMentoringPostDTO> getDetailPost(@PathVariable int postNum) {
 
-        SelectDetailPostDTO response = mentoringPostService.getDetailPost(postNum);
+        SelectDetailMentoringPostDTO response = mentoringPostService.getDetailPost(postNum);
 
         return ResponseEntity.ok(response);
     }

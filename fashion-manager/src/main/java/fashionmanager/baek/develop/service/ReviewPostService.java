@@ -1,7 +1,6 @@
 package fashionmanager.baek.develop.service;
 
 
-import fashionmanager.baek.develop.aggregate.PostType;
 import fashionmanager.baek.develop.dto.*;
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.entity.ReviewPostEntity;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class ReviewPostServiceImpl {
+public class ReviewPostService {
     private final ReviewPostRepository reviewPostRepository;
     private final ReviewItemRepository reviewItemRepository;
     private final PhotoRepository photoRepository;
@@ -34,20 +33,20 @@ public class ReviewPostServiceImpl {
     private String reviewItemUploadPath = "C:\\uploadFiles\\review_items";
 
     @Autowired
-    public ReviewPostServiceImpl(ReviewPostRepository reviewPostRepository,
-                                 ReviewItemRepository reviewItemRepository, PhotoRepository photoRepository, ReviewPostMapper reviewPostMapper) {
+    public ReviewPostService(ReviewPostRepository reviewPostRepository,
+                             ReviewItemRepository reviewItemRepository, PhotoRepository photoRepository, ReviewPostMapper reviewPostMapper) {
         this.reviewPostRepository = reviewPostRepository;
         this.reviewItemRepository = reviewItemRepository;
         this.photoRepository = photoRepository;
         this.reviewPostMapper = reviewPostMapper;
     }
 
-    public List<SelectAllPostDTO> getPostList() {
+    public List<SelectAllReviewPostDTO> getPostList() {
         return reviewPostMapper.findAll();
     }
 
-    public SelectDetailPostDTO getDetailPost(int postNum) {
-        SelectDetailPostDTO postDetail = reviewPostMapper.findById(postNum);
+    public SelectDetailReviewPostDTO getDetailPost(int postNum) {
+        SelectDetailReviewPostDTO postDetail = reviewPostMapper.findById(postNum);
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }
