@@ -23,7 +23,7 @@ public class MentoringPostEntity {
     private String content;
 
     @Column(name = "finish")
-    private boolean finish = false;
+    private boolean finish;
 
     @Column(name = "author_num")
     private int authorNum;

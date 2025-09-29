@@ -2,15 +2,16 @@ package fashionmanager.baek.develop.dto;
 
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
+import java.util.List;
+
+@Data
 @Getter
 @Setter
-@ToString
-public class RegistResponseDTO {
+public class FashionModifyResponseDTO {
     private int num;
     private String title;
     private String content;
     private int member_num;
-    private boolean finish;
+    private List<Integer> hashtag;
+    private List<Integer> items;
 }
