@@ -4,7 +4,182 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="06fda6d6-c120-46b0-a0b7-26f6b9160f1b" name="변경" comment="" />
+    <list default="true" id="06fda6d6-c120-46b0-a0b7-26f6b9160f1b" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.13/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.13/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/file-system.probe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/modules/eurekagateway.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/HELP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/classes/java/main/msa/eurekagateway/EurekaGatewayApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/classes/java/main/msa/eurekagateway/filter/JwtAuthenticationFilter$Config.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/classes/java/main/msa/eurekagateway/filter/JwtAuthenticationFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/classes/java/main/msa/eurekagateway/filter/JwtUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/classes/java/test/msa/eurekagateway/EurekaGatewayApplicationTests.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/reports/problems/problems-report.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/resources/main/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/tmp/compileJava/compileTransaction/stash-dir/JwtAuthenticationFilter$Config.class.uniqueId2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/tmp/compileJava/compileTransaction/stash-dir/JwtAuthenticationFilter.class.uniqueId1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/tmp/compileJava/compileTransaction/stash-dir/JwtUtil.class.uniqueId0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-gateway/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.13/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.13/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/file-system.probe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/HELP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/build/classes/java/main/msa/eurekaserver/EurekaServerApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/build/resources/main/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../eureka-server/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/FashionManagerApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/common/Pagination.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/common/PagingButtonInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/config/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/configuration/MybatisConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/main/controller/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/mapper/UserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/mapper/UserStructMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Controller/BadgeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/DTO/BadgeAssignRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/DTO/BadgeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/DTO/UserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Entity/Badge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Service/BadgeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Service/SelectService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/repository/BadgeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/resources/fashionmanager/park/develop/mapper/UserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.13/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.13/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/checksums/md5-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/checksums/sha1-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.14.3/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/fashion_manager.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HELP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/fashionmanager/FashionManager2ApplicationTests.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/fashionmanager/kim/develop/BlacklistServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/fashionmanager/kim/develop/CategoryServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/fashionmanager/kim/develop/HashTagServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/fashionmanager/kim/develop/MemberServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/fashionmanager/kim/develop/MessageServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/fashionmanager/kim/develop/ReportServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/fashionmanager.kim.develop.CategoryServiceTest.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/css/base-style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/js/report.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/fashionmanager.kim.develop.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/BlacklistMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/HashTagMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/MemberMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/MessageCategoryMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/MessageMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/PhotoCategoryMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/ReportCategoryMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/ReportMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/kim/develop/mapper/ReviewCategoryMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/lee/develop/mapper/CommentMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/fashionmanager/song/develop/InfluencerApply/mapper/InfluencerApplyMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/test-results/test/TEST-fashionmanager.kim.develop.CategoryServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/JwtAuthenticationFilter.class.uniqueId6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/JwtTokenProvider.class.uniqueId4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MemberController.class.uniqueId2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MemberMapper.class.uniqueId3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MemberRightDTO.class.uniqueId1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MemberService.class.uniqueId5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MessageController.class.uniqueId0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MessageService.class.uniqueId7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/SecurityConfiguration.class.uniqueId8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/compileTransaction/stash-dir/CategoryServiceTest.class.uniqueId0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-server/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-server/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,7 +284,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.FashionManager2Application.executor": "Run",
     "Spring Boot.FashionManagerApplication.executor": "Run",
-    "git-widget-placeholder": "features",
+    "git-widget-placeholder": "Features-KSM-MSAeureka 병합 중",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -316,7 +491,7 @@
       <workItem from="1758965819871" duration="841000" />
       <workItem from="1758971723810" duration="9939000" />
       <workItem from="1759061592345" duration="12117000" />
-      <workItem from="1759124496601" duration="2156000" />
+      <workItem from="1759124496601" duration="2513000" />
     </task>
     <servers />
   </component>

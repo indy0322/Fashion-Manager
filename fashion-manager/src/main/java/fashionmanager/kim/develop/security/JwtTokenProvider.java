@@ -42,7 +42,6 @@ public class JwtTokenProvider {
 
     public String createToken(MemberRightDTO memberRight){
         //MemberRightDTO memberRight = memberService.selectMemberRightById(memberId);
-
         Claims claims = Jwts.claims().setSubject(memberRight.getMemberId());
         claims.put("role",memberRight.getMemberStateName());
         claims.put("name",memberRight.getMemberName());
@@ -56,7 +55,8 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now.getTime() + expirationTime))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
-
+        log.info("expirationTime: {}", expirationTime);
+        log.info("now: {}", now);
         return token;
     }
 
@@ -97,7 +97,7 @@ public class JwtTokenProvider {
             Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(getSigningKey())
                     .build()
-                    .parseClaimsJws(token);;
+                    .parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         }catch(Exception e){
             log.error("에러발생: {}",e.getMessage());
