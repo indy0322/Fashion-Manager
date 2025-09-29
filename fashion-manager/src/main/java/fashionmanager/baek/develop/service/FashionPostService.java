@@ -31,7 +31,6 @@ public class FashionPostService {
     private final PhotoRepository photoRepository;
     private final FashionPostMapper fashionPostMapper;
     private final PostReactionRepository postReactionRepository;
-    private final ModelMapper modelMapper;
     private static final Set<String> VALID_REACTION_TYPES = Set.of("good", "cheer");
     private String postUploadPath = "C:\\uploadFiles\\fashion";
     private String fashionItemsUploadPath = "C:\\uploadFiles\\fashion_items";
@@ -40,14 +39,13 @@ public class FashionPostService {
     @Autowired
     public FashionPostService(FashionPostRepository fashionPostRepository, FashionHashRepository fashionHashRepository,
                               FashionItemRepository fashionItemRepository, PhotoRepository photoRepository,
-                              FashionPostMapper fashionPostMapper, PostReactionRepository postReactionRepository, ModelMapper modelMapper) {
+                              FashionPostMapper fashionPostMapper, PostReactionRepository postReactionRepository) {
         this.fashionPostRepository = fashionPostRepository;
         this.fashionHashRepository = fashionHashRepository;
         this.fashionItemRepository = fashionItemRepository;
         this.photoRepository = photoRepository;
         this.fashionPostMapper = fashionPostMapper;
         this.postReactionRepository = postReactionRepository;
-        this.modelMapper = modelMapper;
     }
 
     public List<SelectAllFashionPostDTO> getPostList() {
@@ -344,68 +342,74 @@ public class FashionPostService {
 
     @Transactional
     public ReactionResponseDTO insertReact(int postNum, ReactionRequestDTO reaction) {
-        // 0. 요청 유효성 검사
-        String reactionType = reaction.getReactionType().toLowerCase();
-        if (!VALID_REACTION_TYPES.contains(reactionType)) {
-            throw new IllegalArgumentException("'good' 또는 'cheer'만 가능합니다.");
+        if (reaction.getReactionType() == null ||
+                !VALID_REACTION_TYPES.contains(reaction.getReactionType().toLowerCase())) {
+            throw new IllegalArgumentException("좋아요/힘내요 요청이 아닙니다!");
         }
+        String reactionType = reaction.getReactionType().toLowerCase();
+        ReactionResponseDTO response = new ReactionResponseDTO();
 
-        // 1. 게시물 조회
+
         FashionPostEntity post = fashionPostRepository.findById(postNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
 
-        // 2. 사용자의 기존 반응 조회 (수정된 Repository 메소드 사용)
-        int memberNum = reaction.getMemberNum();
-        int categoryNum = 1; // 패션 게시물 카테고리
-        Optional<PostReactionEntity> oldReactionOpt = postReactionRepository.findByMemberNumAndPostNumAndPostCategoryNum(memberNum, postNum, categoryNum);
+        PostReactionEntity reactionEntity = new PostReactionEntity();
+        reactionEntity.setMemberNum(reaction.getMemberNum());
+        reactionEntity.setReactionType(reaction.getReactionType());
+        reactionEntity.setPostNum(postNum);
+        reactionEntity.setPostCategoryNum(1);  // 패션 게시물은 1
 
-        PostReactionEntity finalReactionEntity = null;
+        Optional<PostReactionEntity> oldReaction = postReactionRepository.findByMemberNumAndPostNumAndPostCategoryNum
+                (reaction.getMemberNum(), 1, postNum);
 
-        if (oldReactionOpt.isPresent()) {
-            // 3-1. 기존 반응이 있을 경우
-            PostReactionEntity existingReaction = oldReactionOpt.get();
-
-            if (existingReaction.getReactionType().equalsIgnoreCase(reactionType)) {
-                // [CASE 1: 같은 반응 클릭 -> 취소]
+        if (oldReaction.isPresent()) {
+            PostReactionEntity existingReaction = oldReaction.get();
+            if (existingReaction.getReactionType().equalsIgnoreCase(reactionEntity.getReactionType())) {
                 postReactionRepository.delete(existingReaction);
-                if (reactionType.equals("good")) post.setGood(post.getGood() - 1);
-                else post.setCheer(post.getCheer() - 1);
-                // finalReactionEntity는 null인 상태로 둠 (취소되었으므로)
+
+                switch (reactionType) {
+                    case "good":
+                        post.setGood(post.getGood() - 1);
+                        break;
+                    case "cheer":
+                        post.setCheer(post.getCheer() - 1);
+                        break;
+                }
             } else {
-                // [CASE 2: 다른 반응 클릭 -> 변경]
-                // 기존 반응 카운트 -1
-                if (existingReaction.getReactionType().equalsIgnoreCase("good")) post.setGood(post.getGood() - 1);
-                else post.setCheer(post.getCheer() - 1);
-
-                // 새 반응으로 덮어쓰고 카운트 +1
-                existingReaction.setReactionType(reactionType);
-                finalReactionEntity = postReactionRepository.save(existingReaction);
-                if (reactionType.equals("good")) post.setGood(post.getGood() + 1);
-                else post.setCheer(post.getCheer() + 1);
+                PostReactionEntity newReaction = postReactionRepository.save(reactionEntity);
+                switch (reactionType) {
+                    case "good":
+                        post.setGood(post.getGood() + 1);
+                        break;
+                    case "cheer":
+                        post.setCheer(post.getCheer() + 1);
+                        break;
+                }
             }
+            PostReactionEntity newReaction = postReactionRepository.save(reactionEntity);
+
+            FashionPostEntity updateReactionPost = fashionPostRepository.save(post);
+            response.setPostNum(postNum);
+            response.setReactionType(reactionType);
+            response.setMemberNum(reaction.getMemberNum());
+            response.setPostCategoryNum(1);
         } else {
-            // 3-2. [CASE 3: 기존 반응 없음 -> 신규 등록]
             PostReactionEntity newReaction = new PostReactionEntity();
-            newReaction.setMemberNum(memberNum);
+            newReaction.setMemberNum(reaction.getMemberNum());
+            newReaction.setReactionType(reaction.getReactionType());
             newReaction.setPostNum(postNum);
-            newReaction.setPostCategoryNum(categoryNum);
-            newReaction.setReactionType(reactionType);
+            newReaction.setPostCategoryNum(1);  // 패션 게시물은 1
 
-            finalReactionEntity = postReactionRepository.save(newReaction);
-
-            // 게시물 카운트 +1
+            PostReactionEntity finalReactionEntity = postReactionRepository.save(newReaction);
             if (reactionType.equals("good")) post.setGood(post.getGood() + 1);
             else post.setCheer(post.getCheer() + 1);
+
+            response.setPostNum(postNum);
+            response.setReactionType(reactionType);
+            response.setMemberNum(reaction.getMemberNum());
+            response.setPostCategoryNum(1);
+
         }
-
-        // 4. 변경된 게시물 상태 저장 및 응답 반환
-        fashionPostRepository.save(post);
-
-        if (finalReactionEntity == null) {
-            // 반응이 취소된 경우, 빈 응답 또는 특정 상태를 나타내는 DTO를 반환할 수 있습니다.
-            return new ReactionResponseDTO();
-        }
-
-        return modelMapper.map(finalReactionEntity, ReactionResponseDTO.class);
+        return response;
     }
 }

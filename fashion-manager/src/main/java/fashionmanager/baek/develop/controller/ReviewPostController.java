@@ -34,6 +34,13 @@ public class ReviewPostController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/react/{postNum}")
+    public ResponseEntity<ReactionResponseDTO> insertReaction(@PathVariable int postNum,
+                                                              @RequestBody ReactionRequestDTO reactionRequestDTO){
+        ReactionResponseDTO responseReaction = reviewPostService.insertReact(postNum, reactionRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseReaction);
+    }
+
     @PostMapping
     public ResponseEntity<ReviewRegistResponseDTO> registPost
             (@RequestPart("newPost") ReviewRegistRequestDTO newPost,

@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReactionResponseDTO {
-    private int num;
     private int postNum;
     private int postCategoryNum;
     private String reactionType;
