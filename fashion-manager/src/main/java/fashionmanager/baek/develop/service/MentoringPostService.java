@@ -1,7 +1,10 @@
 package fashionmanager.baek.develop.service;
 
-import fashionmanager.baek.develop.aggregate.PostType;
 import fashionmanager.baek.develop.dto.*;
+import fashionmanager.baek.develop.dto.ModifyRequestDTO;
+import fashionmanager.baek.develop.dto.ModifyResponseDTO;
+import fashionmanager.baek.develop.dto.RegistRequestDTO;
+import fashionmanager.baek.develop.dto.RegistResponseDTO;
 import fashionmanager.baek.develop.entity.MentoringPostEntity;
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.mapper.MentoringPostMapper;
@@ -20,37 +23,34 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class MentoringPostServiceImpl implements PostService {
+public class MentoringPostService {
     private final MentoringPostRespository mentoringPostRespository;
     private final PhotoRepository photoRepository;
     private final MentoringPostMapper mentoringPostMapper;
     private String postUploadPath = "C:\\uploadFiles\\mentoring";
 
     @Autowired
-    public MentoringPostServiceImpl(MentoringPostRespository mentoringPostRespository,
-                                    PhotoRepository photoRepository, MentoringPostMapper mentoringPostMapper) {
+    public MentoringPostService(MentoringPostRespository mentoringPostRespository,
+                                PhotoRepository photoRepository, MentoringPostMapper mentoringPostMapper) {
         this.mentoringPostRespository = mentoringPostRespository;
         this.photoRepository = photoRepository;
         this.mentoringPostMapper = mentoringPostMapper;
     }
 
-    @Override
-    public List<SelectAllPostDTO> getPostList() {
+    public List<SelectAllMentoringPostDTO> getPostList() {
         return mentoringPostMapper.findAll();
     }
 
-    @Override
-    public SelectDetailPostDTO getDetailPost(int postNum) {
-        SelectDetailPostDTO postDetail = mentoringPostMapper.findById(postNum);
+    public SelectDetailMentoringPostDTO getDetailPost(int postNum) {
+        SelectDetailMentoringPostDTO postDetail = mentoringPostMapper.findById(postNum);
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }
         return postDetail;
     }
 
-    @Override
     @Transactional
-    public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> postFiles,
+    public MentoringRegistResponseDTO registPost(MentoringRegistRequestDTO newPost, List<MultipartFile> postFiles,
                                         List<MultipartFile> itemFiles) {
         MentoringPostEntity mentoringPostEntity = changeToRegistPost(newPost);
         MentoringPostEntity registMentoringPost =  mentoringPostRespository.save(mentoringPostEntity);
@@ -81,49 +81,45 @@ public class MentoringPostServiceImpl implements PostService {
             }
         }
 
-        RegistResponseDTO response = new RegistResponseDTO();
+        MentoringRegistResponseDTO response = new MentoringRegistResponseDTO();
         response.setNum(postNum);
         response.setTitle(registMentoringPost.getTitle());
         response.setContent(registMentoringPost.getContent());
-        response.setMember_num(registMentoringPost.getAuthorNum());
+        response.setAuthorNum(registMentoringPost.getAuthorNum());
         response.setFinish(registMentoringPost.isFinish());
         return response;
     }
 
-    private MentoringPostEntity changeToRegistPost(RegistRequestDTO newPost) {
+    private MentoringPostEntity changeToRegistPost(MentoringRegistRequestDTO newPost) {
         MentoringPostEntity mentoringPostEntity = new MentoringPostEntity();
         mentoringPostEntity.setTitle(newPost.getTitle());
         mentoringPostEntity.setContent(newPost.getContent());
-        mentoringPostEntity.setAuthorNum(newPost.getMember_num());
+        mentoringPostEntity.setFinish(newPost.isFinish());
+        mentoringPostEntity.setAuthorNum(newPost.getAuthorNum());
 
         return mentoringPostEntity;
     }
 
-    @Override
-    public PostType getPostType() {
-        return PostType.MENTORING;
-    }
 
-    @Override
     @Transactional
-    public ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost,
-                                        List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
+    public MentoringModifyResponseDTO modifyPost(int postNum, MentoringModifyRequestDTO updatePost,
+                                                 List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
         MentoringPostEntity mentoringPostEntity = mentoringPostRespository.findById(postNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. id=" + postNum));
 
         mentoringPostEntity.setTitle(updatePost.getTitle());
         mentoringPostEntity.setContent(updatePost.getContent());
         mentoringPostEntity.setFinish(updatePost.isFinish());
-        mentoringPostEntity.setAuthorNum(updatePost.getMember_num());
+        mentoringPostEntity.setAuthorNum(updatePost.getAuthorNum());
 
         updatePhotos(mentoringPostEntity,this.postUploadPath, postFiles, 3);
 
-        ModifyResponseDTO response = new ModifyResponseDTO();
+        MentoringModifyResponseDTO response = new MentoringModifyResponseDTO();
         response.setNum(postNum);
         response.setTitle(mentoringPostEntity.getTitle());
         response.setContent(mentoringPostEntity.getContent());
         response.setFinish(mentoringPostEntity.isFinish());
-        response.setMember_num(mentoringPostEntity.getAuthorNum());
+        response.setAuthorNum(mentoringPostEntity.getAuthorNum());
         return response;
     }
 
@@ -132,8 +128,9 @@ public class MentoringPostServiceImpl implements PostService {
         List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum);
         for (PhotoEntity photo : photosToUpdate) {
             File fileToDelete = new File(photo.getPath() + File.separator + photo.getName());
-            if (fileToDelete.exists()) {
-                fileToDelete.delete();
+            boolean deleted = fileToDelete.delete();
+            if (!deleted) {
+                log.info("수정 중 사진 파일 삭제에 실패했습니다. {}", fileToDelete.getPath());  // 삭제 실패했다면 log로 남김
             }
         }
         photoRepository.deleteAll(photosToUpdate);
@@ -171,7 +168,6 @@ public class MentoringPostServiceImpl implements PostService {
         }
     }
 
-    @Override
     @Transactional
     public void deletePost(int postNum) {
         MentoringPostEntity mentoringToDelete = mentoringPostRespository.findById(postNum)
@@ -180,8 +176,9 @@ public class MentoringPostServiceImpl implements PostService {
         List<PhotoEntity> photosToDelete = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 3);
         for (PhotoEntity photo : photosToDelete) {
             File file = new File(photo.getPath() + File.separator + photo.getName());
-            if(file.exists()) {
-                file.delete();
+            boolean deleted = file.delete();
+            if(!deleted) {
+                log.info("파일 삭제 중 이미지 파일 삭제에 실패했습니다");
             }
         }
         photoRepository.deleteAll(photosToDelete);

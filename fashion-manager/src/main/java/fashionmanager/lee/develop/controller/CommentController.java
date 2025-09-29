@@ -12,6 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+import java.util.Map;
+
+>>>>>>> features
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
@@ -59,7 +65,7 @@ public class CommentController {
     ) {
         if (
                 reactionDto.getReactionType() == null ||
-                        !VALID_REACTION_TYPES.contains(reactionDto.getReactionType().toLowerCase()) // *******
+                        !VALID_REACTION_TYPES.contains(reactionDto.getReactionType().toLowerCase())
         ) {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid reactionType. Must be 'good' or 'cheer'."));
         }

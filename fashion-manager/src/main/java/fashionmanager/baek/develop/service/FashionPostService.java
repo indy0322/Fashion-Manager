@@ -1,6 +1,5 @@
 package fashionmanager.baek.develop.service;
 
-import fashionmanager.baek.develop.aggregate.PostType;
 import fashionmanager.baek.develop.dto.*;
 import fashionmanager.baek.develop.entity.FashionHashTagEntity;
 import fashionmanager.baek.develop.entity.FashionPostEntity;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class FashionPostServiceImpl implements PostService {
+public class FashionPostService {
     private final FashionPostRepository fashionPostRepository;
     private final FashionHashRepository fashionHashRepository;
     private final FashionItemRepository fashionItemRepository;
@@ -39,9 +38,9 @@ public class FashionPostServiceImpl implements PostService {
 
 
     @Autowired
-    public FashionPostServiceImpl(FashionPostRepository fashionPostRepository, FashionHashRepository fashionHashRepository,
-                                  FashionItemRepository fashionItemRepository, PhotoRepository photoRepository,
-                                  FashionPostMapper fashionPostMapper) {
+    public FashionPostService(FashionPostRepository fashionPostRepository, FashionHashRepository fashionHashRepository,
+                              FashionItemRepository fashionItemRepository, PhotoRepository photoRepository,
+                              FashionPostMapper fashionPostMapper) {
         this.fashionPostRepository = fashionPostRepository;
         this.fashionHashRepository = fashionHashRepository;
         this.fashionItemRepository = fashionItemRepository;
@@ -49,25 +48,32 @@ public class FashionPostServiceImpl implements PostService {
         this.fashionPostMapper = fashionPostMapper;
     }
 
-    @Override
-    public List<SelectAllPostDTO> getPostList() {
+    public List<SelectAllFashionPostDTO> getPostList() {
         return fashionPostMapper.findAll();
     }
 
-    @Override
-    public SelectDetailPostDTO getDetailPost(int postNum) {
-        SelectDetailPostDTO postDetail = fashionPostMapper.findById(postNum);
+    public SelectDetailFashionPostDTO getDetailPost(int postNum) {
+        SelectDetailFashionPostDTO postDetail = fashionPostMapper.findById(postNum);
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }
+        int good = postDetail.getGood();
+        int cheer = postDetail.getCheer();
+        double temp = 0.0;
+        if(good + cheer > 0) {
+            temp = ((double) good / (good + cheer)) * 100.0;
+        }
+        postDetail.setTemp(temp);
         return postDetail;
     }
 
-    @Override
     @Transactional
-    public RegistResponseDTO registPost(RegistRequestDTO newPost, List<MultipartFile> postFiles,
+    public FashionRegistResponseDTO registPost(FashionRegistRequestDTO newPost, List<MultipartFile> postFiles,
                                         List<MultipartFile> itemFiles) {
         /* 설명. 1. fashion_post table에 게시글 등록 */
+        if (newPost.getTitle() == null || newPost.getTitle().isBlank()) {
+            throw new IllegalArgumentException("제목을 입력해주세요");
+        }
         FashionPostEntity fashionPostEntity = changeToRegistPost(newPost);
         FashionPostEntity registFashionPost = fashionPostRepository.save(fashionPostEntity);
         int postNum = registFashionPost.getNum();
@@ -137,32 +143,29 @@ public class FashionPostServiceImpl implements PostService {
         }
 
         /* 설명. 5. responseDTO 생성 */
-        RegistResponseDTO response = new RegistResponseDTO();
+        FashionRegistResponseDTO response = new FashionRegistResponseDTO();
         response.setNum(postNum);
         response.setTitle(registFashionPost.getTitle());
         response.setContent(registFashionPost.getContent());
+        response.setHashtag(newPost.getHashtag());
+        response.setItems(newPost.getItems());
         response.setMember_num(registFashionPost.getMember_num());
         return response;
     }
 
-    private FashionPostEntity changeToRegistPost(RegistRequestDTO newPost) {
+    private FashionPostEntity changeToRegistPost(FashionRegistRequestDTO newPost) {
         FashionPostEntity fashionPostEntity = new FashionPostEntity();
         fashionPostEntity.setTitle(newPost.getTitle());
         fashionPostEntity.setContent(newPost.getContent());
         fashionPostEntity.setGood(0);
         fashionPostEntity.setCheer(0);
-        fashionPostEntity.setMember_num(newPost.getMember_num());
+        fashionPostEntity.setMember_num(newPost.getMemberNum());
         return fashionPostEntity;
     }
 
-    @Override
-    public PostType getPostType() {
-        return PostType.FASHION;
-    }
 
-    @Override
     @Transactional
-    public ModifyResponseDTO modifyPost(int postNum, ModifyRequestDTO updatePost,
+    public FashionModifyResponseDTO modifyPost(int postNum, FashionModifyRequestDTO updatePost,
                                         List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
         /* 설명. 1. 수정할 게시글이 존재하는지 확인 */
         FashionPostEntity fashionPostEntity = fashionPostRepository.findById(postNum)
@@ -183,7 +186,7 @@ public class FashionPostServiceImpl implements PostService {
         updatePhotos(fashionPostEntity,this.fashionItemsUploadPath, itemFiles, 4); // 패션 아이템 사진 업데이트
 
         /* 6. 최종 응답 DTO 생성 */
-        ModifyResponseDTO response = new ModifyResponseDTO();
+        FashionModifyResponseDTO response = new FashionModifyResponseDTO();
         response.setNum(postNum);
         response.setTitle(fashionPostEntity.getTitle());
         response.setContent(fashionPostEntity.getContent());
@@ -252,8 +255,12 @@ public class FashionPostServiceImpl implements PostService {
         for (PhotoEntity photo : photosToUpdate) {
             File fileToDelete = new File(photo.getPath() + File.separator + photo.getName());
             if (fileToDelete.exists()) {
-                fileToDelete.delete();
+                boolean deleted = fileToDelete.delete();
+                if (!deleted) {
+                    log.info("수정 중 사진 파일 삭제에 실패했습니다. {}", fileToDelete.getPath());  // 삭제 실패했다면 log로 남김
+                }
             }
+
         }
         photoRepository.deleteAll(photosToUpdate);
 
@@ -293,7 +300,6 @@ public class FashionPostServiceImpl implements PostService {
         }
     }
 
-    @Override
     @Transactional
     public void deletePost(int postNum) {
         /* 설명. 1. 게시글 존재 여부 검사 */
@@ -312,7 +318,10 @@ public class FashionPostServiceImpl implements PostService {
         for (PhotoEntity photo : photosToDelete) {
             File file = new File(photo.getPath() + File.separator + photo.getName());
             if(file.exists()) {
-                file.delete();
+                boolean deleted = file.delete();
+                if(!deleted) {
+                    log.info("파일 삭제 중 이미지 파일 삭제에 실패했습니다");
+                }
             }
         }
         photoRepository.deleteAll(photosToDelete);
