@@ -205,22 +205,54 @@
 <br>
 
 ## 6. 기술 스택
-<div align=center><h1>STACKS</h1></div>
+<div align=center><h1>Backend</h1></div>
 
 <div align=center> 
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"> 
   <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"> 
   <img src="https://img.shields.io/badge/spring boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
   <img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white">
+
   ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+
   <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
   <img src="https://img.shields.io/badge/JPA-Hibernate-blue?style=for-the-badge&logo=hibernate&logoColor=white">
   <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
   
 
   <br>
+
 </div>
 
+<div align=center><h1>DB server</h1></div>
+
+<div align=center> 
+  <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white">
+  
+  <br>
+</div>
+
+<div align=center><h1>API Test & Tools</h1></div>
+
+<div align=center> 
+  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
+  
+  <br>
+</div>
+
+<div align=center><h1>Infra & DevOps</h1></div>
+
+<div align=center> 
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github">
+
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+
+![ERDCloud](https://img.shields.io/badge/ERDCloud-0052CC?style=for-the-badge&logo=icloud&logoColor=white)
+  
+  <br>
+</div>
 
 ## 7. 동료 평가
 
