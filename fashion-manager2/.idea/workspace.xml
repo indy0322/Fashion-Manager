@@ -109,7 +109,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.FashionManager2Application.executor": "Run",
     "Spring Boot.FashionManagerApplication.executor": "Run",
-    "git-widget-placeholder": "Features-KSM-MSAeureka",
+    "git-widget-placeholder": "features",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -316,7 +316,7 @@
       <workItem from="1758965819871" duration="841000" />
       <workItem from="1758971723810" duration="9939000" />
       <workItem from="1759061592345" duration="12117000" />
-      <workItem from="1759124496601" duration="1562000" />
+      <workItem from="1759124496601" duration="2156000" />
     </task>
     <servers />
   </component>
