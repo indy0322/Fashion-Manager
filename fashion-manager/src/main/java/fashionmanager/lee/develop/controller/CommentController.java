@@ -59,7 +59,7 @@ public class CommentController {
     ) {
         if (
                 reactionDto.getReactionType() == null ||
-                        !VALID_REACTION_TYPES.contains(reactionDto.getReactionType().toLowerCase())
+                        !VALID_REACTION_TYPES.contains(reactionDto.getReactionType().toLowerCase()) // *******
         ) {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid reactionType. Must be 'good' or 'cheer'."));
         }
