@@ -1,6 +1,5 @@
 package fashionmanager.kim.develop.entity;
 
-import fashionmanager.kim.develop.dto.FashionHashTagDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

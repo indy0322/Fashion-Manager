@@ -1,4 +1,4 @@
-package fashionmanager.song.develop.influencerApply.dto;
+package fashionmanager.song.develop.influencerPage.dto;
 
 import lombok.*;
 
@@ -9,15 +9,17 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class InfluencerApplyResponseDTO {
-    // int -> Integer : null 가능하게
-    private Integer num;
+public class InfluencerPageResponseDTO {
+
+    private int num;
     private String title;
     private String content;
-    private String accept;
-    private Integer memberNum;
+    private String insta;
+    private String phone;
+    private int memberNum;
 
     private String memberName;
+
 
     //  이미지 관련 코드
     private List<String> photoPaths;

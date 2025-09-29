@@ -2,45 +2,43 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fashionmanager.song.develop.influencerPage.mapper.InfluencerPageMapper">
 
-<mapper namespace="fashionmanager.song.develop.influencerApply.mapper.InfluencerApplyMapper">
-
-    <resultMap id="influencerApplyMap" type="fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDTO">
+    <resultMap id="influencerPageMap" type="fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO">
         <id property="num" column="NUM"/>
         <result property="title" column="TITLE"/>
         <result property="content" column="CONTENT"/>
-        <result property="accept" column="ACCEPT"/>
+        <result property="insta" column="INSTA"/>
+        <result property="phone" column="PHONE"/>
         <result property="memberNum" column="MEMBER_NUM"/>
 
-        <!--조인을 위한 추가 매핑-->
+        <!--조인을 하기 위한 memberName 추가-->
         <result property="memberName" column="MEMBER_NAME"/>
     </resultMap>
 
-    <select id="selectResultApply" parameterType="map" resultMap="influencerApplyMap">
+    <select id="selectResultPage" parameterType="map" resultMap="influencerPageMap">
         SELECT
                A.NUM
              , A.TITLE
              , A.CONTENT
-             , A.ACCEPT
              , A.MEMBER_NUM
              , B.NAME AS MEMBER_NAME
-          FROM INFLUENCER_APPLY A
+             , A.INSTA
+             , A.PHONE
+          FROM INFLUENCER_PAGE A
           JOIN MEMBER B ON B.NUM = A.MEMBER_NUM
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="title != null and title != ''">
                 A.TITLE LIKE CONCAT('%', #{title}, '%')
             </if>
-            <if test="content != null and content != ''">
-                AND A.CONTENT LIKE CONCAT('%', #{content}, '%')
+            <if test="insta != null and insta != ''">
+                AND A.INSTA LIKE CONCAT('%', #{insta}, '%')
             </if>
-            <if test="accept != null and accept != ''">
-                AND A.ACCEPT LIKE CONCAT('%', #{accept}, '%')
+            <if test="phone != null and phone != ''">
+                AND A.PHONE LIKE CONCAT('%', #{phone}, '%')
             </if>
             <if test="memberNum != null">
                 AND A.MEMBER_NUM = #{memberNum}
-            </if>
-            <if test="memberName != null and memberName != ''">
-                AND B.NAME LIKE CONCAT('%', #{memberName}, '%')
             </if>
         </trim>
     </select>

@@ -1,6 +1,10 @@
 package fashionmanager.baek.develop.service;
 
 import fashionmanager.baek.develop.dto.*;
+import fashionmanager.baek.develop.dto.ModifyRequestDTO;
+import fashionmanager.baek.develop.dto.ModifyResponseDTO;
+import fashionmanager.baek.develop.dto.RegistRequestDTO;
+import fashionmanager.baek.develop.dto.RegistResponseDTO;
 import fashionmanager.baek.develop.entity.MentoringPostEntity;
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.mapper.MentoringPostMapper;

@@ -1,6 +1,12 @@
 package fashionmanager.baek.develop.entity;
 
 import fashionmanager.baek.develop.entity.pk.FashionHashTagPK;
+<<<<<<< HEAD
+=======
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+>>>>>>> features
 import jakarta.persistence.*;
 import lombok.*;
 

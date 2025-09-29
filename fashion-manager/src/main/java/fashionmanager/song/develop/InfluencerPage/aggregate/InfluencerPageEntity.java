@@ -1,35 +1,35 @@
-package fashionmanager.song.develop.influencerApply.aggregate;
+package fashionmanager.song.develop.influencerPage.aggregate;
 
 import fashionmanager.song.develop.common.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "influencer_apply")
-@Getter
-@Setter
-@ToString
+@Table(name = "influencer_page")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InfluencerApplyEntity {
+public class InfluencerPageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)   // auto increament
     @Column(name = "num")
     private int num;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "content", nullable = false)       // 내용 null 포함
+    @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "accept")
-    private String accept;     // 대기, 승인, 거절
+    @Column(name = "insta")
+    private String insta;
 
-    @Column(name = "member_num")
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "member_num", nullable = false) // fk라서 null 불가
     private int memberNum;
-
 
     // join을 위한 ManyToOne과 JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)

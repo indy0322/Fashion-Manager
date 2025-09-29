@@ -1,13 +1,14 @@
-package fashionmanager.song.develop.influencerApply.service;
+package fashionmanager.song.develop.menteeApply.service;
 
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.repository.PhotoRepository;
 import fashionmanager.song.develop.common.PhotoType;
-import fashionmanager.song.develop.influencerApply.aggregate.InfluencerApplyEntity;
-import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyCreateRequestDTO;
-import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDTO;
-import fashionmanager.song.develop.influencerApply.mapper.InfluencerApplyMapper;
-import fashionmanager.song.develop.influencerApply.repository.InfluencerApplyRepository;
+import fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO;
+import fashionmanager.song.develop.menteeApply.aggregate.MenteeApplyEntity;
+import fashionmanager.song.develop.menteeApply.dto.MenteeApplyCreateRequestDTO;
+import fashionmanager.song.develop.menteeApply.dto.MenteeApplyResponseDTO;
+import fashionmanager.song.develop.menteeApply.mapper.MenteeApplyMapper;
+import fashionmanager.song.develop.menteeApply.repository.MenteeApplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,37 +21,36 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor   // 생성자 자동으로 해주는 어노테이션
-public class InfluencerApplyService {
+public class MenteeApplyService {
 
-    private final InfluencerApplyMapper influencerApplyMapper;
-    private final InfluencerApplyRepository influencerApplyRepository;
+    private final MenteeApplyMapper menteeApplyMapper;
+    private final MenteeApplyRepository menteeRepository;
 
     /*이미지 파일 업로드 코드 추가*/
     private final PhotoRepository photoRepository;
-    private String UploadPath = "C:\\uploadFiles\\Influencer_Apply";
+    private String UploadPath = "C:\\uploadFiles\\Mentee_Apply";
     // PhotoType에서 페이지 코드 가져옴
-    private static final int INFLUENCER_APPLY_CODE = PhotoType.INFLUENCER_APPLY.getCode();
+    private static final int MENTEE_APPLY_CODE = PhotoType.MENTEE_APPLY.getCode();
 
 
-    // 인플루언서 신청 전체 조회
-    public List<InfluencerApplyResponseDTO> selectResultApply(String title,
-                                                              String content,
-                                                              String accept,
-                                                              Integer memberNum,
-                                                              String memberName) {
 
-        List<InfluencerApplyResponseDTO> list =
-                influencerApplyMapper.selectResultApply(
-                        title, content, accept, memberNum, memberName);
+    // 멘토링 신청 조회
+    public List<MenteeApplyResponseDTO> selectResultApply(String content,
+                                                          String accept,
+                                                          Integer mentoringPostNum,
+                                                          String memberName) {
+        List<MenteeApplyResponseDTO> list =
+                menteeApplyMapper.selectResultApply(
+                        content, accept, mentoringPostNum, memberName);
 
-        // 각각 페이지의 사진 목록을 조회해서 /files/influencer_Apply/파일명 형태의 URL로 세팅
-        for (InfluencerApplyResponseDTO dto : list) {
+        // 각각 페이지의 사진 목록을 조회해서 /files/influencer_page/파일명 형태의 URL로 세팅
+        for (MenteeApplyResponseDTO dto : list) {
             int pageNum = dto.getNum();
             List<String> urls = photoRepository
-                    .findAllByPostNumAndPhotoCategoryNum(pageNum, INFLUENCER_APPLY_CODE)
+                    .findAllByPostNumAndPhotoCategoryNum(pageNum, MENTEE_APPLY_CODE)
                     .stream()
                     // 정적 리소스 매핑과 맞춘 상대경로로 응답 (브라우저에서 바로 접근 가능)
-                    .map(p -> "/files/influencer_apply/" + p.getName())
+                    .map(p -> "/files/mentee_apply/" + p.getName())
                     .toList();
             dto.setPhotoPaths(urls);
         }
@@ -58,23 +58,21 @@ public class InfluencerApplyService {
     }
 
 
-
-    // 인플루언서 신청
     @Transactional
-    public InfluencerApplyCreateRequestDTO insertInfluencerApply(InfluencerApplyCreateRequestDTO req,
-                                                                 List<MultipartFile> postFiles) {
+    public MenteeApplyCreateRequestDTO insertMenteeApply(MenteeApplyCreateRequestDTO req,
+                                                         List<MultipartFile> postFiles) {
 //         신청서 상태는 회원이 넣는 것이 아니기 때문에 null 혹은 blank 일떄는 default 상태 -> '대기'
         if (req.getAccept() == null || req.getAccept().isBlank()) {
             req.setAccept("대기");
         }
 
-        InfluencerApplyEntity entity = new InfluencerApplyEntity();
-        entity.setTitle(req.getTitle());
+        MenteeApplyEntity entity = new  MenteeApplyEntity();
         entity.setContent(req.getContent());
         entity.setAccept(req.getAccept());
+        entity.setMentoringPostNum(req.getMentoringPostNum());
         entity.setMemberNum(req.getMemberNum());
 
-        InfluencerApplyEntity entitySaved = influencerApplyRepository.save(entity);
+        MenteeApplyEntity entitySaved = menteeRepository.save(entity);
 
         /*  사진 저장: 디스크 저장 + photo 테이블 insert (postNum과 카테고리 코드 필수) */
         if (postFiles != null && !postFiles.isEmpty()) {
@@ -108,40 +106,32 @@ public class InfluencerApplyService {
                 PhotoEntity photoEntity = new PhotoEntity();
                 photoEntity.setName(savedFileName);
                 photoEntity.setPath(UploadPath);
-                photoEntity.setPhotoCategoryNum(INFLUENCER_APPLY_CODE);
+                photoEntity.setPhotoCategoryNum(MENTEE_APPLY_CODE);
                 photoEntity.setPostNum(entitySaved.getNum());
                 photoRepository.save(photoEntity);
             }
         }
 
-        InfluencerApplyCreateRequestDTO reqSaved = new InfluencerApplyCreateRequestDTO();
-        reqSaved.setNum(entitySaved.getNum());
-        reqSaved.setTitle(entitySaved.getTitle());
+        MenteeApplyCreateRequestDTO reqSaved = new MenteeApplyCreateRequestDTO();
         reqSaved.setContent(entitySaved.getContent());
         reqSaved.setAccept(entitySaved.getAccept());
+        reqSaved.setMentoringPostNum(entitySaved.getMentoringPostNum());
         reqSaved.setMemberNum(entitySaved.getMemberNum());
         return reqSaved;
     }
-
-
-
-
-    // 인플루언서 신청 수정
-
+    // 멘토링 신천서 수정
     @Transactional
-    public int updateInfluencerApply(InfluencerApplyResponseDTO req) {
-        return influencerApplyRepository.findByNumAndMemberNum(req.getNum(), req.getMemberNum())
+    public int updateMenteeApply(MenteeApplyResponseDTO req) {
+        return menteeRepository.findById(req.getNum())
                 .map(entity -> {
-                    entity.setTitle(req.getTitle());
                     entity.setContent(req.getContent());
-                    influencerApplyRepository.save(entity);
+                    menteeRepository.save(entity);
                     return 1;
                 })
                 .orElse(0);
     }
 
-    // 인플루언서 신청 삭제
-    public int deleteInfluencerApplyByTitleAndMemberNum(String title, int memberNum) {
-        return influencerApplyRepository.deleteInfluencerApplyByTitleAndMemberNum(title, memberNum);
+    public int deleteMenteeApplyByMentoringPostNumAndMemberNum(String content, int mentoringPostNum, int memberNum) {
+        return menteeRepository.deleteMenteeApplyByMentoringPostNumAndMemberNum(content, mentoringPostNum, memberNum);
     }
 }

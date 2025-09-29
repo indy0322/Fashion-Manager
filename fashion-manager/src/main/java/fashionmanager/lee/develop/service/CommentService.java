@@ -38,6 +38,7 @@ public class CommentService {
                 commentPostDto.getPostType()
         );
         Comment savedComment = commentRepository.saveAndFlush(commentToSave);
+//        Comment savedComment = commentRepository.save(commentToSave);
         return commentMapper
                 .findCommentByNum(savedComment.getNum())
                 .orElseThrow(() -> new RuntimeException("댓글 생성 후 정보를 가져오는 데 실패했습니다."));
