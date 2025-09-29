@@ -38,7 +38,6 @@ public class CommentService {
                 commentPostDto.getPostType()
         );
         Comment savedComment = commentRepository.saveAndFlush(commentToSave);
-//        Comment savedComment = commentRepository.save(commentToSave);
         return commentMapper
                 .findCommentByNum(savedComment.getNum())
                 .orElseThrow(() -> new RuntimeException("댓글 생성 후 정보를 가져오는 데 실패했습니다."));
@@ -66,42 +65,45 @@ public class CommentService {
 
     @Transactional
     public CommentDTO toggleReaction(Integer commentNum, Integer memberNum, String newReactionType) {
+        // newReactionType을 대문자로 통일
         final String newReaction = newReactionType.toUpperCase();
 
-        Comment comment = commentRepository
-                .findById(commentNum)
-                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다. 번호: " + commentNum));
+        // 댓글 존재 여부 확인
+        if (!commentRepository.existsById(commentNum)) {
+            throw new IllegalArgumentException("댓글을 찾을 수 없습니다. 번호: " + commentNum);
+        }
 
+        // 기존 반응 정보 조회
         Optional<CommentReaction> existingReactionOpt = commentReactionRepository.findByMemberNumAndCommentNum(
                 memberNum,
                 commentNum
         );
 
         if (existingReactionOpt.isPresent()) {
-            CommentReaction existingReactionEntity = existingReactionOpt.get();
-            String oldReaction = existingReactionEntity.getReactionType();
+            // 기존 반응이 있는 경우
+            CommentReaction existingReaction = existingReactionOpt.get();
+            String oldReaction = existingReaction.getReactionType();
 
             if (oldReaction.equals(newReaction)) {
-                commentReactionRepository.delete(existingReactionEntity);
-                if (oldReaction.equals("GOOD")) {
-                    comment.setGood(comment.getGood() - 1);
-                } else {
-                    comment.setCheer(comment.getCheer() - 1);
-                }
+                // 1. 기존 반응과 같은 반응이면 -> 삭제 (토글 OFF)
+                commentReactionRepository.delete(existingReaction);
             } else {
-                throw new IllegalStateException("기존 반응을 먼저 취소해야 합니다.");
+                // 2. 기존 반응과 다른 반응이면 -> 반응 종류 변경 (좋아요 -> 힘내요)
+                // 현재 트리거가 INSERT/DELETE에만 반응하므로, 삭제 후 새로 삽입하여 트리거를 활성화
+                commentReactionRepository.delete(existingReaction);
+                CommentReaction reactionToSave = new CommentReaction(memberNum, commentNum, newReaction);
+                commentReactionRepository.save(reactionToSave);
             }
         } else {
+            // 3. 기존 반응이 없는 경우 -> 새로 추가
             CommentReaction reactionToSave = new CommentReaction(memberNum, commentNum, newReaction);
             commentReactionRepository.save(reactionToSave);
-            if (newReaction.equals("GOOD")) {
-                comment.setGood(comment.getGood() + 1);
-            } else {
-                comment.setCheer(comment.getCheer() + 1);
-            }
         }
-        commentRepository.flush();
-        
+
+        // 데이터베이스 변경사항 즉시 반영
+        commentReactionRepository.flush();
+
+        // 변경된 최신 댓글 정보를 MyBatis를 통해 조회하여 반환
         return commentMapper
                 .findCommentByNum(commentNum)
                 .orElseThrow(() -> new RuntimeException("댓글 정보를 갱신하는 데 실패했습니다."));
