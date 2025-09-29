@@ -12,7 +12,7 @@
 
 |   |   |   |   |   |
 | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------------------: | :-----------------------------------------------------------: | :--------------------------------------------------------------: |
-|      <img src="./image/park.jpg" width="120px;" alt=""/>      |      <img src="./image/paik.webp" width="120px;" alt=""/>      |            <img src="./image/lee.jpeg" width="120px;" alt=""/>            |    <img src="./image/song.jpeg" width="120px;" alt=""/>     |      <img src="./image/kim.jpg" width="120px;" alt=""/>      |
+|      <img src="./image/park.png" width="120px;" alt=""/>      |      <img src="./image/paik.png" width="120px;" alt=""/>      |            <img src="./image/lee.png" width="120px;" alt=""/>            |    <img src="./image/song.png" width="120px;" alt=""/>     |      <img src="./image/kim.png" width="120px;" alt=""/>      |
 |      [박상윤](https://github.com/sangyoun1020)      |      [백준승](https://github.com/seoguhoe2)      |      [이순우](https://github.com/SoonWooLee1)      |      [송형석](https://github.com/thdgudtjr0415)      |      [김승민](https://github.com/indy0322)      |
 
 </div>
@@ -111,43 +111,79 @@
 
 ---
 
-## 1-3. 주요기능
+알겠습니다. 각 기능이 어떤 데이터(필드)와 직접적으로 연결되는지 강조하는 형식으로 수정해 드릴게요.
 
-### 스타일 업로드 및 상호 평가
-
-- 데일리룩(OOTD) 사진 업로드 및 스타일 설명 작성
-  
-- 다른 사용자 스타일에 대해 ‘찬성/반대’ 혹은 별점 형태로 평가
-  
-- 매일/매주 좋아요 & 힘내요 개수를 통해 ‘베스트/워스트’ 드레서 선정
-
-<br />
-
-### 패션 찬반 토론
-
-- ‘양말에 샌들, 괜찮은가?’, ‘올해의 유행 컬러는?’ 등 특정 주제에 대한 토론 참여
-
-- 연령대별, 성별 등 그룹별 토론 기능을 통해 다양한 시각 확인
-
-- 활발한 토론 참여 시 배지, 포인트 등 리워드 제공
-
-<br />
-
-### 멘토-멘티 시스템 ⭐
-
-> **“혼자 고민하는 스타일링은 이제 그만! 전문가에게 직접 물어보세요.”**
-> 
-> - 커뮤니티 내에서 높은 평가를 받거나 검증된 사용자가 ‘멘토’로 활동
->   
-> - 스타일 고민이 있는 ‘멘티’가 원하는 ‘멘토’에게 1:1 피드백 요청
->   
-> - 개인의 체형, 이미지, 라이프스타일에 맞춘 **개인화된 스타일링 코칭** 제공
+기능 설명 바로 아래에 관련 데이터베이스 정보를 명시하여, 아이디어와 실제 데이터 구조의 연결고리를 명확하게 보여주는 데 초점을 맞췄습니다.
 
 ---
 
+# **✨ Fashion Manager: 주요 기능과 데이터 ✨**
+
+각 기능이 어떻게 실제 데이터와 연결되는지 함께 확인해 보세요.
+
+### ## 📸 스타일 업로드 및 상호 평가
+- **데일리룩(OOTD)** 사진을 올리고 나만의 스타일을 설명해요.
+  > 💾 **연관 데이터:** `Fashion_Post`, `Photo`, `Post_Item`, `Fashion_Item`, `Fashion_Hashtag`
+- 다른 사람의 스타일을 보고 **‘찬성/반대’**나 **별점**으로 평가해요.
+  > 💾 **연관 데이터:** `Post_Reaction`
+- 매일, 매주 커뮤니티 투표로 **‘베스트/워스트 드레서’**에 도전해 보세요!
+  > 💾 **연관 데이터:** `good_count`, `cheer_count`
+
+
+
+---
+
+### ## 🗣️ 패션 찬반 토론
+- **'양말에 샌들'** 같이 재미있는 주제로 패션 토론에 참여해요.
+  > 💾 **연관 데이터:** `Review_Post`, `Review_Category`
+- **연령, 성별**에 따른 그룹 토론으로 다양한 의견을 들어봐요.
+  > 💾 **연관 데이터:** `Member.age`, `Member.gender`, `Comment`
+- 토론에 활발하게 참여하면 **배지, 포인트** 등 특별한 보상이 기다려요.
+  > 💾 **연관 데이터:** `Badge`, `Assigned_Badge`
+
+---
+
+### ## 🤝 멘토-멘티 시스템
+- 커뮤니티에서 인정받은 **전문가 ‘멘토’**가 직접 도와줘요.
+  > 💾 **연관 데이터:** `Assigned_Right`, `Influencer_Apply`
+- 고민이 있다면 원하는 멘토에게 **1:1 스타일링 피드백**을 요청할 수 있어요.
+  > 💾 **연관 데이터:** `Mentoring_Post`, `Mentee_Apply`, `Message`
+- **체형, 라이프스타일**에 딱 맞는 나만의 코칭을 받아보세요.
+  > 💾 **연관 데이터:** `Member.height`, `Member.weight`, `Member.age`
+
+---
+
+### ## 🌟 인플루언서 공간
+- 승인된 **인플루언서**가 되어 나만의 전용 페이지를 운영해요.
+  > 💾 **연관 데이터:** `Influencer_Page`, `Influencer_Apply`
+- 자신만의 스타일과 **SNS 계정**을 공유하며 팔로워와 소통할 수 있어요.
+  > 💾 **연관 데이터:** `Photo`, `Comment`, `Message`
+- **브랜드 협찬**이나 **추천 아이템**을 자유롭게 소개하고 공유해요.
+  > 💾 **연관 데이터:** `Fashion_Item`, `Post_Item`
+
+---
+
+### ## 🛡️ 커뮤니티 안전장치
+- 불쾌한 게시글이나 댓글은 **신고 기능**으로 바로 알려주세요.
+  > 💾 **연관 데이터:** `Report`, `Report_Category`
+- 신고가 누적된 사용자는 활동이 제한되며, **블랙리스트**로 관리돼요.
+  > 💾 **연관 데이터:** `Blacklist`, `Member.status`
+- 무분별한 신고를 막기 위해 **일일 신고 횟수**를 제한해요.
+  > 💾 **연관 데이터:** `Member.daily_report_count`
+
+---
+
+### ## 🏆 리워드 및 성장
+- 꾸준한 활동과 기여를 통해 특별한 **활동 배지**를 획득할 수 있어요.
+  > 💾 **연관 데이터:** `Badge`, `Assigned_Badge`
+- **좋아요/힘내요** 기록이 쌓여 나만의 활동 점수가 돼요.
+  > 💾 **연관 데이터:** `good_count`, `cheer_count`
+- 높은 활동 점수와 좋은 평판을 얻어 **멘토/인플루언서**로 성장해 보세요!
+  > 💾 **연관 데이터:** `Assigned_Right`
+
 ## 1-4. WBS
 
-<img src = "./image/wbs.png" width = "1000"> </img> <br>
+<img src = "./image/WBS.png" width = "1000"> </img> <br>
 ---
 
 ## 1-5. 요구사항 명세서 
@@ -155,9 +191,10 @@
 <img src = "./image/요구사항1.png" width = "1000"> </img>
 <img src = "./image/요구사항2.png" width = "1000"> </img> <br>
 ---
-## 1-6. UML
+## 1-6. DDD
 
-<img src = "./image/UML.png" width = "1000"> </img> <br>
+<img src = "./image/DDD1.png" width = "1000"> </img>
+<img src = "./image/DDD2.png" width = "1000"> </img> <br>
 ---
 
 ## 2. DB 모델링
@@ -168,11 +205,11 @@
 ---
 ### 2-2. 논리 모델링
 
-<img src = "./image/논리erd.png" width = "1000"> </img> <br>
+<img src = "./image/barker.png" width = "1000"> </img> <br>
 ---
 ### 2-3. 물리 모델링
 
-<img src = "./image/물리erd.png" width = "1000"> </img> <br>
+<img src = "./image/erd.png" width = "1000"> </img> <br>
 ---
 ## 3. 서버 구축
 
@@ -182,8 +219,12 @@
 <img src = "./image/리눅스slave2.png" width = "1000"> </img> <br>
 
 ---
-## 4. DDL
+## 4. DB
 
+  <details>
+    <summary> DDL</summary>
+    <img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
+  </details>
 
 
 <br>
@@ -200,16 +241,54 @@
 <br>
 
 ## 6. 기술 스택
-<div align=center><h1>STACKS</h1></div>
+<div align=center><h1>Backend</h1></div>
 
 <div align=center> 
-  <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white"> 
-  <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> 
-  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"> 
+  <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white"> 
+  <img src="https://img.shields.io/badge/spring boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+  <img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=white">
+
+  ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+
+  <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+  <img src="https://img.shields.io/badge/JPA-Hibernate-blue?style=for-the-badge&logo=hibernate&logoColor=white">
+  <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
+  
+
+  <br>
+
+</div>
+
+<div align=center><h1>DB server</h1></div>
+
+<div align=center> 
+  <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white">
+  
   <br>
 </div>
 
+<div align=center><h1>API Test & Tools</h1></div>
+
+<div align=center> 
+  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
+  
+  <br>
+</div>
+
+<div align=center><h1>Infra & DevOps</h1></div>
+
+<div align=center> 
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github">
+
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+
+![ERDCloud](https://img.shields.io/badge/ERDCloud-0052CC?style=for-the-badge&logo=icloud&logoColor=white)
+  
+  <br>
+</div>
 
 ## 7. 동료 평가
 
