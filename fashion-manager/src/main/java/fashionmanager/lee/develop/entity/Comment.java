@@ -3,7 +3,7 @@ package fashionmanager.lee.develop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity // ****
 @Table(name = "COMMENT")
 @Getter
 @Setter
