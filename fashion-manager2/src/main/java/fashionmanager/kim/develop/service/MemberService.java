@@ -6,10 +6,12 @@ import fashionmanager.kim.develop.entity.Member;
 import fashionmanager.kim.develop.mapper.MemberMapper;
 import fashionmanager.kim.develop.repository.AssignedRightRepository;
 import fashionmanager.kim.develop.repository.MemberRepository;
-//import fashionmanager.kim.develop.security.JwtTokenProvider;
+import fashionmanager.kim.develop.security.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,16 +30,16 @@ public class MemberService {
     private final ModelMapper modelMapper;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-//    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public MemberService(MemberMapper memberMapper, MemberRepository memberRepository, AssignedRightRepository assignedRightRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public MemberService(MemberMapper memberMapper, MemberRepository memberRepository, AssignedRightRepository assignedRightRepository, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.memberMapper = memberMapper;
         this.memberRepository = memberRepository;
         this.assignedRightRepository = assignedRightRepository;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-//        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public MemberDTO selectMessageAllow(String memberId){
@@ -115,23 +117,23 @@ public class MemberService {
         }
     }
 
-//    public String memberLogin(String memberId, String memberPwd) {
-//        MemberRightDTO member = memberMapper.selectMemberRightById(memberId);
-//        if(member == null){
-//            log.info("존재하지 않는 회원");
-//            return "존재하지 않는 회원";
-//        }else{
-//            boolean check = bCryptPasswordEncoder.matches(memberPwd, member.getMemberPwd());
-//            if(!check){
-//                log.info("비밀번호 불일치");
-//                return "비밀번호 불일치";
-//            }else{
-//                log.info("비밀번호 일치");
-//                String token = jwtTokenProvider.createToken(member);
-//                return token;
-//            }
-//        }
-//    }
+    public String memberLogin(String memberId, String memberPwd) {
+        MemberRightDTO member = memberMapper.selectMemberRightById(memberId);
+        if(member == null){
+            log.info("존재하지 않는 회원");
+            return "존재하지 않는 회원";
+        }else{
+            boolean check = bCryptPasswordEncoder.matches(memberPwd, member.getMemberPwd());
+            if(!check){
+                log.info("비밀번호 불일치");
+                return "비밀번호 불일치";
+            }else{
+                log.info("비밀번호 일치");
+                String token = jwtTokenProvider.createToken(member);
+                return token;
+            }
+        }
+    }
 }
 
 

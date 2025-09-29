@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21416bd3-b6d0-45f0-88b7-564c1f3ddd9b" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/FashionManagerApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/configuration/MybatisConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/Entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/repository/BadgeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/repository/BadgeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/park/develop/menu/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fashion-manager2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager2/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +103,7 @@
       <workItem from="1758970243352" duration="4181000" />
       <workItem from="1759061376444" duration="3599000" />
       <workItem from="1759124215882" duration="3550000" />
-      <workItem from="1759134042444" duration="655000" />
+      <workItem from="1759134042444" duration="1254000" />
     </task>
     <servers />
   </component>
