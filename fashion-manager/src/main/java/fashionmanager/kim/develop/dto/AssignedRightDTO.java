@@ -1,5 +1,7 @@
 package fashionmanager.kim.develop.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Data

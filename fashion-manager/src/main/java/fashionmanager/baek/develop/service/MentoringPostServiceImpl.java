@@ -1,12 +1,14 @@
 package fashionmanager.baek.develop.service;
 
 import fashionmanager.baek.develop.aggregate.PostType;
+import fashionmanager.baek.develop.dto.*;
 import fashionmanager.baek.develop.dto.ModifyRequestDTO;
 import fashionmanager.baek.develop.dto.ModifyResponseDTO;
 import fashionmanager.baek.develop.dto.RegistRequestDTO;
 import fashionmanager.baek.develop.dto.RegistResponseDTO;
 import fashionmanager.baek.develop.entity.MentoringPostEntity;
 import fashionmanager.baek.develop.entity.PhotoEntity;
+import fashionmanager.baek.develop.mapper.MentoringPostMapper;
 import fashionmanager.baek.develop.repository.MentoringPostRespository;
 import fashionmanager.baek.develop.repository.PhotoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +27,29 @@ import java.util.UUID;
 public class MentoringPostServiceImpl implements PostService {
     private final MentoringPostRespository mentoringPostRespository;
     private final PhotoRepository photoRepository;
+    private final MentoringPostMapper mentoringPostMapper;
     private String postUploadPath = "C:\\uploadFiles\\mentoring";
 
     @Autowired
     public MentoringPostServiceImpl(MentoringPostRespository mentoringPostRespository,
-                                    PhotoRepository photoRepository) {
+                                    PhotoRepository photoRepository, MentoringPostMapper mentoringPostMapper) {
         this.mentoringPostRespository = mentoringPostRespository;
         this.photoRepository = photoRepository;
+        this.mentoringPostMapper = mentoringPostMapper;
+    }
+
+    @Override
+    public List<SelectAllPostDTO> getPostList() {
+        return mentoringPostMapper.findAll();
+    }
+
+    @Override
+    public SelectDetailPostDTO getDetailPost(int postNum) {
+        SelectDetailPostDTO postDetail = mentoringPostMapper.findById(postNum);
+        if (postDetail == null) {
+            throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
+        }
+        return postDetail;
     }
 
     @Override

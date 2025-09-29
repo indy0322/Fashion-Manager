@@ -2,6 +2,7 @@ package fashionmanager.baek.develop.entity.pk;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
