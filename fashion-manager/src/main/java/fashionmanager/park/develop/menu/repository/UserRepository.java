@@ -6,7 +6,6 @@ import fashionmanager.park.develop.menu.Entity.User;
 
 
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsByUserId(String userId);

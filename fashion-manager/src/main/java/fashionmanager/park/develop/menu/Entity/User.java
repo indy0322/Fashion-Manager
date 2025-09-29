@@ -40,13 +40,13 @@ public class User {
     @Column(nullable = false)
     private String status = "ACTIVE";
 
-    @Column(name="MessageAllow")
+    @Column(name="message_allow")
     private int userMessageAllow;
 
-    @Column(name="ReportCount")
+    @Column(name="report_count")
     private int ReportCount;
 
-    @Column(name="DailyReportCount")
+    @Column(name="daily_report_count")
     private int DailyReportCount;
 
 
