@@ -3,6 +3,10 @@ package fashionmanager.baek.develop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "fashion_post")
 @NoArgsConstructor

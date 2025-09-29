@@ -1,5 +1,6 @@
 package fashionmanager.kim.develop.controller;
 
+import fashionmanager.kim.develop.dto.InsertReportDTO;
 import fashionmanager.kim.develop.dto.ReportDTO;
 import fashionmanager.kim.develop.service.ReportService;
 import lombok.extern.slf4j.Slf4j;

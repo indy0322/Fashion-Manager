@@ -1,5 +1,6 @@
 package fashionmanager.kim.develop.service;
 
+import fashionmanager.kim.develop.dto.InsertReportDTO;
 import fashionmanager.kim.develop.dto.ReportDTO;
 import fashionmanager.kim.develop.entity.Report;
 import fashionmanager.kim.develop.mapper.ReportMapper;

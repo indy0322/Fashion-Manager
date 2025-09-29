@@ -5,6 +5,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "review_post")
 @Data
