@@ -25,8 +25,11 @@ public class SecurityConfiguration {
         httpSecurity.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/member/**").permitAll().anyRequest().authenticated()
+                        .requestMatchers("/member/**").permitAll()
+                        .anyRequest().authenticated()
                 );
+
+        System.out.println(">>> JwtAuthenticationFilter 등록됨");
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
