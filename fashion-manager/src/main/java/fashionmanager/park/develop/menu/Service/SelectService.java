@@ -1,12 +1,11 @@
 package fashionmanager.park.develop.menu.Service;
 
 
-
+import fashionmanager.park.develop.mapper.UserMapper;
+import fashionmanager.park.develop.menu.DTO.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import fashionmanager.park.develop.mapper.UserMapper;
-import fashionmanager.park.develop.menu.DTO.UserDTO;
 
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class SelectService {
     public UserDTO findUserByNum(int userNum) {
         return userMapper.selectUserByNum(userNum);
     }
+
 
 
     // 2. 전체 회원 조회
