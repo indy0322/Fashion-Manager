@@ -17,7 +17,7 @@
 
 </div>
 
-
+ 
 <br>
 
 -----
@@ -179,12 +179,12 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 
   <details>
     <summary> Event-Storming </summary>
-    <img src = "./image/DDD1.png" width = "1000"> </img>
+    <img src = "./image/DDD1.png" width = "1500"> </img>
   </details>
 
   <details>
     <summary> Context-Map </summary>
-    <img src = "./image/DDD2.png" width = "1000"> </img>
+    <img src = "./image/DDD2.png" width = "1500"> </img>
   </details>
 
 <br>
@@ -212,12 +212,12 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 
   <details>
     <summary> user-service</summary>
-    <img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
+    <img src = "./image/상영예정작예상평점.png" width="800"> </img> 
   </details>
 
   <details>
     <summary> core-service </summary>
-    <img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
+    <img src = "./image/상영예정작예상평점.png" width="800"> </img> 
   </details>
 
 <br>
@@ -226,28 +226,183 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 
 ## 5. 테스트 케이스
 
+<details>
+  <summary> 👤 회원 관리 도메인 테스트 </summary>
+  <br>
+  
   <details>
-    <summary> 단위 테스트 </summary>
-    <img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
+    <summary>회원 기본 CRUD</summary>
+    <br>
+    <details>
+      <summary>회원 가입</summary>
+      <img src="./images/member/회원가입.png" width="800" />
+    </details>
+    <details>
+      <summary>회원 전체 조회</summary>
+      <img src="./images/member/회원_전체조회.png" width="800" />
+    </details>
+    <details>
+      <summary>특정 회원 조회</summary>
+      <img src="./images/member/특정_회원조회.png" width="800" />
+    </details>
+    <details>
+      <summary>회원 정보 수정</summary>
+      <img src="./images/member/회원정보수정.png" width="800" />
+    </details>
+    <details>
+      <summary>회원 정보 삭제</summary>
+      <img src="./images/member/회원정보삭제.png" width="800" />
+    </details>
+  </details>
+  
+  ---
+  
+  <details>
+    <summary>회원 관리 기능</summary>
+    <br>
+    <details>
+      <summary>회원 메시지 수신 여부 설정</summary>
+      <img src="./images/member/회원메시지수신여부설정.png" width="800" />
+    </details>
+    <details>
+      <summary>회원 신고 누적 수 & 하루 신고 가능 횟수 수정</summary>
+      <img src="./images/member/회원신고누적수_하루신고가능횟수수정.png" width="800" />
+    </details>
+  </details>
+  
+  ---
+  
+  <details>
+    <summary>회원 칭호 관리</summary>
+    <br>
+    <details>
+      <summary>회원 칭호 부여</summary>
+      <img src="./images/member/회원칭호부여.png" width="800" />
+    </details>
+    <details>
+      <summary>회원 칭호 삭제</summary>
+      <img src="./images/member/회원칭호삭제.png" width="800" />
+    </details>
   </details>
 
-  <details>
-    <summary> API 테스트 </summary>
-      <details>
-    	<summary> API 테스트 </summary>
-    	<img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
-    	<summary> API 테스트 </summary>
-    	<img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
-    	<summary> API 테스트 </summary>
-    	<img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
-    	<summary> API 테스트 </summary>
-    	<img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
-    	<summary> API 테스트 </summary>
-    	<img src = "./gif/상영예정작예상평점.gif" width="800"> </img> 
-      </details>
-  </details>
-
+</details>
 <br>
+
+<details>
+  <summary> 💬 댓글 관리 도메인 테스트 </summary>
+  <br>
+  
+  <details>
+    <summary>패션게시판_댓글추가</summary>
+    <img src="./images/comment/패션게시판_댓글추가.png" width="800" />
+  </details>
+  <details>
+    <summary>리뷰게시판_댓글추가</summary>
+    <img src="./images/comment/리뷰게시판_댓글추가.png" width="800" />
+  </details>
+  
+  <details>
+    <summary>패션게시판_댓글조회</summary>
+    <img src="./images/comment/패션게시판_댓글조회.png" width="800" />
+  </details>
+  <details>
+    <summary>리뷰게시판_댓글조회</summary>
+    <img src="./images/comment/리뷰게시판_댓글조회.png" width="800" />
+  </details>
+
+  <details>
+    <summary>댓글수정</summary>
+    <img src="./images/comment/댓글수정.png" width="800" />
+  </details>
+  <details>
+    <summary>댓글삭제</summary>
+    <img src="./images/comment/댓글삭제.png" width="800" />
+  </details>
+  
+</details>
+<br>
+
+<details>
+  <summary> 🧑‍💼/🧑‍🎓 인플루언서, 멘티 관리 도메인 테스트 </summary>
+  <br>
+  
+  <details>
+    <summary> 🧑‍💼 인플루언서 관련 API </summary>
+    <br>
+    
+    <details>
+      <summary>인플루언서 신청/관리</summary>
+      <br>
+      <details>
+        <summary>인플루언서 신청</summary>
+        <img src="./images/influencer,mentee/인플루언서 신청.png" width="800" />
+      </details>
+      <details>
+        <summary>인플루언서 신청 조회</summary>
+        <img src="./images/influencer,mentee/인플루언서 신청 조회.png" width="800" />
+      </details>
+      <details>
+        <summary>인플루언서 신청 내용 수정</summary>
+        <img src="./images/influencer,mentee/인플루언서 신청 내용 수정.png" width="800" />
+      </details>
+      <details>
+        <summary>인플루언서 신청 취소</summary>
+        <img src="./images/influencer,mentee/인플루언서 신청 취소.png" width="800" />
+      </details>
+    </details>
+
+    <details>
+      <summary>인플루언서 페이지 관리</summary>
+      <br>
+      <details>
+        <summary>인플루언서 페이지 생성</summary>
+        <img src="./images/influencer,mentee/인플루언서 페이지 생성.png" width="800" />
+      </details>
+      <details>
+        <summary>인플루언서 페이지 조회</summary>
+        <img src="./images/influencer,mentee/인플루언서 페이지 조회.png" width="800" />
+      </details>
+       <details>
+        <summary>인플루언서 페이지네이션</summary>
+        <img src="./images/influencer,mentee/인플루언서 페이지네이션.png" width="800" />
+      </details>
+      <details>
+        <summary>인플루언서 페이지 수정</summary>
+        <img src="./images/influencer,mentee/인플루언서 페이지 수정.png" width="800" />
+      </details>
+      <details>
+        <summary>인플루언서 페이지 삭제</summary>
+        <img src="./images/influencer,mentee/인플루언서 페이지 삭제.png" width="800" />
+      </details>
+    </details>
+  </details>
+  
+  ---
+  
+  <details>
+    <summary> 🧑‍🎓 멘티 관련 API </summary>
+    <br>
+    
+    <details>
+      <summary>멘티 신청</summary>
+      <img src="./images/influencer,mentee/멘티 신청.png" width="800" />
+    </details>
+    <details>
+      <summary>멘티 신청 조회</summary>
+      <img src="./images/influencer,mentee/멘티 신청 조회.png" width="800" />
+    </details>
+    <details>
+      <summary>멘티 신청서 수정</summary>
+      <img src="./images/influencer,mentee/멘티 신청서 수정.png" width="800" />
+    </details>
+    <details>
+      <summary>멘티 신청서 삭제</summary>
+      <img src="./images/influencer,mentee/멘티 신청서 삭제.png" width="800" />
+    </details>
+  </details>
+</details>
+<br>
+
 
 ## 6. 기술 스택
 <div align=center><h1>Backend</h1></div>
