@@ -45,10 +45,8 @@ public class MentoringPostService {
         if(postDetail.getPhotos() != null) {
             for(PhotoDTO photo : postDetail.getPhotos()) {
                 String subPath = "";
-                if(photo.getPhotoCategoryNum() == 2) {
-                    subPath = "review/";
-                } else if(photo.getPhotoCategoryNum() == 5) {
-                    subPath = "review_items/";
+                if(photo.getPhotoCategoryNum() == 3) {
+                    subPath = "mentoring/";
                 }
                 String imageUrl = "/images/" + extractFolderName(photo.getPath()) + "/" + photo.getName();
                 photo.setImageUrl(imageUrl);

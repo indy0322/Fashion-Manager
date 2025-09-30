@@ -63,9 +63,9 @@
         </collection>
 
         <collection property="photos" ofType="fashionmanager.baek.develop.dto.PhotoDTO">
-            <id property="num" column="num"/>
-            <result property="name" column="name"/>
-            <result property="path" column="path"/>
+            <id property="num" column="photo_num"/>
+            <result property="name" column="photo_name"/>
+            <result property="path" column="photo_path"/>
             <result property="photoCategoryNum" column="photo_category_num"/>
         </collection>
     </resultMap>
@@ -85,6 +85,7 @@
              , p.num AS photo_num
              , p.name AS photo_name
              , p.path AS photo_path
+             , p.photo_category_num
           FROM fashion_post fp
           LEFT JOIN member m ON fp.member_num = m.num
           LEFT JOIN post_item pi ON fp.num = pi.post_num
