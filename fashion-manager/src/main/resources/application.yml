@@ -3,9 +3,9 @@ spring:
     name: member-service
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/fashion_manager
-    username: swcamp
-    password: swcamp
+    url: jdbc:mariadb://localhost:3308/fashion_manager
+    username: root
+    password: 991020
 
   servlet:
     multipart:
