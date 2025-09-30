@@ -18,15 +18,15 @@
 
     <select id="selectResultPage" parameterType="map" resultMap="influencerPageMap">
         SELECT
-               A.NUM
-             , A.TITLE
-             , A.CONTENT
-             , A.MEMBER_NUM
-             , B.NAME AS MEMBER_NAME
-             , A.INSTA
-             , A.PHONE
-          FROM INFLUENCER_PAGE A
-          JOIN MEMBER B ON B.NUM = A.MEMBER_NUM
+        A.NUM
+        , A.TITLE
+        , A.CONTENT
+        , A.MEMBER_NUM
+        , B.NAME AS MEMBER_NAME
+        , A.INSTA
+        , A.PHONE
+        FROM INFLUENCER_PAGE A
+        JOIN MEMBER B ON B.NUM = A.MEMBER_NUM
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="title != null and title != ''">
                 A.TITLE LIKE CONCAT('%', #{title}, '%')
@@ -41,5 +41,36 @@
                 AND A.MEMBER_NUM = #{memberNum}
             </if>
         </trim>
+        ORDER BY A.NUM DESC
+    </select>
+
+    <!-- 추가: 검색 + 페이징 -->
+    <select id="selectResultPageWithPaging" parameterType="map" resultMap="influencerPageMap">
+        SELECT
+        A.NUM
+        , A.TITLE
+        , A.CONTENT
+        , A.MEMBER_NUM
+        , B.NAME AS MEMBER_NAME
+        , A.INSTA
+        , A.PHONE
+        FROM INFLUENCER_PAGE A
+        JOIN MEMBER B ON B.NUM = A.MEMBER_NUM
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="title != null and title != ''">
+                A.TITLE LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="insta != null and insta != ''">
+                AND A.INSTA LIKE CONCAT('%', #{insta}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                AND A.PHONE LIKE CONCAT('%', #{phone}, '%')
+            </if>
+            <if test="memberNum != null">
+                AND A.MEMBER_NUM = #{memberNum}
+            </if>
+        </trim>
+        ORDER BY A.NUM DESC
+        LIMIT #{offset}, #{limit}
     </select>
 </mapper>
