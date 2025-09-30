@@ -2,8 +2,8 @@ package fashionmanager.song.develop.menteeApply.service;
 
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.repository.PhotoRepository;
-import fashionmanager.kim.develop.repository.MemberRepository;
 import fashionmanager.song.develop.common.PhotoType;
+import fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO;
 import fashionmanager.song.develop.menteeApply.aggregate.MenteeApplyEntity;
 import fashionmanager.song.develop.menteeApply.dto.MenteeApplyCreateRequestDTO;
 import fashionmanager.song.develop.menteeApply.dto.MenteeApplyResponseDTO;
@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +25,6 @@ public class MenteeApplyService {
 
     private final MenteeApplyMapper menteeApplyMapper;
     private final MenteeApplyRepository menteeRepository;
-    private final MemberRepository  memberRepository;
 
     /*이미지 파일 업로드 코드 추가*/
     private final PhotoRepository photoRepository;
@@ -77,8 +75,6 @@ public class MenteeApplyService {
         MenteeApplyEntity entitySaved = menteeRepository.save(entity);
 
         /*  사진 저장: 디스크 저장 + photo 테이블 insert (postNum과 카테고리 코드 필수) */
-        List<String> urls = new ArrayList<>();   // 추가
-
         if (postFiles != null && !postFiles.isEmpty()) {
             File uploadDir = new File(UploadPath);
             if (!uploadDir.exists()) {
@@ -87,14 +83,19 @@ public class MenteeApplyService {
             for (MultipartFile imageFile : postFiles) {
                 // 원본 파일 이름 저장
                 String originalFileName = imageFile.getOriginalFilename();
+
                 // 원본 파일 이름이 없거나 혹은 파일 이름에 .이 포함 되어 있지 않으면 예외 처리
                 if (originalFileName == null || !originalFileName.contains(".")) {
                     throw new RuntimeException("유효하지 않은 파일명입니다.");
                 }
+
                 // 확장자명 뽑기
                 String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+
                 // 파일 이름 리네임
                 String savedFileName = UUID.randomUUID().toString() + extension;
+
+
                 File targetFile = new File(UploadPath + File.separator + savedFileName);
                 try {
                     imageFile.transferTo(targetFile);
@@ -108,33 +109,20 @@ public class MenteeApplyService {
                 photoEntity.setPhotoCategoryNum(MENTEE_APPLY_CODE);
                 photoEntity.setPostNum(entitySaved.getNum());
                 photoRepository.save(photoEntity);
-
-                urls.add("/files/mentee_apply/" + savedFileName);     // 추가
             }
         }
-        // db에서 이름 가져오기
-        String memberName = memberRepository.findById(entitySaved.getMemberNum())
-                .map(m -> m.getMemberName())
-                .orElse(null);
-
 
         MenteeApplyCreateRequestDTO reqSaved = new MenteeApplyCreateRequestDTO();
-        reqSaved.setNum(entitySaved.getNum());
         reqSaved.setContent(entitySaved.getContent());
         reqSaved.setAccept(entitySaved.getAccept());
         reqSaved.setMentoringPostNum(entitySaved.getMentoringPostNum());
         reqSaved.setMemberNum(entitySaved.getMemberNum());
-        reqSaved.setMemberName(memberName);  // 추가
-        reqSaved.setPhotoPaths(urls);      //  추가
         return reqSaved;
     }
-
-
-
     // 멘토링 신천서 수정
     @Transactional
     public int updateMenteeApply(MenteeApplyResponseDTO req) {
-        return menteeRepository.findByNumAndMemberNum(req.getNum(), req.getMemberNum())
+        return menteeRepository.findById(req.getNum())
                 .map(entity -> {
                     entity.setContent(req.getContent());
                     menteeRepository.save(entity);

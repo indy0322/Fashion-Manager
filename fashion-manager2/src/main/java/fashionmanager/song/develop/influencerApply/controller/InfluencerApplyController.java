@@ -3,7 +3,6 @@ package fashionmanager.song.develop.influencerApply.controller;
 import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyCreateRequestDTO;
 import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyResponseDTO;
 import fashionmanager.song.develop.influencerApply.service.InfluencerApplyService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -39,7 +38,7 @@ public class InfluencerApplyController {
                 = influencerApplyService.selectResultApply(
                         title,content,accept,memberNum,memberName);
         for(InfluencerApplyResponseDTO InfluencerApply : influencerApplyList){
-            log.info("인플루언서 신청 조회: {}", influencerApplyList.size());
+            log.info("인플루언서 신청 조회: {}", InfluencerApply);
         }
         return ResponseEntity.ok(influencerApplyList);
     }
@@ -51,17 +50,14 @@ public class InfluencerApplyController {
                                     @ModelAttribute InfluencerApplyCreateRequestDTO req,
                                     @RequestPart(value = "files", required = false) List<MultipartFile> files) {
         InfluencerApplyCreateRequestDTO saved = influencerApplyService.insertInfluencerApply(req, files);
-
-        if (saved == null) {
-            log.info("인플루언서 신청 실패: {}", req);
-            // 400 Bad Request 로 처리
-            throw new IllegalArgumentException("인플루언서 신청에 실패했습니다.");
+        if (saved != null) {
+            log.info("인플루언서 신청 완료!: {}", saved);
+            return ResponseEntity.ok(saved);
+        } else {
+            log.info("인플루언서 신청 실패~: {}", req);
+            return ResponseEntity.badRequest().build();
         }
-        log.info("인플루언서 신청 완료!: {}", saved);
-        return ResponseEntity.ok(saved);
     }
-
-
 
     // 인플루언서 신청 수정
     @PutMapping("/updateInfluencerApply")
@@ -69,36 +65,35 @@ public class InfluencerApplyController {
                                                 @RequestBody InfluencerApplyResponseDTO req) {
         int result = influencerApplyService.updateInfluencerApply(req);
 
-        if (result != 1) {
-            log.info("인플루언서 신청서 수정 실패: {}", result);
-            // 수정 대상이 없거나 충돌 등 → 404로 명확히
-            throw new EntityNotFoundException("수정 대상 신청서를 찾을 수 없습니다.");
-        }
-
         Map<String, Object> body = new HashMap<>();
         body.put("인플루언서 신청서 수정", result);
-        log.info("인플루언서 신청서 수정 완료!: {}", result);
-        return ResponseEntity.ok(body);
+
+        if (result == 1) {
+            log.info("인플루언서 신청서 수정 완료!: {}", result);
+            return ResponseEntity.ok(body);
+        } else {
+            log.info("인플루언서 신청서 수정 실패!: {}", result);
+            return ResponseEntity.badRequest().body(body);
+        }
     }
-
-
-
 
     // 인플루언서 신청 취소
     @DeleteMapping("/deleteInfluencerApply")
     public ResponseEntity<Map<String, Object>> deleteInfluencerApplyByTitleAndMemberNum(
                                                             @RequestParam String title,
                                                             @RequestParam int memberNum) {
-        int deleted = influencerApplyService.deleteInfluencerApplyByTitleAndMemberNum(title, memberNum);
-        if (deleted <= 0) {
-            log.info("인플루언서 신청서 삭제 실패: {}", deleted);
-            // 삭제 대상 없음 → 404
-            throw new EntityNotFoundException("삭제할 신청서를 찾을 수 없습니다.");
-        }
-        Map<String, Object> body = new HashMap<>();
-        body.put("인플루언서 신청서 삭제", deleted);
-        log.info("인플루언서 신청서 삭제 완료!: {}", deleted);
-        return ResponseEntity.ok(body);
-    }
 
+        int delete = influencerApplyService.deleteInfluencerApplyByTitleAndMemberNum(title, memberNum);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("인플루언서 신성서 삭제", delete);
+
+        if (delete > 0) {
+            log.info("인플루언서 신청서 삭제 완료!: {}", delete);
+            return ResponseEntity.ok(body); // 200 OK
+        } else {
+            log.info("인플루언서 신청서 삭제 실패!: {}", delete);
+            return ResponseEntity.badRequest().body(body);
+        }
+    }
 }
