@@ -42,7 +42,24 @@ public class MentoringPostService {
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }
+        if(postDetail.getPhotos() != null) {
+            for(PhotoDTO photo : postDetail.getPhotos()) {
+                String subPath = "";
+                if(photo.getPhotoCategoryNum() == 3) {
+                    subPath = "mentoring/";
+                }
+                String imageUrl = "/images/" + extractFolderName(photo.getPath()) + "/" + photo.getName();
+                photo.setImageUrl(imageUrl);
+            }
+        }
         return postDetail;
+    }
+
+    private String extractFolderName(String path) {
+        if(path == null || path.isEmpty()) {
+            return "";
+        }
+        return new File(path).getName();
     }
 
     @Transactional
@@ -180,5 +197,15 @@ public class MentoringPostService {
         photoRepository.deleteAll(photosToDelete);
 
         mentoringPostRespository.deleteById(postNum);
+    }
+
+    public List<SelectAllMentoringPostDTO> getPostListByPage(Criteria criteria) {
+        log.info("Criteria 설정만큼 List 갖고 오기: " + criteria);
+        return mentoringPostMapper.getListWithPaging(criteria);
+    }
+
+    public int getTotal() {
+        log.info("get total count");
+        return mentoringPostMapper.getTotalCount();
     }
 }

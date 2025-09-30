@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/posts/fashion")
@@ -20,9 +22,22 @@ public class FashionPostController {
         this.fashionPostService = fashionPostService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<SelectAllFashionPostDTO>> getPostList() {
         List<SelectAllFashionPostDTO> response = fashionPostService.getPostList();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> getPostListByPage(Criteria criteria) {
+        List<SelectAllFashionPostDTO> list = fashionPostService.getPostListByPage(criteria);
+        int total = fashionPostService.getTotal();
+
+        PageDTO pageMaker = new PageDTO(criteria, total);
+        Map<String, Object> response = new HashMap<>();
+        response.put("list", list);
+        response.put("pageMaker", pageMaker);
+
         return ResponseEntity.ok(response);
     }
 
@@ -58,8 +73,15 @@ public class FashionPostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping("/react/{postNum}")
+    public ResponseEntity<ReactionResponseDTO> insertReaction(@PathVariable int postNum,
+                        @RequestBody ReactionRequestDTO reactionRequestDTO){
+        ReactionResponseDTO responseReaction = fashionPostService.insertReact(postNum, reactionRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseReaction);
+    }
+
     @DeleteMapping("/{postNum}")
-    public ResponseEntity<String> deletePost (@PathVariable int postNum) {
+    public ResponseEntity<String> deletePost(@PathVariable int postNum) {
 
         fashionPostService.deletePost(postNum);
 

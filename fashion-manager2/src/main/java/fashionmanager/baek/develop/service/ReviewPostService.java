@@ -2,12 +2,11 @@ package fashionmanager.baek.develop.service;
 
 
 import fashionmanager.baek.develop.dto.*;
-import fashionmanager.baek.develop.entity.PhotoEntity;
-import fashionmanager.baek.develop.entity.ReviewPostEntity;
-import fashionmanager.baek.develop.entity.ReviewPostItemEntity;
+import fashionmanager.baek.develop.entity.*;
 import fashionmanager.baek.develop.entity.pk.ReviewPostItemPK;
 import fashionmanager.baek.develop.mapper.ReviewPostMapper;
 import fashionmanager.baek.develop.repository.PhotoRepository;
+import fashionmanager.baek.develop.repository.PostReactionRepository;
 import fashionmanager.baek.develop.repository.ReviewItemRepository;
 import fashionmanager.baek.develop.repository.ReviewPostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -29,16 +30,19 @@ public class ReviewPostService {
     private final ReviewItemRepository reviewItemRepository;
     private final PhotoRepository photoRepository;
     private final ReviewPostMapper reviewPostMapper;
+    private final PostReactionRepository postReactionRepository;
+    private static final Set<String> VALID_REACTION_TYPES = Set.of("good", "cheer");
     private String postUploadPath = "C:\\uploadFiles\\review";
     private String reviewItemUploadPath = "C:\\uploadFiles\\review_items";
 
     @Autowired
     public ReviewPostService(ReviewPostRepository reviewPostRepository,
-                             ReviewItemRepository reviewItemRepository, PhotoRepository photoRepository, ReviewPostMapper reviewPostMapper) {
+                             ReviewItemRepository reviewItemRepository, PhotoRepository photoRepository, ReviewPostMapper reviewPostMapper, PostReactionRepository postReactionRepository) {
         this.reviewPostRepository = reviewPostRepository;
         this.reviewItemRepository = reviewItemRepository;
         this.photoRepository = photoRepository;
         this.reviewPostMapper = reviewPostMapper;
+        this.postReactionRepository = postReactionRepository;
     }
 
     public List<SelectAllReviewPostDTO> getPostList() {
@@ -50,8 +54,27 @@ public class ReviewPostService {
         if (postDetail == null) {
             throw new IllegalArgumentException("해당 게시글을 찾을 수 없습니다.");
         }
+        if(postDetail.getPhotos() != null) {
+            for (PhotoDTO photo : postDetail.getPhotos()) {
+                String subPath = "";
+                if (photo.getPhotoCategoryNum() == 2) {
+                    subPath = "review/";
+                } else if (photo.getPhotoCategoryNum() == 5) {
+                    subPath = "review_items/";
+                }
+                String imageUrl = "/images/" + extractFolderName(photo.getPath()) + "/" + photo.getName();
+                photo.setImageUrl(imageUrl);
+            }
+        }
         return postDetail;
     }
+    private String extractFolderName(String path) {
+        if(path == null || path.isEmpty()) {
+            return "";
+        }
+        return new File(path).getName();
+    }
+
 
     @Transactional
     public ReviewRegistResponseDTO registPost(ReviewRegistRequestDTO newPost, List<MultipartFile> postFiles,
@@ -259,5 +282,88 @@ public class ReviewPostService {
 
     private void deleteItems(int postNum) {
         reviewItemRepository.deleteAllByReviewPostItemPK_PostNum(postNum);
+    }
+
+    @Transactional
+    public ReactionResponseDTO insertReact(int postNum, ReactionRequestDTO reaction) {
+        if (reaction.getReactionType() == null ||
+                !VALID_REACTION_TYPES.contains(reaction.getReactionType().toLowerCase())) {
+            throw new IllegalArgumentException("좋아요/힘내요 요청이 아닙니다!");
+        }
+        String reactionType = reaction.getReactionType().toLowerCase();
+        ReactionResponseDTO response = new ReactionResponseDTO();
+
+
+        ReviewPostEntity post = reviewPostRepository.findById(postNum)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
+
+        PostReactionEntity reactionEntity = new PostReactionEntity();
+        reactionEntity.setMemberNum(reaction.getMemberNum());
+        reactionEntity.setReactionType(reaction.getReactionType());
+        reactionEntity.setPostNum(postNum);
+        reactionEntity.setPostCategoryNum(2);  // 후기 게시물은 2
+
+        Optional<PostReactionEntity> oldReaction = postReactionRepository.findByMemberNumAndPostNumAndPostCategoryNum
+                (reaction.getMemberNum(), 2, postNum);
+
+        if (oldReaction.isPresent()) {
+            PostReactionEntity existingReaction = oldReaction.get();
+            if (existingReaction.getReactionType().equalsIgnoreCase(reactionEntity.getReactionType())) {
+                postReactionRepository.delete(existingReaction);
+
+                switch (reactionType) {
+                    case "good":
+                        post.setGood(post.getGood() - 1);
+                        break;
+                    case "cheer":
+                        post.setCheer(post.getCheer() - 1);
+                        break;
+                }
+            } else {
+                PostReactionEntity newReaction = postReactionRepository.save(reactionEntity);
+                switch (reactionType) {
+                    case "good":
+                        post.setGood(post.getGood() + 1);
+                        break;
+                    case "cheer":
+                        post.setCheer(post.getCheer() + 1);
+                        break;
+                }
+            }
+            PostReactionEntity newReaction = postReactionRepository.save(reactionEntity);
+
+            ReviewPostEntity updateReactionPost = reviewPostRepository.save(post);
+            response.setPostNum(postNum);
+            response.setReactionType(reactionType);
+            response.setMemberNum(reaction.getMemberNum());
+            response.setPostCategoryNum(2);
+        } else {
+            PostReactionEntity newReaction = new PostReactionEntity();
+            newReaction.setMemberNum(reaction.getMemberNum());
+            newReaction.setReactionType(reaction.getReactionType());
+            newReaction.setPostNum(postNum);
+            newReaction.setPostCategoryNum(2);  // 후기 게시물은 2
+
+            PostReactionEntity finalReactionEntity = postReactionRepository.save(newReaction);
+            if (reactionType.equals("good")) post.setGood(post.getGood() + 1);
+            else post.setCheer(post.getCheer() + 1);
+
+            response.setPostNum(postNum);
+            response.setReactionType(reactionType);
+            response.setMemberNum(reaction.getMemberNum());
+            response.setPostCategoryNum(2);
+
+        }
+        return response;
+    }
+
+    public List<SelectAllReviewPostDTO> getPostListByPage(Criteria criteria) {
+        log.info("Criteria 설정만큼 List 갖고 오기: " + criteria);
+        return reviewPostMapper.getListWithPaging(criteria);
+    }
+
+    public int getTotal() {
+        log.info("get total count");
+        return reviewPostMapper.getTotalCount();
     }
 }
