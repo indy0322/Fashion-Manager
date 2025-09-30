@@ -19,7 +19,7 @@ public class PageDTO {
 
         int pageCount = 10;
 
-        this.endPage = (int) (Math.ceil(criteria.getPageNum() / (double) pageCount));
+        this.endPage = (int) (Math.ceil(criteria.getPageNum() / (double) pageCount)) * pageCount;
         this.startPage = this.endPage - pageCount + 1;
         int realEndPage = (int) (Math.ceil((total * 1.0) / criteria.getAmount()));
         if(realEndPage < this.endPage) {
