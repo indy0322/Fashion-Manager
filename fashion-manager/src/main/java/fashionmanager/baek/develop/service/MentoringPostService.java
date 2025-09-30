@@ -200,4 +200,14 @@ public class MentoringPostService {
 
         mentoringPostRespository.deleteById(postNum);
     }
+
+    public List<SelectAllMentoringPostDTO> getPostListByPage(Criteria criteria) {
+        log.info("Criteria 설정만큼 List 갖고 오기: " + criteria);
+        return mentoringPostMapper.getListWithPaging(criteria);
+    }
+
+    public int getTotal() {
+        log.info("get total count");
+        return mentoringPostMapper.getTotalCount();
+    }
 }

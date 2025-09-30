@@ -52,6 +52,16 @@ public class FashionPostService {
         return fashionPostMapper.findAll();
     }
 
+    public List<SelectAllFashionPostDTO> getPostListByPage(Criteria criteria) {
+        log.info("Criteria 설정만큼 List 갖고 오기: " + criteria);
+        return fashionPostMapper.getListWithPaging(criteria);
+    }
+
+    public int getTotal() {
+        log.info("get total count");
+        return fashionPostMapper.getTotalCount();
+    }
+
     public SelectDetailFashionPostDTO getDetailPost(int postNum) {
         SelectDetailFashionPostDTO postDetail = fashionPostMapper.findById(postNum);
         if (postDetail == null) {

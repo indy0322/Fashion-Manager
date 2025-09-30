@@ -337,4 +337,14 @@ public class ReviewPostService {
         }
         return response;
     }
+
+    public List<SelectAllReviewPostDTO> getPostListByPage(Criteria criteria) {
+        log.info("Criteria 설정만큼 List 갖고 오기: " + criteria);
+        return reviewPostMapper.getListWithPaging(criteria);
+    }
+
+    public int getTotal() {
+        log.info("get total count");
+        return reviewPostMapper.getTotalCount();
+    }
 }
