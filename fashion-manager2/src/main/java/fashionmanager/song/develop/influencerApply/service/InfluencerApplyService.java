@@ -2,7 +2,6 @@ package fashionmanager.song.develop.influencerApply.service;
 
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.repository.PhotoRepository;
-import fashionmanager.kim.develop.repository.MemberRepository;
 import fashionmanager.song.develop.common.PhotoType;
 import fashionmanager.song.develop.influencerApply.aggregate.InfluencerApplyEntity;
 import fashionmanager.song.develop.influencerApply.dto.InfluencerApplyCreateRequestDTO;
@@ -16,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +24,6 @@ public class InfluencerApplyService {
 
     private final InfluencerApplyMapper influencerApplyMapper;
     private final InfluencerApplyRepository influencerApplyRepository;
-    private final MemberRepository memberRepository;
 
     /*이미지 파일 업로드 코드 추가*/
     private final PhotoRepository photoRepository;
@@ -80,8 +77,6 @@ public class InfluencerApplyService {
         InfluencerApplyEntity entitySaved = influencerApplyRepository.save(entity);
 
         /*  사진 저장: 디스크 저장 + photo 테이블 insert (postNum과 카테고리 코드 필수) */
-        List<String> urls = new ArrayList<>();   // 추가
-
         if (postFiles != null && !postFiles.isEmpty()) {
             File uploadDir = new File(UploadPath);
             if (!uploadDir.exists()) {
@@ -95,10 +90,14 @@ public class InfluencerApplyService {
                 if (originalFileName == null || !originalFileName.contains(".")) {
                     throw new RuntimeException("유효하지 않은 파일명입니다.");
                 }
+
                 // 확장자명 뽑기
                 String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+
                 // 파일 이름 리네임
                 String savedFileName = UUID.randomUUID().toString() + extension;
+
+
                 File targetFile = new File(UploadPath + File.separator + savedFileName);
                 try {
                     imageFile.transferTo(targetFile);
@@ -112,16 +111,8 @@ public class InfluencerApplyService {
                 photoEntity.setPhotoCategoryNum(INFLUENCER_APPLY_CODE);
                 photoEntity.setPostNum(entitySaved.getNum());
                 photoRepository.save(photoEntity);
-
-                urls.add("/files/influencer_apply/" + savedFileName);     // 추가
             }
         }
-
-        // db에서 이름 가져오기
-        String memberName = memberRepository.findById(entitySaved.getMemberNum())
-                .map(m -> m.getMemberName())
-                .orElse(null);
-
 
         InfluencerApplyCreateRequestDTO reqSaved = new InfluencerApplyCreateRequestDTO();
         reqSaved.setNum(entitySaved.getNum());
@@ -129,9 +120,6 @@ public class InfluencerApplyService {
         reqSaved.setContent(entitySaved.getContent());
         reqSaved.setAccept(entitySaved.getAccept());
         reqSaved.setMemberNum(entitySaved.getMemberNum());
-        reqSaved.setMemberName(memberName);  // 추가
-        reqSaved.setPhotoPaths(urls);      //  추가
-
         return reqSaved;
     }
 

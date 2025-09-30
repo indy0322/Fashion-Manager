@@ -4,7 +4,6 @@ import fashionmanager.song.develop.influencerPage.dto.InfluencerPageCreateReques
 import fashionmanager.song.develop.influencerPage.dto.InfluencerPageResponseDTO;
 import fashionmanager.song.develop.influencerPage.service.InfluencerPageReadService;
 import fashionmanager.song.develop.influencerPage.service.InfluencerPageService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -43,7 +42,7 @@ public class InfluencerPageController {
                 = influencerPageService.selectResultPage(
                         title, insta, phone, memberNum);
         for (InfluencerPageResponseDTO influencerPage : searchPageList) {
-            log.info("인플루언서 페이지 조건 조회: {}", searchPageList.size());
+            log.info("인플루언서 페이지 조건 조회: {}", influencerPage);
         }
         return ResponseEntity.ok(searchPageList);
     }
@@ -75,12 +74,13 @@ public class InfluencerPageController {
 //                              @RequestPart("data") InfluencerPageCreateRequestDTO req,   // 이건 다른 대안
                                 @RequestPart(value = "files", required = false) List<MultipartFile> files) {
         InfluencerPageCreateRequestDTO saved = influencerPageService.insertInfluencerPage(req, files);
-        if (saved == null) {
-            log.info("인플루언서 페이지 생성 실패: {}", req);
-            throw new IllegalArgumentException("인플루언서 페이지 생성에 실패했습니다.");
+        if (saved != null) {
+            log.info("인플루언서 페이지 생성 완료!: {}", saved);
+            return ResponseEntity.ok(saved);
+        } else {
+            log.info("인플루언서 페이지 생성 실패!: {}", req);
+            return ResponseEntity.badRequest().build();
         }
-        log.info("인플루언서 페이지 생성 완료!: {}", saved);
-        return ResponseEntity.ok(saved);
     }
 
     // 인플루언서 페이지 수정
@@ -89,31 +89,35 @@ public class InfluencerPageController {
                                                 @RequestBody InfluencerPageResponseDTO req) {
         int result = influencerPageService.updateInfluencerPage(req);
 
-        if (result != 1) {
-            log.info("인플루언서 페이지 수정 실패: {}", result);
-            throw new EntityNotFoundException("수정 대상 페이지를 찾을 수 없습니다.");
-        }
         Map<String, Object> body = new HashMap<>();
         body.put("인플루언서 페이지 수정", result);
-        log.info("인플루언서 페이지 수정 완료!: {}", result);
-        return ResponseEntity.ok(body);
+
+        if (result == 1) {
+            log.info("인플루언서 페이지 생성 완료!: {}", result);
+            return ResponseEntity.ok(body);
+        } else {
+            log.info("인플루언서 페이지 수정 실패: {}", req);
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-
-    // 인플루언서 페이지 삭제
     @DeleteMapping("/deleteInfluencerPage")
     public ResponseEntity<Map<String, Object>> deleteInfluencerPageTitleAndMemberNum(
             @RequestParam String title,
             @RequestParam int memberNum) {
 
-        int deleted = influencerPageService.deleteInfluencerPageTitleAndMemberNum(title, memberNum);
-        if (deleted <= 0) {
-            log.info("인플루언서 페이지 삭제 실패: {}", deleted);
-            throw new EntityNotFoundException("삭제할 페이지를 찾을 수 없습니다.");
-        }
+        int delete = influencerPageService.deleteInfluencerPageTitleAndMemberNum(title, memberNum);
+
         Map<String, Object> body = new HashMap<>();
-        body.put("인플루언서 페이지 삭제", deleted);
-        log.info("인플루언서 페이지 삭제 완료!: {}", deleted);
-        return ResponseEntity.ok(body);
+        body.put("인플루언서 페이지 삭제", delete);
+
+        if (delete > 0) {
+            log.info("인플루언서 페이지 삭제 완료!: {}", delete);
+            return ResponseEntity.ok(body);
+        } else {
+            log.info("인플루언서 페이지 삭제 실패!: {}", delete);
+            return ResponseEntity.badRequest().body(body);
+        }
     }
+
 }

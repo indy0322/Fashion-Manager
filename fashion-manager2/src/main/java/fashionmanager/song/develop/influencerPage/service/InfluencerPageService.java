@@ -2,7 +2,6 @@ package fashionmanager.song.develop.influencerPage.service;
 
 import fashionmanager.baek.develop.entity.PhotoEntity;
 import fashionmanager.baek.develop.repository.PhotoRepository;
-import fashionmanager.kim.develop.repository.MemberRepository;
 import fashionmanager.song.develop.common.PhotoType;
 import fashionmanager.song.develop.influencerPage.aggregate.InfluencerPageEntity;
 import fashionmanager.song.develop.influencerPage.dto.InfluencerPageCreateRequestDTO;
@@ -16,7 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor   // 생성자 자동으로 해주는 어노테이션
@@ -24,7 +26,6 @@ public class InfluencerPageService {
 
     private final InfluencerPageMapper influencerPageMapper;
     private final InfluencerPageRepository influencerPageRepository;
-    private final MemberRepository memberRepository;
 
     /*이미지 파일 업로드 코드 추가*/
     private final PhotoRepository photoRepository;
@@ -71,8 +72,6 @@ public class InfluencerPageService {
         InfluencerPageEntity saved = influencerPageRepository.save(entity);
 
         /*  사진 저장: 디스크 저장 + photo 테이블 insert (postNum과 카테고리 코드 필수) */
-        List<String> urls = new ArrayList<>();   // 추가
-
         if (postFiles != null && !postFiles.isEmpty()) {
             File uploadDir = new File(UploadPath);
             if (!uploadDir.exists()) {
@@ -107,16 +106,8 @@ public class InfluencerPageService {
                 photoEntity.setPostNum(saved.getNum());                    //  반드시 postNum 설정
                 photoEntity.setPhotoCategoryNum(INFLUENCER_PAGE_CODE);
                 photoRepository.save(photoEntity);
-
-                urls.add("/files/influencer_page/" + savedFileName);     // 추가
             }
         }
-
-        // db에서 이름 가져오기
-        String memberName = memberRepository.findById(saved.getMemberNum())
-                .map(m -> m.getMemberName())
-                .orElse(null);
-
 
         InfluencerPageCreateRequestDTO reqSaved = new InfluencerPageCreateRequestDTO();
         reqSaved.setNum(saved.getNum());
@@ -125,8 +116,6 @@ public class InfluencerPageService {
         reqSaved.setInsta(saved.getInsta());
         reqSaved.setPhone(saved.getPhone());
         reqSaved.setMemberNum(saved.getMemberNum());
-        reqSaved.setMemberName(memberName);  // 추가
-        reqSaved.setPhotoPaths(urls);      //  추가
         return reqSaved;
     }
 
