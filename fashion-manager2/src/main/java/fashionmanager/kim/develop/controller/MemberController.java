@@ -74,10 +74,10 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/memberlogin")
-    public ResponseEntity<String> memberLogin(String memberId, String memberPwd){
-        String result = ms.memberLogin(memberId, memberPwd);
-
-        return ResponseEntity.ok(result);
-    }
+//    @PostMapping("/memberlogin")
+//    public ResponseEntity<String> memberLogin(String memberId, String memberPwd){
+//        String result = ms.memberLogin(memberId, memberPwd);
+//
+//        return ResponseEntity.ok(result);
+//    }
 }
