@@ -11,8 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/member")
 @Slf4j
 public class UserController {
 
@@ -26,19 +27,7 @@ public class UserController {
     }
 
 
-
-
-//    // 1. 회원 조회 페이지(JPA)
-//
-//    @GetMapping("/select")
-//    public void selectMenu() {
-//
-//    }
-
-
-
-
-    // 2. 회원 조회 페이지 결과(Mybatis)
+    // 1. 특정 회원 조회 (Mybatis)
 
     @GetMapping("/selectResult")
     public ResponseEntity<UserDTO> selectResult(@RequestParam int userNum) {
@@ -50,7 +39,91 @@ public class UserController {
 
 
 
-     // 2. 회원 조회 페이지 결과(JPA)
+
+    // 2. 전체 회원 조회 (Mybatis)
+    @GetMapping("/list")
+    public ResponseEntity<List<UserDTO>> findUserList() {
+        List<UserDTO> userList = selectService.findAllUsers();
+
+        return ResponseEntity.ok(userList);
+
+    }
+
+
+
+    // 3. 회원가입 기능
+
+    @PostMapping("/regist")
+    public ResponseEntity<UserDTO> registMenu(@RequestBody UserDTO newUser) {
+        UserDTO savedUser = userService.registUser(newUser);
+        return ResponseEntity.ok(savedUser);
+    }
+
+
+
+    // 4. 회원 정보  수정
+    @PatchMapping("/{userNum}")
+    public ResponseEntity<UserDTO> modifyMenu(
+            @PathVariable int userNum,
+            @RequestBody Map<String, Object> updates) {
+
+        UserDTO updatedUser = userService.modifyMenu(userNum, updates);
+
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    // 5. 메시지 수신 여부 수정
+
+
+    @PatchMapping("/message-allow/{userNum}")
+    public ResponseEntity<UserDTO> modifyMessage(
+            @PathVariable int userNum,
+            @RequestBody Map<String, Object> updates) {
+
+        UserDTO updatedUser = userService.modifyMessage(userNum, updates);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+
+    // 6. 신고 누적 or 하루 신고 가능 횟수 수정(관리자 권한)
+
+
+
+    @PatchMapping("/report/{userNum}")
+    public ResponseEntity<UserDTO> modifyReport(
+            @PathVariable int userNum,
+            @RequestBody Map<String, Object> updates) {
+
+        UserDTO updatedUser = userService.modifyReport(userNum, updates);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+
+    // 7. 회원정보 삭제
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Map<String, Object>> deleteUser(@RequestBody UserDTO userDTO) {
+        int userNum = userDTO.getUserNum(); // Body에서 userNum 꺼냄
+        userService.userDelete(userNum);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "회원이 삭제되었습니다.");
+        response.put("deletedUserNum", userNum);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+
+//    // 1. 회원 조회 페이지(JPA)
+//
+//    @GetMapping("/select")
+//    public void selectMenu() {
+//
+//    }
+
+
+    // 2. 회원 조회 페이지 결과(JPA)
 
 //    @GetMapping("/selectResult")
 //    public String findUserById(@RequestParam int userNum, Model model) {
@@ -81,28 +154,8 @@ public class UserController {
 
 
 
-    // 3. 전체 회원 조회 (Mybatis)
-    @GetMapping("/list")
-    public ResponseEntity<List<UserDTO>> findUserList() {
-        List<UserDTO> userList = selectService.findAllUsers();
 
-        return ResponseEntity.ok(userList);
-
-    }
-
-
-
-    // 4. 회원가입 기능
-
-    @PostMapping("/regist")
-    public ResponseEntity<UserDTO> registMenu(@RequestBody UserDTO newUser) {
-        UserDTO savedUser = userService.registUser(newUser);
-        return ResponseEntity.ok(savedUser);
-    }
-
-
-
-//    // 5. 회원정보 수정 <인적사항 수정> (JPA)
+//    // 4. 회원정보 수정 <인적사항 수정> (JPA)
 //
 //
 //    @PostMapping("/modify")
@@ -113,57 +166,7 @@ public class UserController {
 //    }
 
 
-    // 5. 회원 정보  수정
-    @PatchMapping("/{userNum}")
-    public ResponseEntity<UserDTO> modifyMenu(
-            @PathVariable int userNum,
-            @RequestBody Map<String, Object> updates) {
 
-        UserDTO updatedUser = userService.modifyMenu(userNum, updates);
-
-        return ResponseEntity.ok(updatedUser);
-    }
-
-    // 6. 메시지 수신 여부 수정
-
-
-    @PatchMapping("/message-allow/{userNum}")
-    public ResponseEntity<UserDTO> modifyMessage(
-            @PathVariable int userNum,
-            @RequestBody Map<String, Object> updates) {
-
-        UserDTO updatedUser = userService.modifyMessage(userNum, updates);
-        return ResponseEntity.ok(updatedUser);
-    }
-
-
-    // 7. 신고 누적 or 하루 신고 가능 횟수 수정(관리자 권한)
-
-
-
-    @PatchMapping("/report/{userNum}")
-    public ResponseEntity<UserDTO> modifyReport(
-            @PathVariable int userNum,
-            @RequestBody Map<String, Object> updates) {
-
-        UserDTO updatedUser = userService.modifyReport(userNum, updates);
-        return ResponseEntity.ok(updatedUser);
-    }
-
-
-    // 8. 회원정보 삭제
-
-    @DeleteMapping("/delete")
-    public ResponseEntity<Map<String, Object>> deleteUser(@RequestBody UserDTO userDTO) {
-        int userNum = userDTO.getUserNum(); // Body에서 userNum 꺼냄
-        userService.userDelete(userNum);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "회원이 삭제되었습니다.");
-        response.put("deletedUserNum", userNum);
-
-        return ResponseEntity.ok(response);
-    }
 
 
 }

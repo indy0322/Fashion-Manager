@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/menu")
+@RequestMapping("/member")
 public class BadgeController {
 
     private final BadgeService badgeService;
