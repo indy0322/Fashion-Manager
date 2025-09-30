@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/posts/review")
@@ -21,6 +23,19 @@ public class ReviewPostController {
     }
 
     @GetMapping
+    public ResponseEntity<Map<String, Object>> getPostListByPage(Criteria criteria) {
+        List<SelectAllReviewPostDTO> list = reviewPostService.getPostListByPage(criteria);
+        int total = reviewPostService.getTotal();
+
+        PageDTO pageMaker = new PageDTO(criteria, total);
+        Map<String, Object> response = new HashMap<>();
+        response.put("list", list);
+        response.put("pageMaker", pageMaker);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all")
     public ResponseEntity<List<SelectAllReviewPostDTO>> getPostList() {
         List<SelectAllReviewPostDTO> response = reviewPostService.getPostList();
         return ResponseEntity.ok(response);
@@ -32,6 +47,13 @@ public class ReviewPostController {
         SelectDetailReviewPostDTO response = reviewPostService.getDetailPost(postNum);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/react/{postNum}")
+    public ResponseEntity<ReactionResponseDTO> insertReaction(@PathVariable int postNum,
+                                                              @RequestBody ReactionRequestDTO reactionRequestDTO){
+        ReactionResponseDTO responseReaction = reviewPostService.insertReact(postNum, reactionRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseReaction);
     }
 
     @PostMapping

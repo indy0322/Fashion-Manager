@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/posts/mentoring")
@@ -21,6 +23,19 @@ public class MentoringPostController {
     }
 
     @GetMapping
+    public ResponseEntity<Map<String, Object>> getPostListByPage(Criteria criteria) {
+        List<SelectAllMentoringPostDTO> list = mentoringPostService.getPostListByPage(criteria);
+        int total = mentoringPostService.getTotal();
+
+        PageDTO pageMaker = new PageDTO(criteria, total);
+        Map<String, Object> response = new HashMap<>();
+        response.put("list", list);
+        response.put("pageMaker", pageMaker);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all")
     public ResponseEntity<List<SelectAllMentoringPostDTO>> getPostList() {
         List<SelectAllMentoringPostDTO> response = mentoringPostService.getPostList();
         return ResponseEntity.ok(response);

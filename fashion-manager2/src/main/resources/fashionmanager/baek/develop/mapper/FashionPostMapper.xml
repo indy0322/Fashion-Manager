@@ -3,6 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="fashionmanager.baek.develop.mapper.FashionPostMapper">
+    <sql id="criteria">
+        <trim prefix="WHERE" prefixOverrides="OR">
+            <if test='type != null and type.contains("T")'>
+                OR fp.title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test='type != null and type.contains("W")'>
+                OR m.name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </trim>
+    </sql>
     <select id="findAll" resultType="fashionmanager.baek.develop.dto.SelectAllFashionPostDTO">
         SELECT
                num
@@ -12,6 +22,25 @@
              , cheer
           FROM fashion_post
          ORDER BY num desc;
+    </select>
+    <select id="getListWithPaging" resultType="fashionmanager.baek.develop.dto.SelectAllFashionPostDTO">
+        SELECT
+            fp.num, fp.title, fp.member_num, fp.good, fp.cheer
+          FROM
+               fashion_post fp
+          LEFT JOIN
+                   member m ON fp.member_num = m.num
+          <include refid="criteria"></include>
+         ORDER BY
+             fp.num DESC
+         LIMIT #{amount} OFFSET ${(pageNum - 1) * amount}
+    </select>
+    <select id="getTotalCount" resultType="_int">
+        SELECT
+               count(*)
+          FROM fashion_post fp
+          LEFT JOIN
+               member m ON fp.member_num = m.num
     </select>
     <resultMap id="selectDetailPostResultMap" type="fashionmanager.baek.develop.dto.SelectDetailFashionPostDTO">
         <id property="num" column="post_num"/>
@@ -34,9 +63,9 @@
         </collection>
 
         <collection property="photos" ofType="fashionmanager.baek.develop.dto.PhotoDTO">
-            <id property="num" column="num"/>
-            <result property="name" column="name"/>
-            <result property="path" column="path"/>
+            <id property="num" column="photo_num"/>
+            <result property="name" column="photo_name"/>
+            <result property="path" column="photo_path"/>
             <result property="photoCategoryNum" column="photo_category_num"/>
         </collection>
     </resultMap>
@@ -56,13 +85,14 @@
              , p.num AS photo_num
              , p.name AS photo_name
              , p.path AS photo_path
+             , p.photo_category_num
           FROM fashion_post fp
           LEFT JOIN member m ON fp.member_num = m.num
           LEFT JOIN post_item pi ON fp.num = pi.post_num
           LEFT JOIN fashion_item fi ON pi.item_num = fi.num
           LEFT JOIN fashion_hashtag fh ON fp.num = fh.post_num
           LEFT JOIN hash_tag ht ON fh.tag_num = ht.num
-          LEFT JOIN photo p ON fp.num = p.post_num AND p.photo_category_num = 1
+          LEFT JOIN photo p ON fp.num = p.post_num AND p.photo_category_num IN (1,4)
          WHERE fp.num = #{num}
     </select>
 </mapper>

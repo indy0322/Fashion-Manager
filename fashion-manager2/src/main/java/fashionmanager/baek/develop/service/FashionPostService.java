@@ -1,26 +1,24 @@
 package fashionmanager.baek.develop.service;
 
 import fashionmanager.baek.develop.dto.*;
-import fashionmanager.baek.develop.entity.FashionHashTagEntity;
-import fashionmanager.baek.develop.entity.FashionPostEntity;
-import fashionmanager.baek.develop.entity.FashionPostItemEntity;
-import fashionmanager.baek.develop.entity.PhotoEntity;
+import fashionmanager.baek.develop.entity.*;
 import fashionmanager.baek.develop.entity.pk.FashionHashTagPK;
 import fashionmanager.baek.develop.entity.pk.FashionPostItemPK;
 import fashionmanager.baek.develop.mapper.FashionPostMapper;
-import fashionmanager.baek.develop.repository.FashionHashRepository;
-import fashionmanager.baek.develop.repository.FashionItemRepository;
-import fashionmanager.baek.develop.repository.FashionPostRepository;
-import fashionmanager.baek.develop.repository.PhotoRepository;
+import fashionmanager.baek.develop.repository.*;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,24 +30,36 @@ public class FashionPostService {
     private final FashionItemRepository fashionItemRepository;
     private final PhotoRepository photoRepository;
     private final FashionPostMapper fashionPostMapper;
+    private final PostReactionRepository postReactionRepository;
+    private static final Set<String> VALID_REACTION_TYPES = Set.of("good", "cheer");
     private String postUploadPath = "C:\\uploadFiles\\fashion";
     private String fashionItemsUploadPath = "C:\\uploadFiles\\fashion_items";
-
 
 
     @Autowired
     public FashionPostService(FashionPostRepository fashionPostRepository, FashionHashRepository fashionHashRepository,
                               FashionItemRepository fashionItemRepository, PhotoRepository photoRepository,
-                              FashionPostMapper fashionPostMapper) {
+                              FashionPostMapper fashionPostMapper, PostReactionRepository postReactionRepository) {
         this.fashionPostRepository = fashionPostRepository;
         this.fashionHashRepository = fashionHashRepository;
         this.fashionItemRepository = fashionItemRepository;
         this.photoRepository = photoRepository;
         this.fashionPostMapper = fashionPostMapper;
+        this.postReactionRepository = postReactionRepository;
     }
 
     public List<SelectAllFashionPostDTO> getPostList() {
         return fashionPostMapper.findAll();
+    }
+
+    public List<SelectAllFashionPostDTO> getPostListByPage(Criteria criteria) {
+        log.info("Criteria 설정만큼 List 갖고 오기: " + criteria);
+        return fashionPostMapper.getListWithPaging(criteria);
+    }
+
+    public int getTotal() {
+        log.info("get total count");
+        return fashionPostMapper.getTotalCount();
     }
 
     public SelectDetailFashionPostDTO getDetailPost(int postNum) {
@@ -60,16 +70,36 @@ public class FashionPostService {
         int good = postDetail.getGood();
         int cheer = postDetail.getCheer();
         double temp = 0.0;
-        if(good + cheer > 0) {
+        if (good + cheer > 0) {
             temp = ((double) good / (good + cheer)) * 100.0;
         }
         postDetail.setTemp(temp);
+
+        if(postDetail.getPhotos() != null) {
+            for(PhotoDTO photo : postDetail.getPhotos()) {
+                String subPath = "";
+                if(photo.getPhotoCategoryNum() == 1) {
+                    subPath = "fashion/";
+                } else if(photo.getPhotoCategoryNum() == 4) {
+                    subPath = "fashion_items/";
+                }
+                String imageUrl = "/images/" + extractFolderName(photo.getPath()) + "/" + photo.getName();
+                photo.setImageUrl(imageUrl);
+            }
+        }
         return postDetail;
+    }
+
+    private String extractFolderName(String path) {
+        if(path == null || path.isEmpty()) {
+            return "";
+        }
+        return new File(path).getName();
     }
 
     @Transactional
     public FashionRegistResponseDTO registPost(FashionRegistRequestDTO newPost, List<MultipartFile> postFiles,
-                                        List<MultipartFile> itemFiles) {
+                                               List<MultipartFile> itemFiles) {
         /* 설명. 1. fashion_post table에 게시글 등록 */
         if (newPost.getTitle() == null || newPost.getTitle().isBlank()) {
             throw new IllegalArgumentException("제목을 입력해주세요");
@@ -166,7 +196,7 @@ public class FashionPostService {
 
     @Transactional
     public FashionModifyResponseDTO modifyPost(int postNum, FashionModifyRequestDTO updatePost,
-                                        List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
+                                               List<MultipartFile> postFiles, List<MultipartFile> itemFiles) {
         /* 설명. 1. 수정할 게시글이 존재하는지 확인 */
         FashionPostEntity fashionPostEntity = fashionPostRepository.findById(postNum)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다. id=" + postNum));
@@ -182,8 +212,8 @@ public class FashionPostService {
         List<Integer> updateItems = updateItems(postNum, updatePost.getItems());
 
         /* 5. 사진 업데이트 (파일 처리는 기존의 'Delete & Insert' 방식 유지) */
-        updatePhotos(fashionPostEntity,this.postUploadPath, postFiles, 1); // 게시물 사진 업데이트
-        updatePhotos(fashionPostEntity,this.fashionItemsUploadPath, itemFiles, 4); // 패션 아이템 사진 업데이트
+        updatePhotos(fashionPostEntity, this.postUploadPath, postFiles, 1); // 게시물 사진 업데이트
+        updatePhotos(fashionPostEntity, this.fashionItemsUploadPath, itemFiles, 4); // 패션 아이템 사진 업데이트
 
         /* 6. 최종 응답 DTO 생성 */
         FashionModifyResponseDTO response = new FashionModifyResponseDTO();
@@ -248,7 +278,7 @@ public class FashionPostService {
         return newItemId;
     }
 
-    private void updatePhotos(FashionPostEntity post,String uploadPath, List<MultipartFile> newImageFiles, int categoryNum) {
+    private void updatePhotos(FashionPostEntity post, String uploadPath, List<MultipartFile> newImageFiles, int categoryNum) {
         /* 설명. 1. 기존 사진 파일 및 DB 정보 삭제 */
         int postNum = post.getNum();
         List<PhotoEntity> photosToUpdate = photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, categoryNum);
@@ -275,7 +305,9 @@ public class FashionPostService {
                                List<MultipartFile> imageFiles, int categoryNum) {
         int postNum = post.getNum();
         File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) { uploadDir.mkdirs(); }
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
         for (MultipartFile imageFile : imageFiles) {
             String originalFileName = imageFile.getOriginalFilename();
             String extension = "";
@@ -317,9 +349,9 @@ public class FashionPostService {
         photosToDelete.addAll(photoRepository.findAllByPostNumAndPhotoCategoryNum(postNum, 4));
         for (PhotoEntity photo : photosToDelete) {
             File file = new File(photo.getPath() + File.separator + photo.getName());
-            if(file.exists()) {
+            if (file.exists()) {
                 boolean deleted = file.delete();
-                if(!deleted) {
+                if (!deleted) {
                     log.info("파일 삭제 중 이미지 파일 삭제에 실패했습니다");
                 }
             }
@@ -336,5 +368,78 @@ public class FashionPostService {
 
     private void deleteItems(int postNum) {
         fashionItemRepository.deleteAllByFashionPostItemPK_PostNum(postNum);
+    }
+
+    @Transactional
+    public ReactionResponseDTO insertReact(int postNum, ReactionRequestDTO reaction) {
+        if (reaction.getReactionType() == null ||
+                !VALID_REACTION_TYPES.contains(reaction.getReactionType().toLowerCase())) {
+            throw new IllegalArgumentException("좋아요/힘내요 요청이 아닙니다!");
+        }
+        String reactionType = reaction.getReactionType().toLowerCase();
+        ReactionResponseDTO response = new ReactionResponseDTO();
+
+
+        FashionPostEntity post = fashionPostRepository.findById(postNum)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
+
+        PostReactionEntity reactionEntity = new PostReactionEntity();
+        reactionEntity.setMemberNum(reaction.getMemberNum());
+        reactionEntity.setReactionType(reaction.getReactionType());
+        reactionEntity.setPostNum(postNum);
+        reactionEntity.setPostCategoryNum(1);  // 패션 게시물은 1
+
+        Optional<PostReactionEntity> oldReaction = postReactionRepository.findByMemberNumAndPostNumAndPostCategoryNum
+                (reaction.getMemberNum(), 1, postNum);
+
+        if (oldReaction.isPresent()) {
+            PostReactionEntity existingReaction = oldReaction.get();
+            if (existingReaction.getReactionType().equalsIgnoreCase(reactionEntity.getReactionType())) {
+                postReactionRepository.delete(existingReaction);
+
+                switch (reactionType) {
+                    case "good":
+                        post.setGood(post.getGood() - 1);
+                        break;
+                    case "cheer":
+                        post.setCheer(post.getCheer() - 1);
+                        break;
+                }
+            } else {
+                PostReactionEntity newReaction = postReactionRepository.save(reactionEntity);
+                switch (reactionType) {
+                    case "good":
+                        post.setGood(post.getGood() + 1);
+                        break;
+                    case "cheer":
+                        post.setCheer(post.getCheer() + 1);
+                        break;
+                }
+            }
+            PostReactionEntity newReaction = postReactionRepository.save(reactionEntity);
+
+            FashionPostEntity updateReactionPost = fashionPostRepository.save(post);
+            response.setPostNum(postNum);
+            response.setReactionType(reactionType);
+            response.setMemberNum(reaction.getMemberNum());
+            response.setPostCategoryNum(1);
+        } else {
+            PostReactionEntity newReaction = new PostReactionEntity();
+            newReaction.setMemberNum(reaction.getMemberNum());
+            newReaction.setReactionType(reaction.getReactionType());
+            newReaction.setPostNum(postNum);
+            newReaction.setPostCategoryNum(1);  // 패션 게시물은 1
+
+            PostReactionEntity finalReactionEntity = postReactionRepository.save(newReaction);
+            if (reactionType.equals("good")) post.setGood(post.getGood() + 1);
+            else post.setCheer(post.getCheer() + 1);
+
+            response.setPostNum(postNum);
+            response.setReactionType(reactionType);
+            response.setMemberNum(reaction.getMemberNum());
+            response.setPostCategoryNum(1);
+
+        }
+        return response;
     }
 }

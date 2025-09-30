@@ -8,5 +8,6 @@ public class PhotoDTO {
     private int postNum;
     private String name;
     private String path;
+    private String imageUrl;
     private int photoCategoryNum;
 }
