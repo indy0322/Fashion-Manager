@@ -13,8 +13,8 @@ import java.util.List;
 public class SelectAllFashionPostDTO {
     private int num;
     private String title;
-    private String content;
     private int memberNum;
+    private String memberName;
     private int good;
     private int cheer;
 }

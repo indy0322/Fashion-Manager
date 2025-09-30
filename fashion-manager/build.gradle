@@ -50,6 +50,9 @@ dependencies {
     // 스프링 시큐리티 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    // 스프링 시큐리티 비밀번호 해쉬 라이브러리 부분
+    implementation 'org.springframework.security:spring-security-crypto'
+
     //JWT 토큰 라이브러리
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'

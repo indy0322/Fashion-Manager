@@ -12,13 +12,13 @@ import java.util.Optional;
 
 public interface MenteeApplyRepository extends JpaRepository<MenteeApplyEntity, Integer> {
 
-    Optional<MenteeApplyEntity> findById(Integer id);
+    Optional<MenteeApplyEntity> findByNumAndMemberNum(Integer num,  Integer memberNum);
 
     @Modifying
     @Transactional
     @Query(value = """
         DELETE FROM mentee_apply
-         WHERE ((:content IS NULL AND content IS NULL) OR content = :content)
+         WHERE content = :content
            AND mentoring_post_num = :mentoringPostNum
            AND member_num = :memberNum
     """, nativeQuery = true)
