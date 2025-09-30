@@ -5,24 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06fda6d6-c120-46b0-a0b7-26f6b9160f1b" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/config/SwaggerConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.idea/modules/eurekagateway.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/modules/eurekagateway.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-server/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/kim/develop/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/kim/develop/security/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/kim/develop/security/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/kim/develop/security/SecurityConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
@@ -31,15 +30,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/dto/MemberRightDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/dto/MemberRightDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/security/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/security/JwtTokenProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/security/SecurityConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/service/MemberService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +148,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.FashionManagerApplication.executor": "Run",
     "Spring Boot.FashionManagerApplication2.executor": "Run",
-    "git-widget-placeholder": "features",
+    "git-widget-placeholder": "SHS",
     "last_opened_file_path": "D:/부트캠프 2차 프로젝트/fashion-manager2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -392,6 +383,7 @@
       <workItem from="1759129507789" duration="3590000" />
       <workItem from="1759134051319" duration="2525000" />
       <workItem from="1759137556266" duration="11509000" />
+      <workItem from="1759216933315" duration="2057000" />
     </task>
     <servers />
   </component>
