@@ -17,5 +17,4 @@ public class ReviewRegistResponseDTO {
     private int cheer = 0;
     private List<Integer> items;
     private int memberNum;
-    private int reviewCategoryNum;
 }
