@@ -3,6 +3,9 @@ package fashionmanager.park.develop.menu.Service;
 import fashionmanager.park.develop.mapper.UserMapper;
 import fashionmanager.park.develop.menu.DTO.UserDTO;
 import fashionmanager.park.develop.menu.Entity.User;
+import fashionmanager.park.develop.menu.exception.DuplicateUserException;
+import fashionmanager.park.develop.menu.exception.NotFoundException;
+import fashionmanager.park.develop.menu.exception.ValidationException;
 import fashionmanager.park.develop.menu.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+
 
 @Service
 @Slf4j
@@ -51,37 +55,38 @@ public class UserService {
 
         // ===== 값 존재 여부 체크 =====
         if (newUser.getUserId() == null || newUser.getUserId().trim().isEmpty()) {
-            throw new RuntimeException("아이디는 필수 입력 값입니다.");
+            throw new ValidationException("아이디는 필수 입력 값입니다.");
         }
         if (newUser.getUserEmail() == null || newUser.getUserEmail().trim().isEmpty()) {
-            throw new RuntimeException("이메일은 필수 입력 값입니다.");
+            throw new ValidationException("이메일은 필수 입력 값입니다.");
         }
 
         if (newUser.getUserPwd() == null || newUser.getUserPwd().trim().isEmpty()) {
-            throw new RuntimeException("비밀번호는 필수 입력 값입니다.");
+            throw new ValidationException("비밀번호는 필수 입력 값입니다.");
         }
         if (newUser.getUserName() == null || newUser.getUserName().trim().isEmpty()) {
-            throw new RuntimeException("이름은 필수 입력 값입니다.");
+            throw new ValidationException("이름은 필수 입력 값입니다.");
         }
 
         if (newUser.getUserAge() <= 0) {
-            throw new RuntimeException("나이는 1 이상이어야 합니다.");
+            throw new ValidationException("나이는 1 이상이어야 합니다.");
         }
         if (newUser.getUserGender() == null || newUser.getUserGender().trim().isEmpty()) {
-            throw new RuntimeException("성별은 필수 입력 값입니다.");
-
+            throw new ValidationException("성별은 필수 입력 값입니다.");
+        }
 
             // ===== 중복 검사 =====
             if (userRepository.existsByUserId(newUser.getUserId())) {
-                throw new RuntimeException("이미 사용 중인 아이디입니다.");
+                throw new DuplicateUserException("이미 사용 중인 아이디입니다.");
             }
             if (userRepository.existsByUserEmail(newUser.getUserEmail())) {
-                throw new RuntimeException("이미 사용 중인 이메일입니다.");
+                throw new DuplicateUserException("이미 사용 중인 이메일입니다.");
             }
 
 
             // 비밀번호 해싱 (평문 → BCrypt 다이제스트)
             newUser.setUserPwd(bCryptPasswordEncoder.encode(newUser.getUserPwd()));
+
 
             // DTO -> Entity 변환
             modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -89,9 +94,11 @@ public class UserService {
 
             // DB 저장
             User savedUser = userRepository.save(user);
-        }
+
             // Entity -> DTO 변환 후 반환
             return modelMapper.map(savedUser, UserDTO.class);
+
+
 
     }
 
@@ -106,57 +113,76 @@ public class UserService {
         }
 
 
-        // 4. 회원 정보를 수정하는 기능
 
-        @Transactional
-        public UserDTO modifyMenu ( int userNum, Map<String, Object > updates){
-            User foundUser = userRepository.findById(userNum)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+    // 4. 회원 정보를 수정하는 기능
 
-            // 아이디 중복 검사 (본인 제외)
-            if (updates.containsKey("userId")) {
-                String newUserId = (String) updates.get("userId");
+    @Transactional
+    public UserDTO modifyMenu(int userNum, Map<String, Object> updates) {
+        User foundUser = userRepository.findById(userNum)
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
 
-                if (!foundUser.getUserId().equals(newUserId) &&
-                        userRepository.existsByUserId(newUserId)) {
-                    throw new RuntimeException("이미 사용 중인 아이디입니다.");
-                }
-
-                foundUser.setUserId(newUserId);
+        // ===== 아이디 중복 검사 (본인 제외) =====
+        if (updates.containsKey("userId")) {
+            String newUserId = String.valueOf(updates.get("userId"));
+            if (!foundUser.getUserId().equals(newUserId) &&
+                    userRepository.existsByUserId(newUserId)) {
+                throw new DuplicateUserException("이미 사용 중인 아이디입니다.");
             }
-
-            // 이메일 중복 검사 (본인 제외)
-            if (updates.containsKey("userEmail")) {
-                String newEmail = (String) updates.get("userEmail");
-
-                if (!foundUser.getUserEmail().equals(newEmail) &&
-                        userRepository.existsByUserEmail(newEmail)) {
-                    throw new RuntimeException("이미 사용 중인 이메일입니다.");
-                }
-
-                foundUser.setUserEmail(newEmail);
-            }
-
-            // 필요한 값만 덮어쓰기
-            if (updates.containsKey("userName")) {
-                foundUser.setUserName((String) updates.get("userName"));
-            }
-            if (updates.containsKey("userAge")) {
-                // Map에서 꺼내면 Integer로 캐스팅할 때 오류 날 수도 있으니 안전 처리
-                Object ageObj = updates.get("userAge");
-                if (ageObj instanceof Integer) {
-                    foundUser.setUserAge((Integer) ageObj);
-                } else if (ageObj instanceof String) {
-                    foundUser.setUserAge(Integer.parseInt((String) ageObj));
-                }
-            }
-            if (updates.containsKey("userGender")) {
-                foundUser.setUserGender((String) updates.get("userGender"));
-            }
-
-            User savedUser = userRepository.save(foundUser);
-            return modelMapper.map(savedUser, UserDTO.class);
+            foundUser.setUserId(newUserId);
         }
+
+        // ===== 이메일 중복 검사 (본인 제외) =====
+        if (updates.containsKey("userEmail")) {
+            String newEmail = String.valueOf(updates.get("userEmail"));
+            if (!foundUser.getUserEmail().equals(newEmail) &&
+                    userRepository.existsByUserEmail(newEmail)) {
+                throw new DuplicateUserException("이미 사용 중인 이메일입니다.");
+            }
+            foundUser.setUserEmail(newEmail);
+        }
+
+        // 회원 정보 수정(비밀번호 제외)
+        if (updates.containsKey("userName")) {
+            foundUser.setUserName(String.valueOf(updates.get("userName")));
+        }
+        if (updates.containsKey("userAge")) {
+            Object ageObj = updates.get("userAge");
+            int age = (ageObj instanceof Number)
+                    ? ((Number) ageObj).intValue()
+                    : Integer.parseInt(String.valueOf(ageObj));
+            foundUser.setUserAge(age);
+        }
+        if (updates.containsKey("userGender")) {
+            foundUser.setUserGender(String.valueOf(updates.get("userGender")));
+        }
+
+
+
+        // 비밀번호 보안부분 -> 중복 방지(새 비밀번호 == 기존 비밀번호인지 확인)
+        if (updates.containsKey("userPwd")) {
+            String newPwd = String.valueOf(updates.get("userPwd"));
+
+            if (newPwd == null || newPwd.trim().isEmpty()) {
+                throw new ValidationException("새 비밀번호는 비울 수 없습니다.");
+            }
+
+            // DB 해시된 비밀번호와 비교 (같으면 중복)
+            if (bCryptPasswordEncoder.matches(newPwd, foundUser.getUserPwd())) {
+                throw new ValidationException("새 비밀번호는 기존 비밀번호와 같을 수 없습니다.");
+            }
+
+            // 중복 아니면 인코딩 후 저장
+            foundUser.setUserPwd(bCryptPasswordEncoder.encode(newPwd));
+        }
+
+        User saved = userRepository.save(foundUser);
+
+        // 응답에 비밀번호 포함하지 않기!
+        UserDTO dto = modelMapper.map(saved, UserDTO.class);
+        dto.setUserPwd(null); // 여기서 null 값 넣어줘서 확인하지 못 하게 하기
+        return dto;
+    }
+
 
 
         // 5. 메시지 수신여부를 수정하는 기능
@@ -164,7 +190,7 @@ public class UserService {
         @Transactional
         public UserDTO modifyMessage ( int userNum, Map<String, Object > updates){
             User foundUser = userRepository.findById(userNum)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                    .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
 
             if (updates.containsKey("userMessageAllow")) {
                 foundUser.setUserMessageAllow((Integer) updates.get("userMessageAllow"));
@@ -180,7 +206,7 @@ public class UserService {
         @Transactional
         public UserDTO modifyReport ( int userNum, Map<String, Object > updates){
             User foundUser = userRepository.findById(userNum)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                    .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
 
             if (updates.containsKey("reportCount")) {
                 foundUser.setReportCount((Integer) updates.get("reportCount"));
@@ -199,7 +225,7 @@ public class UserService {
         @Transactional
         public void userDelete ( int userNum){
             if (!userRepository.existsById(userNum)) {
-                throw new RuntimeException("존재하지 않는 회원입니다.");
+                throw new NotFoundException("존재하지 않는 회원입니다.");
             }
             userRepository.deleteById(userNum);
         }

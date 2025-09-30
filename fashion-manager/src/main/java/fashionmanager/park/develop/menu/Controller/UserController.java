@@ -62,7 +62,7 @@ public class UserController {
 
 
     // 4. 회원 정보  수정
-    @PatchMapping("/{userNum}")
+    @PatchMapping("/modify/{userNum}")
     public ResponseEntity<UserDTO> modifyMenu(
             @PathVariable int userNum,
             @RequestBody Map<String, Object> updates) {
