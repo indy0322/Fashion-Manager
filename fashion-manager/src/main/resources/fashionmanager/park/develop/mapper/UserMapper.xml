@@ -24,7 +24,7 @@
 
 
     <!-- 1. 특정 회원 조회-->
-    <select id="selectUserByNum" parameterType="int"  resultMap="userWithBadgesResultMap">
+  <select id="selectUserByNum" resultMap="userWithBadgesResultMap">
       SELECT
         m.num AS userNum,
         m.id AS userId,
@@ -44,7 +44,7 @@
 
 
     <!-- 2. 전체 회원 조회 -->
-    <select id="selectAllUsers" resultType="fashionmanager.park.develop.menu.DTO.UserDTO">
+    <select id="selectAllUsers" resultMap="userWithBadgesResultMap">
     SELECT
       m.num AS userNum,
       m.id AS userId,
