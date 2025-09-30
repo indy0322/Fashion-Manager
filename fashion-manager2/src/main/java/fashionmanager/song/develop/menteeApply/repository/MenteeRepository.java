@@ -10,15 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 
-public interface MenteeApplyRepository extends JpaRepository<MenteeApplyEntity, Integer> {
+public interface MenteeRepository extends JpaRepository<MenteeApplyEntity, Integer> {
 
-    Optional<MenteeApplyEntity> findByNumAndMemberNum(Integer num,  Integer memberNum);
+    Optional<MenteeApplyEntity> findById(Integer id);
 
     @Modifying
     @Transactional
     @Query(value = """
         DELETE FROM mentee_apply
-         WHERE content = :content
+         WHERE ((:content IS NULL AND content IS NULL) OR content = :content)
            AND mentoring_post_num = :mentoringPostNum
            AND member_num = :memberNum
     """, nativeQuery = true)
