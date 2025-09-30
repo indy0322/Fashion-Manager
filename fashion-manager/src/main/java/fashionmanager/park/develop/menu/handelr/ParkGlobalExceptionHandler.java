@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class ParkGlobalExceptionHandler {
 
 
     // 회원입력창에 빈 칸이나 잘못된 값을 입력시 예외처리

@@ -1,7 +1,6 @@
 package fashionmanager.song.develop.config;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class SongGlobalExceptionHandler {
 
     // 런타임 예외 발생
     @ExceptionHandler(RuntimeException.class)

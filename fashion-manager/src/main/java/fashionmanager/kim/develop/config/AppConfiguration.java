@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @MapperScan(basePackages = "fashionmanager.kim.develop", annotationClass = Mapper.class)
 public class AppConfiguration {
+
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

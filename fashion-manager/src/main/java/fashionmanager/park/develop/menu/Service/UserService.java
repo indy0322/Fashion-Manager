@@ -240,7 +240,7 @@ public class UserService {
 //        Page<User> userList = userRepository.findAll(pageable);
 //
 //        /* 설명. Page는 자체로 stream이다. */
-//        return userList.map(menu -> modelMapper.map(menu, UserDTO.class));
+//        return userList.map(menu -> ParkmodelMapper.map(menu, UserDTO.class));
 //
 //    }
 
