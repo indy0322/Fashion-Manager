@@ -204,20 +204,32 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 ---
 ## 3. MSA 아키텍쳐
 
-<img src = "./image/리눅스ddl.png" width = "1000"> </img>
-<img src = "./image/리눅스slave2.png" width = "1000"> </img> <br>
+<img src = "./image/msa1.png" width = "1000"> </img>
+<img src = "./image/msa2.png" width = "1000"> </img> <br>
 
 ---
 ## 4. API 명세서
 
   <details>
-    <summary> user-service</summary>
-    <img src = "./image/상영예정작예상평점.png" width="800"> </img> 
+    <summary> member-service </summary>
+    <img src = "./image/MemberService1.png" width="800"> </img> 
+    <img src = "./image/MemberService2.png" width="800"> </img> 
   </details>
 
   <details>
-    <summary> core-service </summary>
-    <img src = "./image/상영예정작예상평점.png" width="800"> </img> 
+    <summary> manager-service </summary>
+    <img src = "./image/ManagerService1.png" width="800"> </img>
+    <img src = "./image/ManagerService2.png" width="800"> </img>
+    <img src = "./image/ManagerService3.png" width="800"> </img> 
+    <img src = "./image/ManagerService4.png" width="800"> </img>
+    <img src = "./image/ManagerService5.png" width="800"> </img> 
+  </details>
+
+  <details>
+    <summary> API명세서 예시 </summary>
+    <img src = "./image/api예시1.png" width="800"> </img> 
+    <img src = "./image/api예시2.png" width="800"> </img> 
+    <img src = "./image/api예시3.png" width="800"> </img> 
   </details>
 
 <br>
