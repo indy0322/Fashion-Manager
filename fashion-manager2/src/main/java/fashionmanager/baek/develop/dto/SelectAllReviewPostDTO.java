@@ -11,6 +11,7 @@ public class SelectAllReviewPostDTO {
     private int num;
     private String title;
     private int memberNum;
+    private String memberName;
     private int good;
     private int cheer;
 }

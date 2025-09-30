@@ -430,7 +430,6 @@ public class FashionPostService {
             newReaction.setPostNum(postNum);
             newReaction.setPostCategoryNum(1);  // 패션 게시물은 1
 
-            PostReactionEntity finalReactionEntity = postReactionRepository.save(newReaction);
             if (reactionType.equals("good")) post.setGood(post.getGood() + 1);
             else post.setCheer(post.getCheer() + 1);
 

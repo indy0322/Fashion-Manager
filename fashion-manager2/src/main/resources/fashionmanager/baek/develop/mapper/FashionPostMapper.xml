@@ -13,7 +13,15 @@
             </if>
         </trim>
     </sql>
-    <select id="findAll" resultType="fashionmanager.baek.develop.dto.SelectAllFashionPostDTO">
+    <resultMap id="selectAllFashionPostMap" type="fashionmanager.baek.develop.dto.SelectAllFashionPostDTO">
+        <id property="num" column="num"/>
+        <result property="title" column="title"/>
+        <result property="memberNum" column="member_num"/>
+        <result property="memberName" column="member_name"/>
+        <result property="good" column="good"/>
+        <result property="cheer" column="cheer"/>
+    </resultMap>
+    <select id="findAll" resultMap="selectAllFashionPostMap">
         SELECT
                fp.num
              , fp.title
@@ -24,9 +32,9 @@
           FROM fashion_post fp
           LEFT JOIN
                member m ON fp.member_num = m.num
-         ORDER BY num desc;
+         ORDER BY fp.num desc;
     </select>
-    <select id="getListWithPaging" resultType="fashionmanager.baek.develop.dto.SelectAllFashionPostDTO">
+    <select id="getListWithPaging" resultMap="selectAllFashionPostMap">
         SELECT
             fp.num, fp.title, fp.member_num, fp.good, fp.cheer, m.name AS member_name
           FROM
