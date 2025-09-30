@@ -5,10 +5,10 @@
 <mapper namespace="fashionmanager.baek.develop.mapper.FashionPostMapper">
     <sql id="criteria">
         <trim prefix="WHERE" prefixOverrides="OR">
-            <if test="type != null and type.contains('T')">
+            <if test='type != null and type.contains("T")'>
                 OR fp.title LIKE CONCAT('%', #{keyword}, '%')
             </if>
-            <if test="type != null and type.contains('W')">
+            <if test='type != null and type.contains("W")'>
                 OR m.name LIKE CONCAT('%', #{keyword}, '%')
             </if>
         </trim>
