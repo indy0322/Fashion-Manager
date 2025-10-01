@@ -789,7 +789,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 회원 서비스 테스트 </summary>
 <br>
-<img src="./images/test/회원 테스트.jpg" width="800" />
+<img src="./images/test/회원_테스트.png" width="800" />
 </details>
 
 ---
@@ -797,7 +797,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 블랙리스트 서비스 테스트 </summary>
 <br>
-<img src="./images/test/블랙리스트 테스트.jpg" width="800" />
+<img src="./images/test/블랙리스트_테스트.png" width="800" />
 </details>
 
 ---
@@ -805,7 +805,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 해시태그 서비스 테스트 </summary>
 <br>
-<img src="./images/test/해시태그 테스트.jpg" width="800" />
+<img src="./images/test/해시태그_테스트.png" width="800" />
 </details>
 
 ---
@@ -813,7 +813,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 패션 게시판 서비스 테스트 </summary>
 <br>
-<img src="./images/test/페션 게시판 조회 테스트.jpg" width="800" />
+<img src="./images/test/페션게시판_조회_테스트.png" width="800" />
 </details>
 
 ---
@@ -821,7 +821,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 댓글 서비스 테스트 </summary>
 <br>
-<img src="./images/test/댓글 테스트.jpg" width="800" />
+<img src="./images/test/댓글_테스트.png" width="800" />
 </details>
 
 ---
@@ -829,7 +829,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 인플루언서 신청 서비스 테스트 </summary>
 <br>
-<img src="./images/test/인플루언서 신청 테스트.jpg" width="800" />
+<img src="./images/test/인플루언서_신청_테스트.png" width="800" />
 </details>
 
 ---
@@ -837,7 +837,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 인플루언서 페이지 서비스 테스트 </summary>
 <br>
-<img src="./images/test/인플루언서 페이지 테스트.jpg" width="800" />
+<img src="./images/test/인플루언서_페이지_테스트.png" width="800" />
 </details>
 
 ---
@@ -845,7 +845,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 멘토링 신청 서비스 테스트 </summary>
 <br>
-<img src="./images/test/멘토링 신청 테스트.jpg" width="800" />
+<img src="./images/test/멘토링_신청_테스트.png" width="800" />
 </details>
 
 ---
@@ -853,7 +853,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 스케줄러 서비스 테스트 (좋아요 초기화) </summary>
 <br>
-<img src="./images/test/좋아요 초기화 테스트.jpg" width="800" />
+<img src="./images/test/좋아요 초기화 테스트.png" width="800" />
 </details>
 
 <br>
