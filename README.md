@@ -165,25 +165,30 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 - 높은 활동 점수와 좋은 평판을 얻어 **멘토/인플루언서**로 성장해 보세요!
   > 💾 **연관 데이터:** `Assigned_Right`
 
-## 1-4. WBS
+## 1-3. WBS
 
 <img src = "./image/WBS.png" width = "1000"> </img> <br>
 ---
 
-## 1-5. 요구사항 명세서 
+## 1-4. 요구사항 명세서 
 
 <img src = "./image/요구사항1.png" width = "1000"> </img>
 <img src = "./image/요구사항2.png" width = "1000"> </img> <br>
 ---
-## 1-6. DDD
+## 1-5. DDD
 
   <details>
-    <summary> Event-Storming </summary>
+    <summary> 이벤트 도메인 </summary>
+    <img src = "./image/DDD0.png" width = "1500"> </img>
+  </details>
+
+  <details>
+    <summary> Policy-Context </summary>
     <img src = "./image/DDD1.png" width = "1500"> </img>
   </details>
 
   <details>
-    <summary> Context-Map </summary>
+    <summary> Context-Mapping </summary>
     <img src = "./image/DDD2.png" width = "1500"> </img>
   </details>
 
@@ -204,6 +209,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 ---
 ## 3. MSA 아키텍쳐
 
+<img src = "./image/msa0.png" width = "1000"> </img>
 <img src = "./image/msa1.png" width = "1000"> </img>
 <img src = "./image/msa2.png" width = "1000"> </img> <br>
 
