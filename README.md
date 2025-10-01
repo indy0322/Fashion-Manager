@@ -853,7 +853,7 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 <details>
 <summary> 스케줄러 서비스 테스트 (좋아요 초기화) </summary>
 <br>
-<img src="./images/test/좋아요 초기화 테스트.png" width="800" />
+<img src="./images/test/좋아요_초기화_테스트.png" width="800" />
 </details>
 
 <br>
