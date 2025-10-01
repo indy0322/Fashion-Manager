@@ -306,84 +306,84 @@ TPO(시간, 장소, 상황) 적합성, 컬러 매치, 아이템 활용도 등 �
 </details>
 <br>
 
-<details>
-  <summary> 🧑‍💼/🧑‍🎓 인플루언서, 멘티 관리 도메인 테스트 </summary>
-  <br>
-  <details>
-    <summary> 🧑‍💼 인플루언서 관련 API </summary>
-    <br>
-    <details>
-      <summary>인플루언서 신청/관리</summary>
-      <br>
-      <details>
-        <summary>인플루언서 신청</summary>
-        <img src="./images/influencer_mentee/인플루언서 신청.png" width="800" />
-      </details>
-      <details>
-        <summary>인플루언서 신청 조회</summary>
-        <img src="./images/influencer_mentee/인플루언서 신청 조회.png" width="800" />
-      </details>
-      <details>
-        <summary>인플루언서 신청 내용 수정</summary>
-        <img src="./images/influencer_mentee/인플루언서 신청 내용 수정.png" width="800" />
-      </details>
-      <details>
-        <summary>인플루언서 신청 취소</summary>
-        <img src="./images/influencer_mentee/인플루언서 신청 취소.png" width="800" />
-      </details>
-    </details>
+## 🧑‍💼/🧑‍🎓 인플루언서, 멘티 관리 도메인 테스트
 
-    <details>
-      <summary>인플루언서 페이지 관리</summary>
-      <br>
-      <details>
-        <summary>인플루언서 페이지 생성</summary>
-        <img src="./images/influencer_mentee/인플루언서 페이지 생성.png" width="800" />
-      </details>
-      <details>
-        <summary>인플루언서 페이지 조회</summary>
-        <img src="./images/influencer_mentee/인플루언서 페이지 조회.png" width="800" />
-      </details>
-       <details>
-        <summary>인플루언서 페이지네이션</summary>
-        <img src="./images/influencer_mentee/인플루언서 페이지네이션.png" width="800" />
-      </details>
-      <details>
-        <summary>인플루언서 페이지 수정</summary>
-        <img src="./images/influencer_mentee/인플루언서 페이지 수정.png" width="800" />
-      </details>
-      <details>
-        <summary>인플루언서 페이지 삭제</summary>
-        <img src="./images/influencer_mentee/인플루언서 페이지 삭제.png" width="800" />
-      </details>
-    </details>
-  </details>
-  
-  ---
-  
-  <details>
-    <summary> 🧑‍🎓 멘티 관련 API </summary>
-    <br>
-    
-    <details>
-      <summary>멘티 신청</summary>
-      <img src="./images/influencer_mentee/멘티 신청.png" width="800" />
-    </details>
-    <details>
-      <summary>멘티 신청 조회</summary>
-      <img src="./images/influencer_mentee/멘티 신청 조회.png" width="800" />
-    </details>
-    <details>
-      <summary>멘티 신청서 수정</summary>
-      <img src="./images/influencer_mentee/멘티 신청서 수정.png" width="800" />
-    </details>
-    <details>
-      <summary>멘티 신청서 삭제</summary>
-      <img src="./images/influencer_mentee/멘티 신청서 삭제.png" width="800" />
-    </details>
-  </details>
+<details>
+<summary> 🧑‍💼 인플루언서 관련 API </summary>
+<br>
+
+<details>
+<summary>인플루언서 신청/관리</summary>
+<br>
+
+<details>
+<summary>인플루언서 신청</summary>
+  <img src="./images/influencer_mentee/인플루언서 신청.png" width="800" />
+</details>
+<details>
+<summary>인플루언서 신청 조회</summary>
+  <img src="./images/influencer_mentee/인플루언서 신청 조회.png" width="800" />
+</details>
+<details>
+<summary>인플루언서 신청 내용 수정</summary>
+  <img src="./images/influencer_mentee/인플루언서 신청 내용 수정.png" width="800" />
+</details>
+<details>
+<summary>인플루언서 신청 취소</summary>
+  <img src="./images/influencer_mentee/인플루언서 신청 취소.png" width="800" />
+</details>
 </details>
 
+<details>
+<summary>인플루언서 페이지 관리</summary>
+<br>
+
+<details>
+<summary>인플루언서 페이지 생성</summary>
+  <img src="./images/influencer_mentee/인플루언서 페이지 생성.png" width="800" />
+</details>
+<details>
+<summary>인플루언서 페이지 조회</summary>
+  <img src="./images/influencer_mentee/인플루언서 페이지 조회.png" width="800" />
+</details>
+  <details>
+<summary>인플루언서 페이지네이션</summary>
+  <img src="./images/influencer_mentee/인플루언서 페이지네이션.png" width="800" />
+</details>
+<details>
+<summary>인플루언서 페이지 수정</summary>
+  <img src="./images/influencer_mentee/인플루언서 페이지 수정.png" width="800" />
+</details>
+<details>
+<summary>인플루언서 페이지 삭제</summary>
+  <img src="./images/influencer_mentee/인플루언서 페이지 삭제.png" width="800" />
+</details>
+</details>
+</details>
+
+---
+
+<details>
+<summary> 🧑‍🎓 멘티 관련 API </summary>
+<br>
+
+<details>
+<summary>멘티 신청</summary>
+  <img src="./images/influencer_mentee/멘티 신청.png" width="800" />
+</details>
+<details>
+<summary>멘티 신청 조회</summary>
+  <img src="./images/influencer_mentee/멘티 신청 조회.png" width="800" />
+</details>
+<details>
+<summary>멘티 신청서 수정</summary>
+  <img src="./images/influencer_mentee/멘티 신청서 수정.png" width="800" />
+</details>
+<details>
+<summary>멘티 신청서 삭제</summary>
+  <img src="./images/influencer_mentee/멘티 신청서 삭제.png" width="800" />
+</details>
+</details>
 <details>
   <summary> 💬 댓글 관리 도메인 테스트 </summary>
   <br>
