@@ -5,10 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06fda6d6-c120-46b0-a0b7-26f6b9160f1b" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtAuthenticationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtServerAuthenticationConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fashion-manager/src/main/java/fashionmanager/kim/develop/config/SwaggerConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
@@ -16,27 +12,24 @@
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.idea/modules/eurekagateway.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/modules/eurekagateway.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-gateway/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtAuthenticationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtAuthenticationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtServerAuthenticationConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/JwtServerAuthenticationConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/java/msa/eurekagateway/filter/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fashion-manager/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../fashion-manager/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/config/SwaggerConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fashionmanager/kim/develop/config/SwaggerConfiguration.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,17 +53,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="fashion_manager" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="fashion_manager" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="fashion_manager" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -100,76 +82,77 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.BlacklistServiceTest.testDeleteBlacklist.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BlacklistServiceTest.testInsertBlacklist.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BlacklistServiceTest.testSelectBlacklist.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testDeleteMessageCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testDeletePhotoCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testDeleteReportCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testDeleteReviewCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testFindAllMenus.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testInsertMessageCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testInsertPhotoCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testInsertReportCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testInsertReviewCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testSelectAllCategories.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testSelectAllMessageCategories.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testSelectAllPhotoCategories.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testSelectAllReportCategories.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testUpdateMessageCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testUpdatePhotoCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testUpdateReportCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryServiceTest.testUpdateReviewCategory.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.HashTagServiceTest.testDeleteHashTag.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.HashTagServiceTest.testInsertHashTag.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.HashTagServiceTest.testSelectHashTags.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.HashTagServiceTest.testSelectHashTagsAndPost.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.testInsertAdmin.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.testSelectMember.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.testSelectMemberByNum.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.testSelectMemberRight.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MemberServiceTest.testUpdateRight.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MessageServiceTest.testDeleteMessage.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MessageServiceTest.testInsertMessage.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MessageServiceTest.testSelectAllMessages.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MessageServiceTest.testSelectReceiverMessages.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.MessageServiceTest.testSelectSenderMessages.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ReportServiceTest.deleteReportsTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ReportServiceTest.getReportsTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ReportServiceTest.selectReportsTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ReportServiceTest.testDeleteReports.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.fashion-manager [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.fashion-manager 빌드.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.fashion-manager2 빌드.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.소스 다운로드.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.FashionManagerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.FashionManagerApplication2.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/부트캠프 2차 프로젝트/fashion-manager2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.BlacklistServiceTest.testDeleteBlacklist.executor": "Run",
+    "Gradle.BlacklistServiceTest.testInsertBlacklist.executor": "Run",
+    "Gradle.BlacklistServiceTest.testSelectBlacklist.executor": "Run",
+    "Gradle.CategoryServiceTest.testDeleteMessageCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testDeletePhotoCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testDeleteReportCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testDeleteReviewCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testFindAllMenus.executor": "Run",
+    "Gradle.CategoryServiceTest.testInsertMessageCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testInsertPhotoCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testInsertReportCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testInsertReviewCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testSelectAllCategories.executor": "Run",
+    "Gradle.CategoryServiceTest.testSelectAllMessageCategories.executor": "Run",
+    "Gradle.CategoryServiceTest.testSelectAllPhotoCategories.executor": "Run",
+    "Gradle.CategoryServiceTest.testSelectAllReportCategories.executor": "Run",
+    "Gradle.CategoryServiceTest.testUpdateMessageCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testUpdatePhotoCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testUpdateReportCategory.executor": "Run",
+    "Gradle.CategoryServiceTest.testUpdateReviewCategory.executor": "Run",
+    "Gradle.HashTagServiceTest.testDeleteHashTag.executor": "Run",
+    "Gradle.HashTagServiceTest.testInsertHashTag.executor": "Run",
+    "Gradle.HashTagServiceTest.testSelectHashTags.executor": "Run",
+    "Gradle.HashTagServiceTest.testSelectHashTagsAndPost.executor": "Run",
+    "Gradle.MemberServiceTest.testInsertAdmin.executor": "Run",
+    "Gradle.MemberServiceTest.testSelectMember.executor": "Run",
+    "Gradle.MemberServiceTest.testSelectMemberByNum.executor": "Run",
+    "Gradle.MemberServiceTest.testSelectMemberRight.executor": "Run",
+    "Gradle.MemberServiceTest.testUpdateRight.executor": "Run",
+    "Gradle.MessageServiceTest.testDeleteMessage.executor": "Run",
+    "Gradle.MessageServiceTest.testInsertMessage.executor": "Run",
+    "Gradle.MessageServiceTest.testSelectAllMessages.executor": "Run",
+    "Gradle.MessageServiceTest.testSelectReceiverMessages.executor": "Run",
+    "Gradle.MessageServiceTest.testSelectSenderMessages.executor": "Run",
+    "Gradle.ReportServiceTest.deleteReportsTest.executor": "Run",
+    "Gradle.ReportServiceTest.getReportsTest.executor": "Run",
+    "Gradle.ReportServiceTest.selectReportsTest.executor": "Run",
+    "Gradle.ReportServiceTest.testDeleteReports.executor": "Run",
+    "Gradle.fashion-manager [clean].executor": "Run",
+    "Gradle.fashion-manager 빌드.executor": "Run",
+    "Gradle.fashion-manager2 빌드.executor": "Run",
+    "Gradle.소스 다운로드.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.FashionManagerApplication.executor": "Run",
+    "Spring Boot.FashionManagerApplication2.executor": "Run",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/부트캠프 2차 프로젝트/fashion-manager2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\lecture\project_2\fashion-manager\src\main\resources\fashionmanager" />
@@ -395,6 +378,7 @@
       <workItem from="1759223724046" duration="68000" />
       <workItem from="1759223831725" duration="4306000" />
       <workItem from="1759386179876" duration="1177000" />
+      <workItem from="1759391476813" duration="798000" />
     </task>
     <servers />
   </component>

@@ -2,6 +2,7 @@ package msa.eurekagateway.filter;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,7 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
         String token = authentication.getCredentials().toString();
 
         if(!jwtUtil.validateToken(token)){
-            return Mono.empty();
+            return Mono.error(new BadCredentialsException("Invalid Token"));
         }
 
         Claims claims = jwtUtil.getClaims(token);
