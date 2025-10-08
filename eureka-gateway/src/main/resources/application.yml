@@ -28,8 +28,13 @@ spring:
            - Path=/manager-service/**
          filters:
            - RewritePath=/manager-service/(?<segment>.*), /$\{segment}
-#           - JwtAuthenticationFilter
+           - JwtAuthenticationFilter
 
 token:
   expiration_time: 86400000
   secret: CxCdBy6P0vET6d/oKN9YSXzUBwfYGR+petj55jmBGrk3XaTqpaCMdgYbv7Q7ccrwjc2441jyOY0OKCFqbZPOHQ==
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
