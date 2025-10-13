@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="06fda6d6-c120-46b0-a0b7-26f6b9160f1b" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-gateway/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../eureka-server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
@@ -116,7 +117,7 @@
     "Spring Boot.FashionManagerApplication2.executor": "Run",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/부트캠프 2차 프로젝트/fashion-manager2",
+    "last_opened_file_path": "C:/lecture/project_2_test/fashion-manager2/src/main/java/fashionmanager/kim",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -132,6 +133,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\lecture\project_2_test\fashion-manager2\src\main\java\fashionmanager\kim" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\lecture\project_2\fashion-manager\src\main\resources\fashionmanager" />
     </key>
@@ -357,6 +361,7 @@
       <workItem from="1759223831725" duration="4306000" />
       <workItem from="1759386179876" duration="1177000" />
       <workItem from="1759391476813" duration="798000" />
+      <workItem from="1759815608363" duration="7476000" />
     </task>
     <servers />
   </component>

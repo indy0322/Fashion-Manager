@@ -24,17 +24,25 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity.csrf(csrf -> csrf.disable())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(authorize -> authorize
+//                        .requestMatchers("/member/**").permitAll()
+//                        .requestMatchers("/category/**").hasRole("인플루언서")
+//                        .anyRequest().authenticated()
+//                );
+////
+//        System.out.println(">>> JwtAuthenticationFilter 등록됨");
+//
+//        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+
         httpSecurity.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/member/**").permitAll()
-                        .requestMatchers("/category/**").hasRole("인플루언서")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 );
 
-        System.out.println(">>> JwtAuthenticationFilter 등록됨");
-
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
